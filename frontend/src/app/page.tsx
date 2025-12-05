@@ -12,16 +12,13 @@ const Canvas2D = dynamic(() => import("@/features/planning/components/Canvas2D")
 const View3D = dynamic(() => import("@/features/planning/components/View3D").then(m => m.View3D), { ssr: false });
 
 export default function Page() {
-  const [activeTool, setActiveTool] = useState("select");
   const [currentView, setCurrentView] = useState<"2D" | "3D" | "ISO" | "PERSP">("2D");
 
   return (
     <PlanningLayout
       currentView={currentView}
       onViewChange={setCurrentView}
-      toolPalette={
-        <ToolPalette activeTool={activeTool} onToolChange={setActiveTool} />
-      }
+      toolPalette={<ToolPalette />}
       sidePanel={<SidePanel />}
       referenceViewer={<ReferenceViewer />}
     >
@@ -29,7 +26,7 @@ export default function Page() {
       {currentView === "2D" ? (
         <Canvas2D />
       ) : (
-        <View3D />
+        <View3D viewMode={currentView} />
       )}
     </PlanningLayout>
   );

@@ -1,50 +1,180 @@
 import { GlassPanel } from "@/components/ui/GlassPanel";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { clsx } from "clsx";
 import { motion, AnimatePresence } from "framer-motion";
-import { Building2, Layers, Calculator, MessageSquare } from "lucide-react";
+import { Building2, Layers, Calculator, MessageSquare, Upload, FileImage, Ruler, Check, Trash2 } from "lucide-react";
+import { usePlanningStore, SCALE_PRESETS } from "@/store/planningStore";
+import { NeonButton } from "@/components/ui/NeonButton";
 
-// Mock Content Components
-const BuildingTab = () => (
-    <div className="space-y-4 p-1">
-        <div className="space-y-2">
-            <label className="text-xs text-text-muted uppercase font-bold tracking-wider">Drawing Info</label>
-            <div className="p-3 bg-surface-2 rounded-lg border border-white/5 text-sm space-y-2">
-                <div className="flex justify-between">
-                    <span className="text-text-muted">Scale</span>
-                    <span className="font-mono text-accent">1 : 100</span>
+// Building Tab Component with File Upload
+const BuildingTab = () => {
+    const {
+        drawingUrl,
+        drawingName,
+        scale,
+        scaleRatio,
+        setDrawing,
+        setCurrentTool,
+        setIsSettingScale,
+        setScaleFromRatio,
+        building,
+        setBuilding,
+        polylinePoints,
+        clearPolyline
+    } = usePlanningStore();
+    const fileInputRef = useRef<HTMLInputElement>(null);
+
+    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0];
+        if (file) {
+            const url = URL.createObjectURL(file);
+            setDrawing(url, file.name);
+        }
+    };
+
+    const handleStartScaleSetting = () => {
+        setCurrentTool('scale');
+        setIsSettingScale(true);
+    };
+
+    const totalHeight = building.floorHeight * building.totalFloors + building.roofHeight;
+
+    return (
+        <div className="space-y-4 p-1">
+            {/* File Upload Section */}
+            <div className="space-y-2">
+                <label className="text-xs text-text-muted uppercase font-bold tracking-wider">図面アップロード</label>
+                <input
+                    type="file"
+                    ref={fileInputRef}
+                    onChange={handleFileChange}
+                    accept="image/*,.pdf"
+                    className="hidden"
+                />
+                <button
+                    onClick={() => fileInputRef.current?.click()}
+                    className="w-full p-4 border-2 border-dashed border-white/10 rounded-lg hover:border-primary/50 hover:bg-primary/5 transition-colors flex flex-col items-center gap-2 text-text-muted hover:text-text-main"
+                >
+                    <Upload size={24} />
+                    <span className="text-sm">クリックして図面を選択</span>
+                </button>
+            </div>
+
+            {/* Drawing Info Section */}
+            <div className="space-y-2">
+                <label className="text-xs text-text-muted uppercase font-bold tracking-wider">図面情報</label>
+                <div className="p-3 bg-surface-2 rounded-lg border border-white/5 text-sm space-y-2">
+                    <div className="flex justify-between items-center">
+                        <span className="text-text-muted flex items-center gap-2"><FileImage size={14} /> ファイル</span>
+                        <span className="truncate max-w-[120px]">{drawingName || '未選択'}</span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                        <span className="text-text-muted flex items-center gap-2"><Ruler size={14} /> スケール</span>
+                        {scaleRatio ? (
+                            <span className="font-mono text-accent">1 : {scaleRatio}</span>
+                        ) : (
+                            <span className="text-text-muted">未設定</span>
+                        )}
+                    </div>
+                    <div className="flex justify-between items-center">
+                        <span className="text-text-muted">外周ポリライン</span>
+                        <span className="font-mono">{polylinePoints.length} 頂点</span>
+                    </div>
                 </div>
-                <div className="flex justify-between">
-                    <span className="text-text-muted">File</span>
-                    <span>Plan_1F.pdf</span>
+                {polylinePoints.length > 0 && (
+                    <button
+                        onClick={clearPolyline}
+                        className="w-full p-2 rounded-lg border border-white/10 bg-surface-2 text-sm text-danger hover:bg-danger/10 transition-colors flex items-center justify-center gap-2"
+                    >
+                        <Trash2 size={14} /> ポリラインをクリア
+                    </button>
+                )}
+            </div>
+
+            {/* Scale Presets Section */}
+            <div className="space-y-2">
+                <label className="text-xs text-text-muted uppercase font-bold tracking-wider">スケール設定</label>
+                <div className="grid grid-cols-2 gap-2">
+                    {SCALE_PRESETS.map((preset) => (
+                        <button
+                            key={preset.ratio}
+                            onClick={() => setScaleFromRatio(preset.ratio)}
+                            className={clsx(
+                                "p-2 rounded-lg border text-sm font-mono transition-all flex items-center justify-center gap-2",
+                                scaleRatio === preset.ratio
+                                    ? "border-accent bg-accent/10 text-accent shadow-[0_0_8px_rgba(0,240,255,0.3)]"
+                                    : "border-white/10 bg-surface-2 text-text-muted hover:border-white/20 hover:text-text-main"
+                            )}
+                        >
+                            {scaleRatio === preset.ratio && <Check size={14} />}
+                            {preset.label}
+                        </button>
+                    ))}
+                </div>
+                <button
+                    onClick={handleStartScaleSetting}
+                    className="w-full p-2 rounded-lg border border-white/10 bg-surface-2 text-sm text-text-muted hover:border-primary/50 hover:text-text-main transition-colors flex items-center justify-center gap-2"
+                >
+                    <Ruler size={14} /> 2点クリックで設定
+                </button>
+            </div>
+
+            {/* Height Settings Section - Editable */}
+            <div className="space-y-2">
+                <label className="text-xs text-text-muted uppercase font-bold tracking-wider">建物高さ設定</label>
+                <div className="space-y-2">
+                    <div className="flex items-center gap-2">
+                        <label className="text-xs text-text-muted w-16">階高</label>
+                        <input
+                            type="number"
+                            value={building.floorHeight}
+                            onChange={(e) => setBuilding({ floorHeight: parseInt(e.target.value) || 0 })}
+                            className="flex-1 px-2 py-1.5 bg-surface-2 border border-white/10 rounded text-sm font-mono text-right focus:outline-none focus:border-accent"
+                        />
+                        <span className="text-xs text-text-muted">mm</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                        <label className="text-xs text-text-muted w-16">階数</label>
+                        <input
+                            type="number"
+                            value={building.totalFloors}
+                            onChange={(e) => setBuilding({ totalFloors: parseInt(e.target.value) || 1 })}
+                            min={1}
+                            max={10}
+                            className="flex-1 px-2 py-1.5 bg-surface-2 border border-white/10 rounded text-sm font-mono text-right focus:outline-none focus:border-accent"
+                        />
+                        <span className="text-xs text-text-muted">階</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                        <label className="text-xs text-text-muted w-16">屋根高</label>
+                        <input
+                            type="number"
+                            value={building.roofHeight}
+                            onChange={(e) => setBuilding({ roofHeight: parseInt(e.target.value) || 0 })}
+                            className="flex-1 px-2 py-1.5 bg-surface-2 border border-white/10 rounded text-sm font-mono text-right focus:outline-none focus:border-accent"
+                        />
+                        <span className="text-xs text-text-muted">mm</span>
+                    </div>
+                </div>
+                <div className="p-2 bg-accent/10 rounded-lg border border-accent/30">
+                    <div className="flex justify-between items-center">
+                        <span className="text-sm text-accent">総高さ</span>
+                        <span className="font-mono text-accent font-bold">{(totalHeight / 1000).toFixed(1)}m</span>
+                    </div>
                 </div>
             </div>
         </div>
-
-        <div className="space-y-2">
-            <label className="text-xs text-text-muted uppercase font-bold tracking-wider">Height Settings</label>
-            <div className="grid grid-cols-2 gap-2">
-                <div className="p-2 bg-surface-2 rounded border border-white/5">
-                    <div className="text-[10px] text-text-muted">Floor Height</div>
-                    <div className="font-mono">2,800</div>
-                </div>
-                <div className="p-2 bg-surface-2 rounded border border-white/5">
-                    <div className="text-[10px] text-text-muted">Total Height</div>
-                    <div className="font-mono">8,400</div>
-                </div>
-            </div>
-        </div>
-    </div>
-);
+    );
+};
 
 const ScaffoldTab = () => (
-    <div className="text-sm text-text-muted p-2">Scaffold Settings Placeholder</div>
+    <div className="text-sm text-text-muted p-2">足場条件設定（準備中）</div>
 );
 const QuantityTab = () => (
-    <div className="text-sm text-text-muted p-2">Quantity Table Placeholder</div>
+    <div className="text-sm text-text-muted p-2">数量表（準備中）</div>
 );
 const ChatTab = () => (
-    <div className="text-sm text-text-muted p-2">AI Chat Placeholder</div>
+    <div className="text-sm text-text-muted p-2">AIチャット（準備中）</div>
 );
 
 export function SidePanel() {
