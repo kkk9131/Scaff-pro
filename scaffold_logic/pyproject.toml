@@ -1,0 +1,15 @@
+[project]
+name = "scaffold-logic"
+version = "0.1.0"
+description = "足場割付計算ロジック"
+requires-python = ">=3.11"
+dependencies = []
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0.0",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"

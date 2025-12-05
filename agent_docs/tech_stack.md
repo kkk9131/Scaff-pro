@@ -21,9 +21,11 @@
 ### 2.1 言語・基盤
 
 - 言語：TypeScript  
-- フレームワーク：React  
-- ビルドツール：Vite（高速開発用の SPA 構成）  
-  - 将来 SSR / SEO が必要になった場合は Next.js への移行も検討可能なコード構造にする。
+- フレームワーク：Next.js（App Router）  
+- ビルドツール：Next.js 組み込み  
+  - SSR / SSG サポート  
+  - ファイルベースルーティング  
+  - API Routes（将来の BFF として利用可能）
 
 ### 2.2 UI / 状態管理
 
