@@ -36,7 +36,10 @@ frontend/
       planning/        # 足場計画画面（キャンバス・パネルなど）
       chat/            # チャットパネル
       quantity/        # 数量表表示
-      threeD/          # 3D ビュー関連
+      threeD/          # 3D ビュー関連（ワイヤーフレーム表示）
+      isometric/       # アイソメ図ビュー（輪郭線ベースの建物＋足場）
+      perspective/     # パースビュー（透視図法表示）
+      drawingViewer/   # 参照用図面ビューア（フローティングパネル）
     hooks/             # 共通フック
     store/             # Zustand ストア
     lib/               # 共通ユーティリティ（API クライアント等）
@@ -50,7 +53,9 @@ frontend/
 
 ポイント：
 - 画面単位ではなく「機能単位（features）」でディレクトリを分ける。  
-- キャンバス系（Konva）、3D 系（three.js）は `features/planning` / `features/threeD` にまとめる。
+- キャンバス系（Konva）は `features/planning` にまとめる。
+- 3D / アイソメ / パースはそれぞれ `threeD` / `isometric` / `perspective` に分離。
+- 参照用図面ビューア（フローティングパネル）は `drawingViewer` に配置。
 
 ---
 
