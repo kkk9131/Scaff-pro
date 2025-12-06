@@ -4,7 +4,7 @@ FastAPI アプリケーション エントリポイント
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from app.api.v1 import drawing_router
+from app.api.v1 import drawing_mock_router, drawing_router
 
 app = FastAPI(
     title="Scaff-Pro API",
@@ -36,3 +36,4 @@ async def health_check():
 
 # APIルーターを登録
 app.include_router(drawing_router, prefix="/api/v1")
+app.include_router(drawing_mock_router, prefix="/api/v1")  # Mock API (no API key required)

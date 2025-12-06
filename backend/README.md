@@ -2,6 +2,30 @@
 
 足場SaaSツール バックエンドAPI - Claude Vision APIを使用した建築図面解析機能
 
+## ⚡ クイックスタート（APIキー不要）
+
+Anthropic APIキーが取得できない場合でも、**モックAPI**を使用して開発を進められます：
+
+```bash
+cd backend
+source .venv/bin/activate
+uvicorn app.main:app --reload
+```
+
+モックAPIエンドポイント：
+- `POST /api/v1/drawing-mock/analyze` - APIキー不要で図面解析をシミュレート
+- `GET /api/v1/drawing-mock/health` - モックサービスヘルスチェック
+
+**テスト例：**
+```bash
+curl -X POST http://localhost:8000/api/v1/drawing-mock/analyze \
+  -F "file=@/path/to/floor_plan.png"
+```
+
+> 💡 モックAPIは固定のサンプルデータを返すため、フロントエンド開発やUI/UXのプロトタイピングに最適です。
+
+---
+
 ## セットアップ
 
 ### 1. 仮想環境の作成と有効化
