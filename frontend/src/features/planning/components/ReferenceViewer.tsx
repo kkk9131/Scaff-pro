@@ -30,20 +30,20 @@ export function ReferenceViewer() {
         >
             <GlassPanel className="w-full h-full flex flex-col overflow-hidden" intensity="medium">
                 {/* Header */}
-                <div className="flex items-center justify-between p-2 border-b border-white/10 bg-white/5 drag-handle cursor-move shrink-0">
+                <div className="flex items-center justify-between p-2 border-b border-surface-3 bg-surface-2 drag-handle cursor-move shrink-0">
                     <span className="text-xs font-bold text-text-muted uppercase tracking-wider truncate max-w-[200px]">
                         参照: {drawingName}
                     </span>
                     <div className="flex gap-1">
                         <button
                             onClick={() => setIsMinimized(!isMinimized)}
-                            className="p-1 text-text-muted hover:text-white rounded hover:bg-white/10"
+                            className="p-1 text-text-muted hover:text-text-main rounded hover:bg-surface-3"
                         >
                             {isMinimized ? <Maximize2 size={12} /> : <Minimize2 size={12} />}
                         </button>
                         <button
                             onClick={() => setIsOpen(false)}
-                            className="p-1 text-text-muted hover:text-danger rounded hover:bg-white/10"
+                            className="p-1 text-text-muted hover:text-danger rounded hover:bg-surface-3"
                         >
                             <X size={12} />
                         </button>
@@ -52,7 +52,7 @@ export function ReferenceViewer() {
 
                 {/* Content */}
                 {!isMinimized && (
-                    <div className="flex-1 bg-black/30 overflow-auto flex items-center justify-center">
+                    <div className="flex-1 bg-white overflow-auto flex items-center justify-center">
                         <img
                             src={drawingUrl}
                             alt={drawingName || "Drawing"}

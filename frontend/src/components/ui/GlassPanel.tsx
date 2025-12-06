@@ -19,15 +19,15 @@ export function GlassPanel({
     ...props
 }: GlassPanelProps) {
     const intensityMap = {
-        low: "bg-glass-bg/40 backdrop-blur-sm",
-        medium: "bg-glass-bg backdrop-blur-md",
-        high: "bg-glass-bg/80 backdrop-blur-lg",
+        low: "bg-surface-1/60 backdrop-blur-md",
+        medium: "bg-surface-1/80 backdrop-blur-lg",
+        high: "bg-surface-1/95 backdrop-blur-xl",
     };
 
     return (
         <motion.div
             className={cn(
-                "rounded-xl border border-glass-border shadow-lg",
+                "rounded-xl border border-white/50 shadow-[0_8px_32px_rgba(0,0,0,0.04)]",
                 intensityMap[intensity],
                 className
             )}

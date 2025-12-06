@@ -19,8 +19,13 @@ const BuildingTab = () => {
         setScaleFromRatio,
         building,
         setBuilding,
+        grid,
+        setGrid,
         polylinePoints,
-        clearPolyline
+        clearPolyline,
+        selectedEdgeIndex,
+        edgeAttributes,
+        setEdgeAttribute
     } = usePlanningStore();
     const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -39,9 +44,103 @@ const BuildingTab = () => {
 
     const totalHeight = building.floorHeight * building.totalFloors + building.roofHeight;
 
+    // Helper for edge update
+    const handleEdgeUpdate = (key: 'startFloor' | 'endFloor', value: number) => {
+        if (selectedEdgeIndex === null) return;
+
+        const currentAttr = edgeAttributes[selectedEdgeIndex] || { startFloor: 1, endFloor: building.totalFloors };
+        const newAttr = { ...currentAttr, [key]: value };
+
+        // Validation
+        if (newAttr.startFloor > newAttr.endFloor) {
+            if (key === 'startFloor') newAttr.endFloor = value;
+            else newAttr.startFloor = value;
+        }
+
+        setEdgeAttribute(selectedEdgeIndex, newAttr);
+    };
+
+    const currentEdgeAttr = selectedEdgeIndex !== null
+        ? (edgeAttributes[selectedEdgeIndex] || { startFloor: 1, endFloor: building.totalFloors })
+        : null;
+
     return (
         <div className="space-y-4 p-1">
-            {/* File Upload Section */}
+            {/* ... File Upload ... */}
+            {/* ... Drawing Info ... */}
+            {/* ... Scale Presets ... */}
+
+            {/* Height Settings ... */}
+
+            {/* Edge Property Editor */}
+            <AnimatePresence>
+                {selectedEdgeIndex !== null && currentEdgeAttr && (
+                    <motion.div
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: 'auto' }}
+                        exit={{ opacity: 0, height: 0 }}
+                        className="space-y-2 overflow-hidden"
+                    >
+                        {/* Divider */}
+                        <div className="w-full h-[1px] bg-surface-3 my-2" />
+
+                        <label className="text-xs text-primary uppercase font-bold tracking-wider flex items-center gap-2">
+                            <span className="w-2 h-2 rounded-full bg-primary" />
+                            選択中の壁設定
+                        </label>
+
+                        <div className="p-3 bg-surface-2 border border-primary/30 rounded-lg space-y-3 shadow-[0_0_10px_rgba(var(--primary-rgb),0.1)]">
+                            <div className="flex items-center justify-between text-xs text-text-muted">
+                                <span>Edge ID: {selectedEdgeIndex}</span>
+                                <button
+                                    onClick={() => setEdgeAttribute(selectedEdgeIndex, { startFloor: 1, endFloor: building.totalFloors })}
+                                    className="text-xs text-accent hover:underline"
+                                >
+                                    リセット
+                                </button>
+                            </div>
+
+                            <div className="grid grid-cols-2 gap-2">
+                                <div className="space-y-1">
+                                    <label className="text-xs text-text-muted">開始階</label>
+                                    <div className="flex items-center">
+                                        <input
+                                            type="number"
+                                            min={1}
+                                            max={building.totalFloors}
+                                            value={currentEdgeAttr.startFloor}
+                                            onChange={(e) => handleEdgeUpdate('startFloor', parseInt(e.target.value))}
+                                            className="w-full px-2 py-1 bg-surface-1 border border-surface-3 rounded text-sm text-center focus:border-primary focus:outline-none"
+                                        />
+                                        <span className="ml-1 text-xs">F</span>
+                                    </div>
+                                </div>
+                                <div className="space-y-1">
+                                    <label className="text-xs text-text-muted">終了階</label>
+                                    <div className="flex items-center">
+                                        <input
+                                            type="number"
+                                            min={1}
+                                            max={building.totalFloors}
+                                            value={currentEdgeAttr.endFloor}
+                                            onChange={(e) => handleEdgeUpdate('endFloor', parseInt(e.target.value))}
+                                            className="w-full px-2 py-1 bg-surface-1 border border-surface-3 rounded text-sm text-center focus:border-primary focus:outline-none"
+                                        />
+                                        <span className="ml-1 text-xs">F</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="text-xs text-text-muted text-center pt-1 border-t border-surface-3">
+                                {currentEdgeAttr.startFloor === 1 && currentEdgeAttr.endFloor === building.totalFloors
+                                    ? "全階層 (標準)"
+                                    : `${currentEdgeAttr.startFloor}F 〜 ${currentEdgeAttr.endFloor}F のみ設置`}
+                            </div>
+                        </div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
+
             <div className="space-y-2">
                 <label className="text-xs text-text-muted uppercase font-bold tracking-wider">図面アップロード</label>
                 <input
@@ -53,7 +152,7 @@ const BuildingTab = () => {
                 />
                 <button
                     onClick={() => fileInputRef.current?.click()}
-                    className="w-full p-4 border-2 border-dashed border-white/10 rounded-lg hover:border-primary/50 hover:bg-primary/5 transition-colors flex flex-col items-center gap-2 text-text-muted hover:text-text-main"
+                    className="w-full p-4 border-2 border-dashed border-surface-3 rounded-lg hover:border-primary/50 hover:bg-primary/5 transition-colors flex flex-col items-center gap-2 text-text-muted hover:text-text-main"
                 >
                     <Upload size={24} />
                     <span className="text-sm">クリックして図面を選択</span>
@@ -63,7 +162,7 @@ const BuildingTab = () => {
             {/* Drawing Info Section */}
             <div className="space-y-2">
                 <label className="text-xs text-text-muted uppercase font-bold tracking-wider">図面情報</label>
-                <div className="p-3 bg-surface-2 rounded-lg border border-white/5 text-sm space-y-2">
+                <div className="p-3 bg-surface-2 rounded-lg border border-surface-3 text-sm space-y-2">
                     <div className="flex justify-between items-center">
                         <span className="text-text-muted flex items-center gap-2"><FileImage size={14} /> ファイル</span>
                         <span className="truncate max-w-[120px]">{drawingName || '未選択'}</span>
@@ -84,7 +183,7 @@ const BuildingTab = () => {
                 {polylinePoints.length > 0 && (
                     <button
                         onClick={clearPolyline}
-                        className="w-full p-2 rounded-lg border border-white/10 bg-surface-2 text-sm text-danger hover:bg-danger/10 transition-colors flex items-center justify-center gap-2"
+                        className="w-full p-2 rounded-lg border border-danger/20 bg-surface-2 text-sm text-danger hover:bg-danger/10 transition-colors flex items-center justify-center gap-2"
                     >
                         <Trash2 size={14} /> ポリラインをクリア
                     </button>
@@ -102,8 +201,8 @@ const BuildingTab = () => {
                             className={clsx(
                                 "p-2 rounded-lg border text-sm font-mono transition-all flex items-center justify-center gap-2",
                                 scaleRatio === preset.ratio
-                                    ? "border-accent bg-accent/10 text-accent shadow-[0_0_8px_rgba(0,240,255,0.3)]"
-                                    : "border-white/10 bg-surface-2 text-text-muted hover:border-white/20 hover:text-text-main"
+                                    ? "border-accent bg-accent/10 text-accent shadow-[0_0_12px_var(--accent-glow)]"
+                                    : "border-surface-3 bg-surface-2 text-text-muted hover:border-primary/50 hover:text-text-main"
                             )}
                         >
                             {scaleRatio === preset.ratio && <Check size={14} />}
@@ -113,10 +212,32 @@ const BuildingTab = () => {
                 </div>
                 <button
                     onClick={handleStartScaleSetting}
-                    className="w-full p-2 rounded-lg border border-white/10 bg-surface-2 text-sm text-text-muted hover:border-primary/50 hover:text-text-main transition-colors flex items-center justify-center gap-2"
+                    className="w-full p-2 rounded-lg border border-surface-3 bg-surface-2 text-sm text-text-muted hover:border-primary/50 hover:text-text-main transition-colors flex items-center justify-center gap-2"
                 >
                     <Ruler size={14} /> 2点クリックで設定
                 </button>
+            </div>
+
+            {/* Grid Spacing Section */}
+            <div className="space-y-2">
+                <label className="text-xs text-text-muted uppercase font-bold tracking-wider">グリッド間隔</label>
+                <div className="flex items-center gap-2">
+                    <input
+                        type="number"
+                        value={grid.spacing}
+                        onChange={(e) => setGrid({ spacing: parseInt(e.target.value) || 0 })}
+                        min={100}
+                        step={100}
+                        className="flex-1 px-3 py-2 bg-surface-2 border border-surface-3 rounded-lg text-sm font-mono text-right focus:outline-none focus:border-accent transition-colors"
+                    />
+                    <span className="text-xs text-text-muted">mm</span>
+                </div>
+                <div className="p-2 bg-primary/10 rounded-lg border border-primary/30">
+                    <div className="flex justify-between items-center">
+                        <span className="text-xs text-primary">グリッド寸法</span>
+                        <span className="font-mono text-primary text-sm font-bold">{(grid.spacing / 1000).toFixed(2)}m</span>
+                    </div>
+                </div>
             </div>
 
             {/* Height Settings Section - Editable */}
@@ -129,7 +250,7 @@ const BuildingTab = () => {
                             type="number"
                             value={building.floorHeight}
                             onChange={(e) => setBuilding({ floorHeight: parseInt(e.target.value) || 0 })}
-                            className="flex-1 px-2 py-1.5 bg-surface-2 border border-white/10 rounded text-sm font-mono text-right focus:outline-none focus:border-accent"
+                            className="flex-1 px-2 py-1.5 bg-surface-2 border border-surface-3 rounded text-sm font-mono text-right focus:outline-none focus:border-accent"
                         />
                         <span className="text-xs text-text-muted">mm</span>
                     </div>
@@ -141,7 +262,7 @@ const BuildingTab = () => {
                             onChange={(e) => setBuilding({ totalFloors: parseInt(e.target.value) || 1 })}
                             min={1}
                             max={10}
-                            className="flex-1 px-2 py-1.5 bg-surface-2 border border-white/10 rounded text-sm font-mono text-right focus:outline-none focus:border-accent"
+                            className="flex-1 px-2 py-1.5 bg-surface-2 border border-surface-3 rounded text-sm font-mono text-right focus:outline-none focus:border-accent"
                         />
                         <span className="text-xs text-text-muted">階</span>
                     </div>
@@ -151,7 +272,7 @@ const BuildingTab = () => {
                             type="number"
                             value={building.roofHeight}
                             onChange={(e) => setBuilding({ roofHeight: parseInt(e.target.value) || 0 })}
-                            className="flex-1 px-2 py-1.5 bg-surface-2 border border-white/10 rounded text-sm font-mono text-right focus:outline-none focus:border-accent"
+                            className="flex-1 px-2 py-1.5 bg-surface-2 border border-surface-3 rounded text-sm font-mono text-right focus:outline-none focus:border-accent"
                         />
                         <span className="text-xs text-text-muted">mm</span>
                     </div>
@@ -190,13 +311,13 @@ export function SidePanel() {
     return (
         <GlassPanel className="flex flex-col h-full overflow-hidden" intensity="high">
             {/* Tab Header */}
-            <div className="flex border-b border-white/5">
+            <div className="flex border-b border-surface-3">
                 {tabs.map((tab) => (
                     <button
                         key={tab.id}
                         onClick={() => setActiveTab(tab.id)}
                         className={clsx(
-                            "flex-1 py-3 flex justify-center items-center text-text-muted hover:bg-white/5 transition-colors relative",
+                            "flex-1 py-3 flex justify-center items-center text-text-muted hover:bg-surface-2 transition-colors relative",
                             activeTab === tab.id && "text-primary"
                         )}
                         title={tab.label}

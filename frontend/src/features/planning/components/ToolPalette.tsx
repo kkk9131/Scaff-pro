@@ -1,11 +1,11 @@
 import { GlassPanel } from "@/components/ui/GlassPanel";
-import { MousePointer2, Move, PenTool, Eraser, Ruler, Type } from "lucide-react";
+import { MousePointer2, Move, PenTool, Eraser, Ruler, Type, Magnet } from "lucide-react";
 import { clsx } from "clsx";
 import { motion } from "framer-motion";
 import { usePlanningStore, type ToolType } from "@/store/planningStore";
 
 export function ToolPalette() {
-    const { currentTool, setCurrentTool, setIsSettingScale } = usePlanningStore();
+    const { currentTool, setCurrentTool, setIsSettingScale, isGridSnapEnabled, toggleGridSnap } = usePlanningStore();
 
     const tools: { id: ToolType; icon: typeof MousePointer2; label: string }[] = [
         { id: "select", icon: MousePointer2, label: "選択" },
@@ -32,8 +32,8 @@ export function ToolPalette() {
                     className={clsx(
                         "relative p-2.5 rounded-lg transition-all duration-200 group",
                         currentTool === tool.id
-                            ? "text-primary bg-primary/10 shadow-[0_0_8px_rgba(255,107,53,0.3)]"
-                            : "text-text-muted hover:text-text-main hover:bg-white/5"
+                            ? "text-primary bg-primary/10 shadow-[0_0_8px_var(--primary-glow)]"
+                            : "text-text-muted hover:text-text-main hover:bg-surface-2"
                     )}
                     title={tool.label}
                 >
@@ -48,11 +48,38 @@ export function ToolPalette() {
                     )}
 
                     {/* Tooltip */}
-                    <span className="absolute left-full ml-3 px-2 py-1 bg-surface-2 border border-white/10 rounded text-xs text-text-main opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none z-50">
+                    <span className="absolute left-full ml-3 px-2 py-1 bg-surface-2 border border-surface-3 rounded text-xs text-text-main opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none z-50 shadow-md">
                         {tool.label}
                     </span>
                 </button>
             ))}
+
+            {/* Separator */}
+            <div className="w-8 h-[1px] bg-surface-3 my-1" />
+
+            {/* Grid Snap Toggle */}
+            <button
+                onClick={toggleGridSnap}
+                className={clsx(
+                    "relative p-2.5 rounded-lg transition-all duration-200 group",
+                    isGridSnapEnabled
+                        ? "text-primary bg-primary/10 shadow-[0_0_8px_var(--primary-glow)]"
+                        : "text-text-muted hover:text-text-main hover:bg-surface-2"
+                )}
+                title="グリッド吸着 (ON/OFF)"
+            >
+                <Magnet size={20} strokeWidth={isGridSnapEnabled ? 2.5 : 2} />
+
+                {/* Active Dot for Toggle */}
+                {isGridSnapEnabled && (
+                    <div className="absolute top-2 right-2 w-1.5 h-1.5 bg-primary rounded-full shadow-[0_0_4px_var(--primary-glow)]" />
+                )}
+
+                {/* Tooltip */}
+                <span className="absolute left-full ml-3 px-2 py-1 bg-surface-2 border border-surface-3 rounded text-xs text-text-main opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none z-50 shadow-md">
+                    グリッド吸着 {isGridSnapEnabled ? 'ON' : 'OFF'}
+                </span>
+            </button>
         </GlassPanel>
     );
 }

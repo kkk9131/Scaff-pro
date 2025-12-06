@@ -1,33 +1,96 @@
 @import "tailwindcss";
 
 :root {
-  /* Base Colors - Dark Mode Default */
+  /* =========================================
+     LIGHT THEME (Default / Luminous Blueprint)
+     ========================================= */
+  --background: #F8FAFC;
+  /* Slate 50 */
+  --foreground: #0F172A;
+  /* Slate 900 */
+
+  /* Surface Colors */
+  --surface-1: #FFFFFF;
+  --surface-2: #F1F5F9;
+  /* Slate 100 */
+  --surface-3: #E2E8F0;
+  /* Slate 200 */
+
+  /* Brand Colors */
+  --primary: #3B82F6;
+  /* Blue 500 */
+  --primary-glow: rgba(59, 130, 246, 0.4);
+
+  --accent: #06B6D4;
+  /* Cyan 500 */
+  --accent-glow: rgba(6, 182, 212, 0.4);
+
+  --warning: #F97316;
+  /* Orange 500 */
+  --warning-glow: rgba(249, 115, 22, 0.4);
+
+  --danger: #EF4444;
+  --success: #10B981;
+
+  /* Text Colors */
+  --text-main: #0F172A;
+  --text-muted: #64748B;
+  /* Slate 500 */
+
+  /* Glassmorphism */
+  --glass-bg: rgba(255, 255, 255, 0.7);
+  --glass-border: rgba(255, 255, 255, 0.8);
+  --glass-shadow: rgba(0, 0, 0, 0.05);
+  /* Light shadow for depth */
+  --glass-blur: 16px;
+
+  /* Dot Grid */
+  --dot-color: #CBD5E1;
+  /* Slate 300 */
+}
+
+/* =========================================
+   DARK THEME (Old / Modern Industrial) 
+   ========================================= */
+:root[data-theme='dark'] {
   --background: #050505;
   --foreground: #ededed;
-  
+
   /* Surface Colors */
   --surface-1: #121212;
   --surface-2: #1e1e1e;
   --surface-3: #2a2a2a;
 
-  /* Brand Colors - Industrial & Neon */
-  --primary: #FF6B35; /* Safety Orange */
+  /* Brand Colors (Restoring old Neon colors) */
+  --primary: #FF6B35;
+  /* Safety Orange as Primary in Dark mode */
   --primary-glow: rgba(255, 107, 53, 0.5);
-  
-  --accent: #00F0FF; /* Cyan */
+
+  --accent: #00F0FF;
+  /* Cyan Neon */
   --accent-glow: rgba(0, 240, 255, 0.5);
 
-  --danger: #FF3333;
-  --success: #33FF57;
-  
+  --warning: #F97316;
+  /* Keep Orange consistency but primary takes precedence */
+  /* Note: In dark mode old logic, Primary was Orange. 
+     We should swap usage if we want to keep code consistent or just accept 
+     Primary is Blue in Light, Orange in Dark?
+     Actually, let's keep abstract roles. 
+     If the code uses "text-primary", in Light it's Blue, in Dark it's Orange. 
+     This fits the "Industrial" vs "Blueprint" vibe shift. */
+
   /* Text Colors */
   --text-main: #ededed;
   --text-muted: #a1a1aa;
-  
-  /* Glassmorphism */
+
+  /* Glassmorphism (Dark) */
   --glass-bg: rgba(20, 20, 20, 0.6);
   --glass-border: rgba(255, 255, 255, 0.1);
+  --glass-shadow: rgba(0, 0, 0, 0.5);
   --glass-blur: 12px;
+
+  /* Dot Grid */
+  --dot-color: #333333;
 }
 
 @theme inline {
@@ -36,16 +99,19 @@
   --color-surface-1: var(--surface-1);
   --color-surface-2: var(--surface-2);
   --color-surface-3: var(--surface-3);
-  
+
   --color-primary: var(--primary);
   --color-primary-glow: var(--primary-glow);
-  
+
   --color-accent: var(--accent);
   --color-accent-glow: var(--accent-glow);
 
+  --color-warning: var(--warning);
+  --color-warning-glow: var(--warning-glow);
+
   --color-text-main: var(--text-main);
   --color-text-muted: var(--text-muted);
-  
+
   --color-glass-bg: var(--glass-bg);
   --color-glass-border: var(--glass-border);
 
@@ -57,19 +123,35 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-sans), Arial, sans-serif;
-  overflow: hidden; /* Prevent scrolling for the app-like feel */
+  overflow: hidden;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-/* Custom Utilities for Glassmorphism */
+/* Custom Utilities */
+
 .glass-panel {
   background: var(--glass-bg);
   backdrop-filter: blur(var(--glass-blur));
   -webkit-backdrop-filter: blur(var(--glass-blur));
   border: 1px solid var(--glass-border);
+  box-shadow: 0 4px 20px -5px var(--glass-shadow);
+  transition: background-color 0.3s, border-color 0.3s, box-shadow 0.3s;
 }
 
-/* Dot Grid Background */
+.bloom-primary {
+  box-shadow: 0 0 10px var(--primary-glow);
+}
+
+.bloom-accent {
+  box-shadow: 0 0 10px var(--accent-glow);
+}
+
+.bloom-text {
+  text-shadow: 0 0 10px var(--primary-glow);
+}
+
 .bg-dot-grid {
   background-size: 40px 40px;
-  background-image: radial-gradient(circle, #333 1px, transparent 1px);
+  background-image: radial-gradient(circle, var(--dot-color) 1.5px, transparent 1.5px);
+  transition: background-image 0.3s;
 }

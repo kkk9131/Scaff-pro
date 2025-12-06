@@ -1,7 +1,8 @@
 import { GlassPanel } from "@/components/ui/GlassPanel";
 import { ViewSwitcher } from "../components/ViewSwitcher";
 import { NeonButton } from "@/components/ui/NeonButton";
-import { Maximize2, Save, ArrowLeft } from "lucide-react";
+import { Maximize2, Save, ArrowLeft, Sun, Moon } from "lucide-react";
+import { useThemeStore } from "@/store/themeStore";
 import React from "react";
 
 interface PlanningLayoutProps {
@@ -21,14 +22,15 @@ export function PlanningLayout({
     currentView,
     onViewChange
 }: PlanningLayoutProps) {
+    const { theme, toggleTheme } = useThemeStore();
 
     return (
-        <div className="relative w-screen h-screen bg-surface-1 bg-dot-grid overflow-hidden text-text-main selection:bg-primary/30">
+        <div className="relative w-screen h-screen bg-surface-1 overflow-hidden text-text-main selection:bg-primary/30 transition-colors duration-300">
             {/* Header */}
             <header className="absolute top-0 left-0 right-0 h-16 px-6 flex items-center justify-between z-50 pointer-events-none">
                 {/* Left: Branding & Back */}
                 <div className="flex items-center gap-4 pointer-events-auto">
-                    <button className="p-2 hover:bg-white/5 rounded-full transition-colors text-text-muted hover:text-text-main">
+                    <button className="p-2 hover:bg-black/5 dark:hover:bg-white/5 rounded-full transition-colors text-text-muted hover:text-text-main">
                         <ArrowLeft size={20} />
                     </button>
                     <div>
@@ -38,13 +40,21 @@ export function PlanningLayout({
                 </div>
 
                 {/* Center: View Switcher */}
-                <div className="pointer-events-auto shadow-lg">
+                <div className="pointer-events-auto shadow-md rounded-full">
                     <ViewSwitcher currentView={currentView} onChange={onViewChange} />
                 </div>
 
                 {/* Right: Actions */}
                 <div className="flex items-center gap-3 pointer-events-auto">
-                    <NeonButton size="sm" variant="secondary" className="!rounded-lg backdrop-blur-md bg-black/30">
+                    <NeonButton
+                        size="sm"
+                        variant="secondary"
+                        onClick={toggleTheme}
+                        className="!rounded-lg backdrop-blur-md bg-white/50 border border-white/60 dark:bg-black/30 dark:border-white/10"
+                    >
+                        {theme === 'light' ? <Moon size={16} /> : <Sun size={16} />}
+                    </NeonButton>
+                    <NeonButton size="sm" variant="secondary" className="!rounded-lg backdrop-blur-md bg-white/50 border border-white/60 dark:bg-black/30 dark:border-white/10">
                         <Maximize2 size={16} />
                     </NeonButton>
                     <NeonButton size="sm" variant="primary" className="!px-6">

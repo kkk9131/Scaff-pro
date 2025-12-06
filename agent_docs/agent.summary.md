@@ -29,7 +29,7 @@ cd backend && source .venv/bin/activate && uvicorn app.main:app --reload
 ## フェーズ1: Screen B（キャンバス画面）UI構築 ✅ (2025-12-05)
 
 ### 完了項目
-- [x] **デザインシステム構築**: ダークモード＋ネオンアクセントの「Modern Industrial」テーマ適用
+- [x] **デザインシステム構築**: 明るくモダンな「Luminous Blueprint」テーマ適用（Light Mode Sci-Fi + Construction Trust）
 - [x] **メインレイアウト**: `PlanningLayout` 実装（ヘッダー、サイドバー等）
 - [x] **2D キャンバス**: `Konva` ベースの作図エリア実装（ズーム・パン対応）
 - [x] **3D ビュー**: `Three.js` によるワイヤーフレーム表示実装
@@ -85,4 +85,5 @@ cd backend && source .venv/bin/activate && uvicorn app.main:app --reload
 | 2025-12-05 | 3D可視化機能追加（ポリライン→3Dワイヤーフレーム、高さ設定UI）|
 | 2025-12-05 | フェーズ2完了（図面アップロード、スケール設定、ポリライン作図）|
 | 2025-12-05 | フェーズ1完了（Screen B UI構築）|
+| 2025-12-06 | UIデザイン更新：「Luminous Blueprint」（明るいSF調）へ変更 |
 | 2025-12-05 | フェーズ0完了、技術スタックをNext.jsに変更 |

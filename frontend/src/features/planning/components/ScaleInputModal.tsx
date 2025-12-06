@@ -32,7 +32,7 @@ export function ScaleInputModal({ isOpen, pixelDistance, onConfirm, onCancel }: 
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
-                className="fixed inset-0 z-[100] flex items-center justify-center bg-black/60 backdrop-blur-sm"
+                className="fixed inset-0 z-[100] flex items-center justify-center bg-black/20 backdrop-blur-sm"
                 onClick={onCancel}
             >
                 <motion.div
@@ -44,7 +44,7 @@ export function ScaleInputModal({ isOpen, pixelDistance, onConfirm, onCancel }: 
                     <GlassPanel className="p-6 w-80" intensity="high">
                         <div className="flex justify-between items-center mb-4">
                             <h3 className="text-lg font-bold">スケール設定</h3>
-                            <button onClick={onCancel} className="text-text-muted hover:text-white">
+                            <button onClick={onCancel} className="text-text-muted hover:text-text-main">
                                 <X size={18} />
                             </button>
                         </div>
@@ -68,7 +68,7 @@ export function ScaleInputModal({ isOpen, pixelDistance, onConfirm, onCancel }: 
                                     value={inputValue}
                                     onChange={(e) => setInputValue(e.target.value)}
                                     placeholder="例: 1000"
-                                    className="w-full px-3 py-2 bg-surface-2 border border-white/10 rounded-lg text-text-main placeholder:text-text-muted focus:outline-none focus:border-accent"
+                                    className="w-full px-3 py-2 bg-surface-2 border border-surface-3 rounded-lg text-text-main placeholder:text-text-muted focus:outline-none focus:border-accent"
                                     autoFocus
                                     onKeyDown={(e) => {
                                         if (e.key === 'Enter') handleConfirm();

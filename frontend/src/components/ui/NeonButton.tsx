@@ -19,9 +19,9 @@ export function NeonButton({
     ...props
 }: NeonButtonProps) {
     const variants = {
-        primary: "border-primary text-primary hover:bg-primary/10 shadow-[0_0_10px_rgba(255,107,53,0.2)] hover:shadow-[0_0_20px_rgba(255,107,53,0.5)]",
-        accent: "border-accent text-accent hover:bg-accent/10 shadow-[0_0_10px_rgba(0,240,255,0.2)] hover:shadow-[0_0_20px_rgba(0,240,255,0.5)]",
-        secondary: "border-surface-3 text-text-muted hover:border-text-main hover:text-text-main hover:bg-surface-3",
+        primary: "bg-primary text-white border-transparent hover:bg-primary/90 shadow-[0_4px_14px_0_var(--primary-glow)] hover:shadow-[0_6px_20px_var(--primary-glow)] hover:-translate-y-0.5",
+        accent: "bg-accent text-white border-transparent hover:bg-accent/90 shadow-[0_4px_14px_0_var(--accent-glow)] hover:shadow-[0_6px_20px_var(--accent-glow)] hover:-translate-y-0.5",
+        secondary: "bg-surface-1 border-surface-3 text-text-muted hover:border-primary hover:text-primary hover:bg-surface-2 shadow-sm hover:shadow-md",
     };
 
     const sizes = {
