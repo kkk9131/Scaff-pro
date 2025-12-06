@@ -4,6 +4,8 @@ FastAPI アプリケーション エントリポイント
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
+from app.api.v1 import drawing_router
+
 app = FastAPI(
     title="Scaff-Pro API",
     description="足場SaaSツール バックエンドAPI",
@@ -30,3 +32,7 @@ async def root():
 async def health_check():
     """APIヘルスチェック"""
     return {"status": "healthy"}
+
+
+# APIルーターを登録
+app.include_router(drawing_router, prefix="/api/v1")
