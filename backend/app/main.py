@@ -3,6 +3,10 @@ FastAPI アプリケーション エントリポイント
 """
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
+from pathlib import Path
+
+from app.api.v1 import drawings
 
 app = FastAPI(
     title="Scaff-Pro API",
@@ -18,6 +22,13 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# APIルーター登録
+app.include_router(drawings.router, prefix="/api/v1")
+
+# アップロードディレクトリ作成
+UPLOAD_DIR = Path("uploads")
+UPLOAD_DIR.mkdir(exist_ok=True)
 
 
 @app.get("/")
