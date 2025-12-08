@@ -3,6 +3,8 @@ import { ViewSwitcher } from "../components/ViewSwitcher";
 import { NeonButton } from "@/components/ui/NeonButton";
 import { Maximize2, Save, ArrowLeft, Sun, Moon } from "lucide-react";
 import { useThemeStore } from "@/store/themeStore";
+import { DrawingImportDialog } from "../components/DrawingImportDialog";
+import { FloatingDrawingViewers } from "../components/FloatingDrawingViewers";
 import React from "react";
 
 interface PlanningLayoutProps {
@@ -83,8 +85,13 @@ export function PlanningLayout({
                 {/* Floating Windows */}
                 <div className="absolute inset-0 pointer-events-none">
                     {referenceViewer}
+                    {/* Floating Drawing Viewers */}
+                    <FloatingDrawingViewers />
                 </div>
             </div>
+
+            {/* Drawing Import Dialog (Modal) */}
+            <DrawingImportDialog />
         </div>
     );
 }
