@@ -1,0 +1,5279 @@
+{
+  "schemaVersion": 1,
+  "projectPath": "/Users/kazuto/Desktop/Scaff-pro",
+  "projectRootName": "Scaff-pro",
+  "graphRenderingMode": "refactor",
+  "linkDisplayMode": "all",
+  "graphStats": {
+    "totalNodes": 124,
+    "folders": 38,
+    "files": 86,
+    "images": 5,
+    "videos": 0,
+    "audio": 0,
+    "code": 39,
+    "text": 13,
+    "html": 0,
+    "yaml": 1,
+    "json": 4,
+    "other": 24,
+    "totalLines": 0,
+    "maxLines": 0
+  },
+  "directoryTree": {
+    "name": "Scaff-pro",
+    "type": "directory",
+    "path": "Scaff-pro",
+    "children": [
+      {
+        "name": ".claude",
+        "type": "directory",
+        "path": ".claude",
+        "children": [],
+        "hasMore": true
+      },
+      {
+        "name": ".kamui",
+        "type": "directory",
+        "path": ".kamui",
+        "children": [],
+        "hasMore": true
+      },
+      {
+        "name": ".vscode",
+        "type": "directory",
+        "path": ".vscode",
+        "children": [],
+        "hasMore": true
+      },
+      {
+        "name": ".worktrees",
+        "type": "directory",
+        "path": ".worktrees",
+        "children": [],
+        "hasMore": true
+      },
+      {
+        "name": ".yoyo",
+        "type": "directory",
+        "path": ".yoyo",
+        "children": [],
+        "hasMore": true
+      },
+      {
+        "name": "agent_docs",
+        "type": "directory",
+        "path": "agent_docs",
+        "children": [
+          {
+            "name": "agent.summary.md",
+            "type": "file",
+            "path": "agent_docs/agent.summary.md"
+          },
+          {
+            "name": "directory_structure.md",
+            "type": "file",
+            "path": "agent_docs/directory_structure.md"
+          },
+          {
+            "name": "requirements.md",
+            "type": "file",
+            "path": "agent_docs/requirements.md"
+          },
+          {
+            "name": "roadmap.md",
+            "type": "file",
+            "path": "agent_docs/roadmap.md"
+          },
+          {
+            "name": "screens.md",
+            "type": "file",
+            "path": "agent_docs/screens.md"
+          },
+          {
+            "name": "tech_stack.md",
+            "type": "file",
+            "path": "agent_docs/tech_stack.md"
+          }
+        ]
+      },
+      {
+        "name": "backend",
+        "type": "directory",
+        "path": "backend",
+        "children": [
+          {
+            "name": "app",
+            "type": "directory",
+            "path": "backend/app",
+            "children": [
+              {
+                "name": "__pycache__",
+                "type": "directory",
+                "path": "backend/app/__pycache__",
+                "children": [
+                  {
+                    "name": "__init__.cpython-313.pyc",
+                    "type": "file",
+                    "path": "backend/app/__pycache__/__init__.cpython-313.pyc"
+                  },
+                  {
+                    "name": "__init__.cpython-314.pyc",
+                    "type": "file",
+                    "path": "backend/app/__pycache__/__init__.cpython-314.pyc"
+                  },
+                  {
+                    "name": "main.cpython-313.pyc",
+                    "type": "file",
+                    "path": "backend/app/__pycache__/main.cpython-313.pyc"
+                  },
+                  {
+                    "name": "main.cpython-314.pyc",
+                    "type": "file",
+                    "path": "backend/app/__pycache__/main.cpython-314.pyc"
+                  }
+                ]
+              },
+              {
+                "name": "api",
+                "type": "directory",
+                "path": "backend/app/api",
+                "children": [
+                  {
+                    "name": "__pycache__",
+                    "type": "directory",
+                    "path": "backend/app/api/__pycache__",
+                    "children": [
+                      {
+                        "name": "__init__.cpython-313.pyc",
+                        "type": "file",
+                        "path": "backend/app/api/__pycache__/__init__.cpython-313.pyc"
+                      }
+                    ]
+                  },
+                  {
+                    "name": "v1",
+                    "type": "directory",
+                    "path": "backend/app/api/v1",
+                    "children": [
+                      {
+                        "name": "__pycache__",
+                        "type": "directory",
+                        "path": "backend/app/api/v1/__pycache__",
+                        "children": [
+                          {
+                            "name": "__init__.cpython-313.pyc",
+                            "type": "file",
+                            "path": "backend/app/api/v1/__pycache__/__init__.cpython-313.pyc"
+                          },
+                          {
+                            "name": "drawing_mock.cpython-313.pyc",
+                            "type": "file",
+                            "path": "backend/app/api/v1/__pycache__/drawing_mock.cpython-313.pyc"
+                          },
+                          {
+                            "name": "drawing.cpython-313.pyc",
+                            "type": "file",
+                            "path": "backend/app/api/v1/__pycache__/drawing.cpython-313.pyc"
+                          },
+                          {
+                            "name": "floorplan_extract.cpython-313.pyc",
+                            "type": "file",
+                            "path": "backend/app/api/v1/__pycache__/floorplan_extract.cpython-313.pyc"
+                          }
+                        ]
+                      },
+                      {
+                        "name": "__init__.py",
+                        "type": "file",
+                        "path": "backend/app/api/v1/__init__.py"
+                      },
+                      {
+                        "name": "drawings.py",
+                        "type": "file",
+                        "path": "backend/app/api/v1/drawings.py"
+                      }
+                    ]
+                  },
+                  {
+                    "name": "__init__.py",
+                    "type": "file",
+                    "path": "backend/app/api/__init__.py"
+                  }
+                ]
+              },
+              {
+                "name": "schemas",
+                "type": "directory",
+                "path": "backend/app/schemas",
+                "children": [
+                  {
+                    "name": "__init__.py",
+                    "type": "file",
+                    "path": "backend/app/schemas/__init__.py"
+                  },
+                  {
+                    "name": "drawing.py",
+                    "type": "file",
+                    "path": "backend/app/schemas/drawing.py"
+                  }
+                ]
+              },
+              {
+                "name": "services",
+                "type": "directory",
+                "path": "backend/app/services",
+                "children": [
+                  {
+                    "name": "__pycache__",
+                    "type": "directory",
+                    "path": "backend/app/services/__pycache__",
+                    "children": [
+                      {
+                        "name": "__init__.cpython-313.pyc",
+                        "type": "file",
+                        "path": "backend/app/services/__pycache__/__init__.cpython-313.pyc"
+                      },
+                      {
+                        "name": "__init__.cpython-314.pyc",
+                        "type": "file",
+                        "path": "backend/app/services/__pycache__/__init__.cpython-314.pyc"
+                      }
+                    ]
+                  },
+                  {
+                    "name": "floorplan_analyzer",
+                    "type": "directory",
+                    "path": "backend/app/services/floorplan_analyzer",
+                    "children": [
+                      {
+                        "name": "__pycache__",
+                        "type": "directory",
+                        "path": "backend/app/services/floorplan_analyzer/__pycache__",
+                        "children": [
+                          {
+                            "name": "__init__.cpython-313.pyc",
+                            "type": "file",
+                            "path": "backend/app/services/floorplan_analyzer/__pycache__/__init__.cpython-313.pyc"
+                          },
+                          {
+                            "name": "__init__.cpython-314.pyc",
+                            "type": "file",
+                            "path": "backend/app/services/floorplan_analyzer/__pycache__/__init__.cpython-314.pyc"
+                          },
+                          {
+                            "name": "analyzer.cpython-313.pyc",
+                            "type": "file",
+                            "path": "backend/app/services/floorplan_analyzer/__pycache__/analyzer.cpython-313.pyc"
+                          },
+                          {
+                            "name": "analyzer.cpython-314.pyc",
+                            "type": "file",
+                            "path": "backend/app/services/floorplan_analyzer/__pycache__/analyzer.cpython-314.pyc"
+                          },
+                          {
+                            "name": "types.cpython-313.pyc",
+                            "type": "file",
+                            "path": "backend/app/services/floorplan_analyzer/__pycache__/types.cpython-313.pyc"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "name": "__init__.py",
+                    "type": "file",
+                    "path": "backend/app/services/__init__.py"
+                  },
+                  {
+                    "name": "drawing_analyzer.py",
+                    "type": "file",
+                    "path": "backend/app/services/drawing_analyzer.py"
+                  }
+                ]
+              },
+              {
+                "name": "__init__.py",
+                "type": "file",
+                "path": "backend/app/__init__.py"
+              },
+              {
+                "name": "main.py",
+                "type": "file",
+                "path": "backend/app/main.py"
+              }
+            ]
+          },
+          {
+            "name": "backend",
+            "type": "directory",
+            "path": "backend/backend",
+            "children": []
+          },
+          {
+            "name": "scaff_backend.egg-info",
+            "type": "directory",
+            "path": "backend/scaff_backend.egg-info",
+            "children": [
+              {
+                "name": "dependency_links.txt",
+                "type": "file",
+                "path": "backend/scaff_backend.egg-info/dependency_links.txt"
+              },
+              {
+                "name": "PKG-INFO",
+                "type": "file",
+                "path": "backend/scaff_backend.egg-info/PKG-INFO"
+              },
+              {
+                "name": "requires.txt",
+                "type": "file",
+                "path": "backend/scaff_backend.egg-info/requires.txt"
+              },
+              {
+                "name": "SOURCES.txt",
+                "type": "file",
+                "path": "backend/scaff_backend.egg-info/SOURCES.txt"
+              },
+              {
+                "name": "top_level.txt",
+                "type": "file",
+                "path": "backend/scaff_backend.egg-info/top_level.txt"
+              }
+            ]
+          },
+          {
+            "name": "pyproject.toml",
+            "type": "file",
+            "path": "backend/pyproject.toml"
+          }
+        ]
+      },
+      {
+        "name": "frontend",
+        "type": "directory",
+        "path": "frontend",
+        "children": [
+          {
+            "name": "public",
+            "type": "directory",
+            "path": "frontend/public",
+            "children": [
+              {
+                "name": "file.svg",
+                "type": "file",
+                "path": "frontend/public/file.svg"
+              },
+              {
+                "name": "globe.svg",
+                "type": "file",
+                "path": "frontend/public/globe.svg"
+              },
+              {
+                "name": "next.svg",
+                "type": "file",
+                "path": "frontend/public/next.svg"
+              },
+              {
+                "name": "vercel.svg",
+                "type": "file",
+                "path": "frontend/public/vercel.svg"
+              },
+              {
+                "name": "window.svg",
+                "type": "file",
+                "path": "frontend/public/window.svg"
+              }
+            ]
+          },
+          {
+            "name": "src",
+            "type": "directory",
+            "path": "frontend/src",
+            "children": [
+              {
+                "name": "app",
+                "type": "directory",
+                "path": "frontend/src/app",
+                "children": [
+                  {
+                    "name": "planning",
+                    "type": "directory",
+                    "path": "frontend/src/app/planning",
+                    "children": [
+                      {
+                        "name": "page.tsx",
+                        "type": "file",
+                        "path": "frontend/src/app/planning/page.tsx"
+                      }
+                    ]
+                  },
+                  {
+                    "name": "favicon.ico",
+                    "type": "file",
+                    "path": "frontend/src/app/favicon.ico"
+                  },
+                  {
+                    "name": "globals.css",
+                    "type": "file",
+                    "path": "frontend/src/app/globals.css"
+                  },
+                  {
+                    "name": "layout.tsx",
+                    "type": "file",
+                    "path": "frontend/src/app/layout.tsx"
+                  },
+                  {
+                    "name": "page.tsx",
+                    "type": "file",
+                    "path": "frontend/src/app/page.tsx"
+                  }
+                ]
+              },
+              {
+                "name": "components",
+                "type": "directory",
+                "path": "frontend/src/components",
+                "children": [
+                  {
+                    "name": "icons",
+                    "type": "directory",
+                    "path": "frontend/src/components/icons",
+                    "children": [
+                      {
+                        "name": "index.tsx",
+                        "type": "file",
+                        "path": "frontend/src/components/icons/index.tsx"
+                      }
+                    ]
+                  },
+                  {
+                    "name": "ui",
+                    "type": "directory",
+                    "path": "frontend/src/components/ui",
+                    "children": [
+                      {
+                        "name": "GlassPanel.tsx",
+                        "type": "file",
+                        "path": "frontend/src/components/ui/GlassPanel.tsx"
+                      },
+                      {
+                        "name": "NeonButton.tsx",
+                        "type": "file",
+                        "path": "frontend/src/components/ui/NeonButton.tsx"
+                      }
+                    ]
+                  },
+                  {
+                    "name": "ThemeRegistry.tsx",
+                    "type": "file",
+                    "path": "frontend/src/components/ThemeRegistry.tsx"
+                  }
+                ]
+              },
+              {
+                "name": "features",
+                "type": "directory",
+                "path": "frontend/src/features",
+                "children": [
+                  {
+                    "name": "planning",
+                    "type": "directory",
+                    "path": "frontend/src/features/planning",
+                    "children": [
+                      {
+                        "name": "components",
+                        "type": "directory",
+                        "path": "frontend/src/features/planning/components",
+                        "children": [
+                          {
+                            "name": "Canvas2D.tsx",
+                            "type": "file",
+                            "path": "frontend/src/features/planning/components/Canvas2D.tsx"
+                          },
+                          {
+                            "name": "Canvas3D.tsx",
+                            "type": "file",
+                            "path": "frontend/src/features/planning/components/Canvas3D.tsx"
+                          },
+                          {
+                            "name": "DrawingImportDialog.tsx",
+                            "type": "file",
+                            "path": "frontend/src/features/planning/components/DrawingImportDialog.tsx"
+                          },
+                          {
+                            "name": "FloatingReferenceViewer.tsx",
+                            "type": "file",
+                            "path": "frontend/src/features/planning/components/FloatingReferenceViewer.tsx"
+                          },
+                          {
+                            "name": "Header.tsx",
+                            "type": "file",
+                            "path": "frontend/src/features/planning/components/Header.tsx"
+                          },
+                          {
+                            "name": "index.ts",
+                            "type": "file",
+                            "path": "frontend/src/features/planning/components/index.ts"
+                          },
+                          {
+                            "name": "ReferenceViewer.tsx",
+                            "type": "file",
+                            "path": "frontend/src/features/planning/components/ReferenceViewer.tsx"
+                          },
+                          {
+                            "name": "ScaleInputModal.tsx",
+                            "type": "file",
+                            "path": "frontend/src/features/planning/components/ScaleInputModal.tsx"
+                          },
+                          {
+                            "name": "SidePanel.tsx",
+                            "type": "file",
+                            "path": "frontend/src/features/planning/components/SidePanel.tsx"
+                          },
+                          {
+                            "name": "ToolPalette.tsx",
+                            "type": "file",
+                            "path": "frontend/src/features/planning/components/ToolPalette.tsx"
+                          },
+                          {
+                            "name": "View3D.tsx",
+                            "type": "file",
+                            "path": "frontend/src/features/planning/components/View3D.tsx"
+                          },
+                          {
+                            "name": "ViewSwitcher.tsx",
+                            "type": "file",
+                            "path": "frontend/src/features/planning/components/ViewSwitcher.tsx"
+                          }
+                        ]
+                      },
+                      {
+                        "name": "layouts",
+                        "type": "directory",
+                        "path": "frontend/src/features/planning/layouts",
+                        "children": [
+                          {
+                            "name": "PlanningLayout.tsx",
+                            "type": "file",
+                            "path": "frontend/src/features/planning/layouts/PlanningLayout.tsx"
+                          }
+                        ]
+                      },
+                      {
+                        "name": "index.ts",
+                        "type": "file",
+                        "path": "frontend/src/features/planning/index.ts"
+                      },
+                      {
+                        "name": "PlanningScreen.tsx",
+                        "type": "file",
+                        "path": "frontend/src/features/planning/PlanningScreen.tsx"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "name": "store",
+                "type": "directory",
+                "path": "frontend/src/store",
+                "children": [
+                  {
+                    "name": "planningStore.ts",
+                    "type": "file",
+                    "path": "frontend/src/store/planningStore.ts"
+                  },
+                  {
+                    "name": "themeStore.ts",
+                    "type": "file",
+                    "path": "frontend/src/store/themeStore.ts"
+                  }
+                ]
+              },
+              {
+                "name": "types",
+                "type": "directory",
+                "path": "frontend/src/types",
+                "children": [
+                  {
+                    "name": "index.ts",
+                    "type": "file",
+                    "path": "frontend/src/types/index.ts"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "name": "eslint.config.mjs",
+            "type": "file",
+            "path": "frontend/eslint.config.mjs"
+          },
+          {
+            "name": "next-env.d.ts",
+            "type": "file",
+            "path": "frontend/next-env.d.ts"
+          },
+          {
+            "name": "next.config.ts",
+            "type": "file",
+            "path": "frontend/next.config.ts"
+          },
+          {
+            "name": "package-lock.json",
+            "type": "file",
+            "path": "frontend/package-lock.json"
+          },
+          {
+            "name": "package.json",
+            "type": "file",
+            "path": "frontend/package.json"
+          },
+          {
+            "name": "pnpm-lock.yaml",
+            "type": "file",
+            "path": "frontend/pnpm-lock.yaml"
+          },
+          {
+            "name": "postcss.config.mjs",
+            "type": "file",
+            "path": "frontend/postcss.config.mjs"
+          },
+          {
+            "name": "README.md",
+            "type": "file",
+            "path": "frontend/README.md"
+          },
+          {
+            "name": "tsconfig.json",
+            "type": "file",
+            "path": "frontend/tsconfig.json"
+          },
+          {
+            "name": "UI_DESIGN_SYSTEM.md",
+            "type": "file",
+            "path": "frontend/UI_DESIGN_SYSTEM.md"
+          }
+        ]
+      },
+      {
+        "name": "scaffold_logic",
+        "type": "directory",
+        "path": "scaffold_logic",
+        "children": [
+          {
+            "name": "src",
+            "type": "directory",
+            "path": "scaffold_logic/src",
+            "children": [
+              {
+                "name": "scaffold_logic",
+                "type": "directory",
+                "path": "scaffold_logic/src/scaffold_logic",
+                "children": [
+                  {
+                    "name": "__init__.py",
+                    "type": "file",
+                    "path": "scaffold_logic/src/scaffold_logic/__init__.py"
+                  },
+                  {
+                    "name": "core.py",
+                    "type": "file",
+                    "path": "scaffold_logic/src/scaffold_logic/core.py"
+                  },
+                  {
+                    "name": "types.py",
+                    "type": "file",
+                    "path": "scaffold_logic/src/scaffold_logic/types.py"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "name": "pyproject.toml",
+            "type": "file",
+            "path": "scaffold_logic/pyproject.toml"
+          }
+        ]
+      },
+      {
+        "name": ".gitignore",
+        "type": "file",
+        "path": ".gitignore"
+      },
+      {
+        "name": "package-lock.json",
+        "type": "file",
+        "path": "package-lock.json"
+      },
+      {
+        "name": "README.md",
+        "type": "file",
+        "path": "README.md"
+      }
+    ]
+  },
+  "graphData": {
+    "nodes": [
+      {
+        "id": "Scaff-pro",
+        "name": "Scaff-pro",
+        "path": "Scaff-pro",
+        "type": "directory",
+        "lines": 0,
+        "val": 14,
+        "color": "#4d515a",
+        "baseColor": "#4ec9b0",
+        "originalColor": "#4ec9b0",
+        "defaultGlow": 0.18,
+        "glowIntensity": 0.22,
+        "highlighted": false,
+        "parentPath": null,
+        "childFileCount": 3,
+        "x": -79.8054912046805,
+        "y": -63.592709290216,
+        "z": -62.78355763444111,
+        "vx": -0.43622502864932233,
+        "vy": -0.07475772384503052,
+        "vz": 0.19172520005836827
+      },
+      {
+        "id": "Scaff-pro/.claude",
+        "name": ".claude",
+        "path": "Scaff-pro/.claude",
+        "type": "directory",
+        "lines": 0,
+        "val": 14,
+        "color": "#4d515a",
+        "baseColor": "#4ec9b0",
+        "originalColor": "#4ec9b0",
+        "defaultGlow": 0.18,
+        "glowIntensity": 0.22,
+        "highlighted": false,
+        "parentPath": "Scaff-pro",
+        "childFileCount": 0,
+        "x": -61.949776496141816,
+        "y": -74.35780171489492,
+        "z": -95.2483969333938,
+        "vx": -0.6723811890466093,
+        "vy": -0.020497107316311398,
+        "vz": 0.1267701358892364
+      },
+      {
+        "id": "Scaff-pro/.kamui",
+        "name": ".kamui",
+        "path": "Scaff-pro/.kamui",
+        "type": "directory",
+        "lines": 0,
+        "val": 14,
+        "color": "#4d515a",
+        "baseColor": "#4ec9b0",
+        "originalColor": "#4ec9b0",
+        "defaultGlow": 0.18,
+        "glowIntensity": 0.22,
+        "highlighted": false,
+        "parentPath": "Scaff-pro",
+        "childFileCount": 0,
+        "x": -95.56535599035999,
+        "y": -91.56848844656749,
+        "z": -82.40441965679187,
+        "vx": -0.565814550311077,
+        "vy": -0.10213747892446472,
+        "vz": 0.39931278217472227
+      },
+      {
+        "id": "Scaff-pro/.vscode",
+        "name": ".vscode",
+        "path": "Scaff-pro/.vscode",
+        "type": "directory",
+        "lines": 0,
+        "val": 14,
+        "color": "#4d515a",
+        "baseColor": "#4ec9b0",
+        "originalColor": "#4ec9b0",
+        "defaultGlow": 0.18,
+        "glowIntensity": 0.22,
+        "highlighted": false,
+        "parentPath": "Scaff-pro",
+        "childFileCount": 0,
+        "x": -108.25447438126074,
+        "y": -49.298241917683704,
+        "z": -84.3013090029476,
+        "vx": -0.5034219635111928,
+        "vy": -0.28328649655592336,
+        "vz": 0.23638172179867167
+      },
+      {
+        "id": "Scaff-pro/.worktrees",
+        "name": ".worktrees",
+        "path": "Scaff-pro/.worktrees",
+        "type": "directory",
+        "lines": 0,
+        "val": 14,
+        "color": "#4d515a",
+        "baseColor": "#4ec9b0",
+        "originalColor": "#4ec9b0",
+        "defaultGlow": 0.18,
+        "glowIntensity": 0.22,
+        "highlighted": false,
+        "parentPath": "Scaff-pro",
+        "childFileCount": 0,
+        "x": -58.83207407221956,
+        "y": -42.096664166406256,
+        "z": -40.38756676829639,
+        "vx": -0.5830111311129091,
+        "vy": -0.12196731493801914,
+        "vz": 0.30979782881952295
+      },
+      {
+        "id": "Scaff-pro/.yoyo",
+        "name": ".yoyo",
+        "path": "Scaff-pro/.yoyo",
+        "type": "directory",
+        "lines": 0,
+        "val": 14,
+        "color": "#4d515a",
+        "baseColor": "#4ec9b0",
+        "originalColor": "#4ec9b0",
+        "defaultGlow": 0.18,
+        "glowIntensity": 0.22,
+        "highlighted": false,
+        "parentPath": "Scaff-pro",
+        "childFileCount": 0,
+        "x": -70.6094723287466,
+        "y": -40.11397264832168,
+        "z": -92.93542667058081,
+        "vx": -0.5347986673274534,
+        "vy": -0.0880856077159343,
+        "vz": 0.17786780414780062
+      },
+      {
+        "id": "Scaff-pro/agent_docs",
+        "name": "agent_docs",
+        "path": "Scaff-pro/agent_docs",
+        "type": "directory",
+        "lines": 0,
+        "val": 14,
+        "color": "#4d515a",
+        "baseColor": "#4ec9b0",
+        "originalColor": "#4ec9b0",
+        "defaultGlow": 0.18,
+        "glowIntensity": 0.22,
+        "highlighted": false,
+        "parentPath": "Scaff-pro",
+        "childFileCount": 6,
+        "x": -9.919674495290133,
+        "y": -139.0215099928801,
+        "z": -66.5965016699979,
+        "vx": -0.4142389656688595,
+        "vy": 0.09580173724099467,
+        "vz": -0.5491707654898343
+      },
+      {
+        "id": "Scaff-pro/agent_docs/agent.summary.md",
+        "name": "agent.summary.md",
+        "path": "Scaff-pro/agent_docs/agent.summary.md",
+        "type": "file",
+        "lines": 0,
+        "val": 6,
+        "color": "#4d515a",
+        "baseColor": "#3498db",
+        "originalColor": "#3498db",
+        "defaultGlow": 0.18,
+        "glowIntensity": 0.22,
+        "highlighted": false,
+        "parentPath": "Scaff-pro/agent_docs",
+        "childFileCount": 0,
+        "x": -25.226580871320692,
+        "y": -174.08315767919865,
+        "z": -69.94957857816087,
+        "vx": 0.006068918325057517,
+        "vy": 0.01327970550418472,
+        "vz": -0.66265237555435
+      },
+      {
+        "id": "Scaff-pro/agent_docs/directory_structure.md",
+        "name": "directory_structure.md",
+        "path": "Scaff-pro/agent_docs/directory_structure.md",
+        "type": "file",
+        "lines": 0,
+        "val": 6,
+        "color": "#4d515a",
+        "baseColor": "#3498db",
+        "originalColor": "#3498db",
+        "defaultGlow": 0.18,
+        "glowIntensity": 0.22,
+        "highlighted": false,
+        "parentPath": "Scaff-pro/agent_docs",
+        "childFileCount": 0,
+        "x": -1.6643848953227625,
+        "y": -171.76107388987273,
+        "z": -88.07324406417388,
+        "vx": -0.29833826811646863,
+        "vy": 0.23193653834679503,
+        "vz": -0.6968799529026967
+      },
+      {
+        "id": "Scaff-pro/agent_docs/requirements.md",
+        "name": "requirements.md",
+        "path": "Scaff-pro/agent_docs/requirements.md",
+        "type": "file",
+        "lines": 0,
+        "val": 6,
+        "color": "#4d515a",
+        "baseColor": "#3498db",
+        "originalColor": "#3498db",
+        "defaultGlow": 0.18,
+        "glowIntensity": 0.22,
+        "highlighted": false,
+        "parentPath": "Scaff-pro/agent_docs",
+        "childFileCount": 0,
+        "x": 7.230720606829372,
+        "y": -144.39931925133507,
+        "z": -32.82916619758414,
+        "vx": -0.2815352845889079,
+        "vy": 0.07305340960146872,
+        "vz": -0.6455015160982945
+      },
+      {
+        "id": "Scaff-pro/agent_docs/roadmap.md",
+        "name": "roadmap.md",
+        "path": "Scaff-pro/agent_docs/roadmap.md",
+        "type": "file",
+        "lines": 0,
+        "val": 6,
+        "color": "#4d515a",
+        "baseColor": "#3498db",
+        "originalColor": "#3498db",
+        "defaultGlow": 0.18,
+        "glowIntensity": 0.22,
+        "highlighted": false,
+        "parentPath": "Scaff-pro/agent_docs",
+        "childFileCount": 0,
+        "x": 19.721325779298624,
+        "y": -152.29310794271257,
+        "z": -89.23171691963012,
+        "vx": -0.383154746767758,
+        "vy": 0.482198515899979,
+        "vz": -0.6510117623719472
+      },
+      {
+        "id": "Scaff-pro/agent_docs/screens.md",
+        "name": "screens.md",
+        "path": "Scaff-pro/agent_docs/screens.md",
+        "type": "file",
+        "lines": 0,
+        "val": 6,
+        "color": "#4d515a",
+        "baseColor": "#3498db",
+        "originalColor": "#3498db",
+        "defaultGlow": 0.18,
+        "glowIntensity": 0.22,
+        "highlighted": false,
+        "parentPath": "Scaff-pro/agent_docs",
+        "childFileCount": 0,
+        "x": 28.024902674849052,
+        "y": -149.9873737525138,
+        "z": -59.72655708220747,
+        "vx": -0.36734632476289564,
+        "vy": 0.26557692312604625,
+        "vz": -0.9300901345272947
+      },
+      {
+        "id": "Scaff-pro/agent_docs/tech_stack.md",
+        "name": "tech_stack.md",
+        "path": "Scaff-pro/agent_docs/tech_stack.md",
+        "type": "file",
+        "lines": 0,
+        "val": 6,
+        "color": "#4d515a",
+        "baseColor": "#3498db",
+        "originalColor": "#3498db",
+        "defaultGlow": 0.18,
+        "glowIntensity": 0.22,
+        "highlighted": false,
+        "parentPath": "Scaff-pro/agent_docs",
+        "childFileCount": 0,
+        "x": 1.843221969732761,
+        "y": -173.97416149516107,
+        "z": -48.86001159288882,
+        "vx": -0.23428107435713888,
+        "vy": 0.110059906377197,
+        "vz": -0.8158716754641332
+      },
+      {
+        "id": "Scaff-pro/backend",
+        "name": "backend",
+        "path": "Scaff-pro/backend",
+        "type": "directory",
+        "lines": 0,
+        "val": 14,
+        "color": "#4d515a",
+        "baseColor": "#4ec9b0",
+        "originalColor": "#4ec9b0",
+        "defaultGlow": 0.18,
+        "glowIntensity": 0.22,
+        "highlighted": false,
+        "parentPath": "Scaff-pro",
+        "childFileCount": 1,
+        "x": -192.4393507575036,
+        "y": -141.99537919245626,
+        "z": 43.56399751983798,
+        "vx": -0.14398700968321027,
+        "vy": -0.22081641405662827,
+        "vz": 0.18036523985520322
+      },
+      {
+        "id": "Scaff-pro/backend/app",
+        "name": "app",
+        "path": "Scaff-pro/backend/app",
+        "type": "directory",
+        "lines": 0,
+        "val": 14,
+        "color": "#4d515a",
+        "baseColor": "#4ec9b0",
+        "originalColor": "#4ec9b0",
+        "defaultGlow": 0.18,
+        "glowIntensity": 0.22,
+        "highlighted": false,
+        "parentPath": "Scaff-pro/backend",
+        "childFileCount": 2,
+        "x": -268.74575242296197,
+        "y": -246.57629982219746,
+        "z": 180.1502830838219,
+        "vx": -0.053735132517366925,
+        "vy": -0.17705626431937962,
+        "vz": 0.2696647726493078
+      },
+      {
+        "id": "Scaff-pro/backend/app/__pycache__",
+        "name": "__pycache__",
+        "path": "Scaff-pro/backend/app/__pycache__",
+        "type": "directory",
+        "lines": 0,
+        "val": 14,
+        "color": "#4d515a",
+        "baseColor": "#4ec9b0",
+        "originalColor": "#4ec9b0",
+        "defaultGlow": 0.18,
+        "glowIntensity": 0.22,
+        "highlighted": false,
+        "parentPath": "Scaff-pro/backend/app",
+        "childFileCount": 4,
+        "x": -333.5075691804483,
+        "y": -209.96693696308353,
+        "z": 226.26796955233513,
+        "vx": -0.2983402780889319,
+        "vy": -0.14059024626438105,
+        "vz": -0.31575850793296634
+      },
+      {
+        "id": "Scaff-pro/backend/app/__pycache__/__init__.cpython-313.pyc",
+        "name": "__init__.cpython-313.pyc",
+        "path": "Scaff-pro/backend/app/__pycache__/__init__.cpython-313.pyc",
+        "type": "file",
+        "lines": 0,
+        "val": 6,
+        "color": "#4d515a",
+        "baseColor": "#57606f",
+        "originalColor": "#57606f",
+        "defaultGlow": 0.18,
+        "glowIntensity": 0.22,
+        "highlighted": false,
+        "parentPath": "Scaff-pro/backend/app/__pycache__",
+        "childFileCount": 0,
+        "x": -343.80539219091304,
+        "y": -224.45235536990617,
+        "z": 259.4753319258031,
+        "vx": -0.7423035203334716,
+        "vy": 0.06603928394720229,
+        "vz": -0.318755173782957
+      },
+      {
+        "id": "Scaff-pro/backend/app/__pycache__/__init__.cpython-314.pyc",
+        "name": "__init__.cpython-314.pyc",
+        "path": "Scaff-pro/backend/app/__pycache__/__init__.cpython-314.pyc",
+        "type": "file",
+        "lines": 0,
+        "val": 6,
+        "color": "#4d515a",
+        "baseColor": "#57606f",
+        "originalColor": "#57606f",
+        "defaultGlow": 0.18,
+        "glowIntensity": 0.22,
+        "highlighted": false,
+        "parentPath": "Scaff-pro/backend/app/__pycache__",
+        "childFileCount": 0,
+        "x": -371.9351350437225,
+        "y": -208.50808109303983,
+        "z": 232.38446258694464,
+        "vx": -0.3870974286535192,
+        "vy": -0.09253393648357364,
+        "vz": -0.5959676325663988
+      },
+      {
+        "id": "Scaff-pro/backend/app/__pycache__/main.cpython-313.pyc",
+        "name": "main.cpython-313.pyc",
+        "path": "Scaff-pro/backend/app/__pycache__/main.cpython-313.pyc",
+        "type": "file",
+        "lines": 0,
+        "val": 6,
+        "color": "#4d515a",
+        "baseColor": "#57606f",
+        "originalColor": "#57606f",
+        "defaultGlow": 0.18,
+        "glowIntensity": 0.22,
+        "highlighted": false,
+        "parentPath": "Scaff-pro/backend/app/__pycache__",
+        "childFileCount": 0,
+        "x": -354.3578737826378,
+        "y": -178.52244225243209,
+        "z": 236.92047054889295,
+        "vx": -0.49747334601387877,
+        "vy": -0.13304046656603172,
+        "vz": -0.6590712457412912
+      },
+      {
+        "id": "Scaff-pro/backend/app/__pycache__/main.cpython-314.pyc",
+        "name": "main.cpython-314.pyc",
+        "path": "Scaff-pro/backend/app/__pycache__/main.cpython-314.pyc",
+        "type": "file",
+        "lines": 0,
+        "val": 6,
+        "color": "#4d515a",
+        "baseColor": "#57606f",
+        "originalColor": "#57606f",
+        "defaultGlow": 0.18,
+        "glowIntensity": 0.22,
+        "highlighted": false,
+        "parentPath": "Scaff-pro/backend/app/__pycache__",
+        "childFileCount": 0,
+        "x": -344.1790809850893,
+        "y": -193.43930121763597,
+        "z": 261.6360162625152,
+        "vx": -0.40050465126979534,
+        "vy": 0.10370573222699993,
+        "vz": -0.4692359628689773
+      },
+      {
+        "id": "Scaff-pro/backend/app/api",
+        "name": "api",
+        "path": "Scaff-pro/backend/app/api",
+        "type": "directory",
+        "lines": 0,
+        "val": 14,
+        "color": "#4d515a",
+        "baseColor": "#4ec9b0",
+        "originalColor": "#4ec9b0",
+        "defaultGlow": 0.18,
+        "glowIntensity": 0.22,
+        "highlighted": false,
+        "parentPath": "Scaff-pro/backend/app",
+        "childFileCount": 1,
+        "x": -348.54815373135756,
+        "y": -326.9105818816383,
+        "z": 234.73480166240412,
+        "vx": -0.055993780092699154,
+        "vy": -0.1553065161032546,
+        "vz": 0.5505297000923534
+      },
+      {
+        "id": "Scaff-pro/backend/app/api/__pycache__",
+        "name": "__pycache__",
+        "path": "Scaff-pro/backend/app/api/__pycache__",
+        "type": "directory",
+        "lines": 0,
+        "val": 14,
+        "color": "#4d515a",
+        "baseColor": "#4ec9b0",
+        "originalColor": "#4ec9b0",
+        "defaultGlow": 0.18,
+        "glowIntensity": 0.22,
+        "highlighted": false,
+        "parentPath": "Scaff-pro/backend/app/api",
+        "childFileCount": 1,
+        "x": -372.380459445276,
+        "y": -359.48076371607453,
+        "z": 245.69644294260442,
+        "vx": -0.3141230662216238,
+        "vy": -0.31440894486681265,
+        "vz": 0.16391578110411623
+      },
+      {
+        "id": "Scaff-pro/backend/app/api/__pycache__/__init__.cpython-313.pyc",
+        "name": "__init__.cpython-313.pyc",
+        "path": "Scaff-pro/backend/app/api/__pycache__/__init__.cpython-313.pyc",
+        "type": "file",
+        "lines": 0,
+        "val": 6,
+        "color": "#4d515a",
+        "baseColor": "#57606f",
+        "originalColor": "#57606f",
+        "defaultGlow": 0.18,
+        "glowIntensity": 0.22,
+        "highlighted": false,
+        "parentPath": "Scaff-pro/backend/app/api/__pycache__",
+        "childFileCount": 0,
+        "x": -370.5274016204549,
+        "y": -393.0737642250497,
+        "z": 257.4327586756491,
+        "vx": -0.9336701448326118,
+        "vy": -0.5781573901249116,
+        "vz": -0.4665555430885179
+      },
+      {
+        "id": "Scaff-pro/backend/app/api/v1",
+        "name": "v1",
+        "path": "Scaff-pro/backend/app/api/v1",
+        "type": "directory",
+        "lines": 0,
+        "val": 14,
+        "color": "#4d515a",
+        "baseColor": "#4ec9b0",
+        "originalColor": "#4ec9b0",
+        "defaultGlow": 0.18,
+        "glowIntensity": 0.22,
+        "highlighted": false,
+        "parentPath": "Scaff-pro/backend/app/api",
+        "childFileCount": 2,
+        "x": -405.11179462896786,
+        "y": -391.4236878337704,
+        "z": 308.0100211294771,
+        "vx": -0.37329473311128736,
+        "vy": -0.09530360708400971,
+        "vz": 0.5708690180478282
+      },
+      {
+        "id": "Scaff-pro/backend/app/api/v1/__pycache__",
+        "name": "__pycache__",
+        "path": "Scaff-pro/backend/app/api/v1/__pycache__",
+        "type": "directory",
+        "lines": 0,
+        "val": 14,
+        "color": "#4d515a",
+        "baseColor": "#4ec9b0",
+        "originalColor": "#4ec9b0",
+        "defaultGlow": 0.18,
+        "glowIntensity": 0.22,
+        "highlighted": false,
+        "parentPath": "Scaff-pro/backend/app/api/v1",
+        "childFileCount": 4,
+        "x": -429.0657138597949,
+        "y": -431.90248531850415,
+        "z": 367.74125292763915,
+        "vx": -0.7472011013687049,
+        "vy": -0.524523178933022,
+        "vz": 0.32741566220577684
+      },
+      {
+        "id": "Scaff-pro/backend/app/api/v1/__pycache__/__init__.cpython-313.pyc",
+        "name": "__init__.cpython-313.pyc",
+        "path": "Scaff-pro/backend/app/api/v1/__pycache__/__init__.cpython-313.pyc",
+        "type": "file",
+        "lines": 0,
+        "val": 6,
+        "color": "#4d515a",
+        "baseColor": "#57606f",
+        "originalColor": "#57606f",
+        "defaultGlow": 0.18,
+        "glowIntensity": 0.22,
+        "highlighted": false,
+        "parentPath": "Scaff-pro/backend/app/api/v1/__pycache__",
+        "childFileCount": 0,
+        "x": -455.2476571915457,
+        "y": -456.14425789784383,
+        "z": 379.7559258165487,
+        "vx": -0.7384246642902857,
+        "vy": -0.7304864644269032,
+        "vz": 0.0785690279621244
+      },
+      {
+        "id": "Scaff-pro/backend/app/api/v1/__pycache__/drawing_mock.cpython-313.pyc",
+        "name": "drawing_mock.cpython-313.pyc",
+        "path": "Scaff-pro/backend/app/api/v1/__pycache__/drawing_mock.cpython-313.pyc",
+        "type": "file",
+        "lines": 0,
+        "val": 6,
+        "color": "#4d515a",
+        "baseColor": "#57606f",
+        "originalColor": "#57606f",
+        "defaultGlow": 0.18,
+        "glowIntensity": 0.22,
+        "highlighted": false,
+        "parentPath": "Scaff-pro/backend/app/api/v1/__pycache__",
+        "childFileCount": 0,
+        "x": -456.60039375281804,
+        "y": -418.70222225020063,
+        "z": 389.6454792285763,
+        "vx": -0.8966205082247817,
+        "vy": -0.8581015996071172,
+        "vz": 0.3727443421132554
+      },
+      {
+        "id": "Scaff-pro/backend/app/api/v1/__pycache__/drawing.cpython-313.pyc",
+        "name": "drawing.cpython-313.pyc",
+        "path": "Scaff-pro/backend/app/api/v1/__pycache__/drawing.cpython-313.pyc",
+        "type": "file",
+        "lines": 0,
+        "val": 6,
+        "color": "#4d515a",
+        "baseColor": "#57606f",
+        "originalColor": "#57606f",
+        "defaultGlow": 0.18,
+        "glowIntensity": 0.22,
+        "highlighted": false,
+        "parentPath": "Scaff-pro/backend/app/api/v1/__pycache__",
+        "childFileCount": 0,
+        "x": -421.232212505861,
+        "y": -429.5243343838546,
+        "z": 403.8404592412247,
+        "vx": -0.8030960113570216,
+        "vy": -0.7352797544442338,
+        "vz": 0.363542820095403
+      },
+      {
+        "id": "Scaff-pro/backend/app/api/v1/__pycache__/floorplan_extract.cpython-313.pyc",
+        "name": "floorplan_extract.cpython-313.pyc",
+        "path": "Scaff-pro/backend/app/api/v1/__pycache__/floorplan_extract.cpython-313.pyc",
+        "type": "file",
+        "lines": 0,
+        "val": 6,
+        "color": "#4d515a",
+        "baseColor": "#57606f",
+        "originalColor": "#57606f",
+        "defaultGlow": 0.18,
+        "glowIntensity": 0.22,
+        "highlighted": false,
+        "parentPath": "Scaff-pro/backend/app/api/v1/__pycache__",
+        "childFileCount": 0,
+        "x": -419.202890874768,
+        "y": -463.04889294536486,
+        "z": 387.41082967418475,
+        "vx": -0.8537319794202348,
+        "vy": -0.6990949939489508,
+        "vz": 0.15554933829009007
+      },
+      {
+        "id": "Scaff-pro/backend/app/api/v1/__init__.py",
+        "name": "__init__.py",
+        "path": "Scaff-pro/backend/app/api/v1/__init__.py",
+        "type": "file",
+        "lines": 0,
+        "val": 6,
+        "color": "#4d515a",
+        "baseColor": "#57606f",
+        "originalColor": "#57606f",
+        "defaultGlow": 0.18,
+        "glowIntensity": 0.22,
+        "highlighted": false,
+        "parentPath": "Scaff-pro/backend/app/api/v1",
+        "childFileCount": 0,
+        "x": -408.32595874610456,
+        "y": -427.9916941671564,
+        "z": 308.3667320138611,
+        "vx": -0.45727008939569563,
+        "vy": -0.08623756475301401,
+        "vz": 0.5744003678484016
+      },
+      {
+        "id": "Scaff-pro/backend/app/api/v1/drawings.py",
+        "name": "drawings.py",
+        "path": "Scaff-pro/backend/app/api/v1/drawings.py",
+        "type": "file",
+        "lines": 0,
+        "val": 6,
+        "color": "#4d515a",
+        "baseColor": "#57606f",
+        "originalColor": "#57606f",
+        "defaultGlow": 0.18,
+        "glowIntensity": 0.22,
+        "highlighted": false,
+        "parentPath": "Scaff-pro/backend/app/api/v1",
+        "childFileCount": 0,
+        "x": -438.64136876619045,
+        "y": -406.40200674970276,
+        "z": 301.55270384235075,
+        "vx": -0.5075390649937785,
+        "vy": 0.09002204062530864,
+        "vz": 0.7103635480518716
+      },
+      {
+        "id": "Scaff-pro/backend/app/api/__init__.py",
+        "name": "__init__.py",
+        "path": "Scaff-pro/backend/app/api/__init__.py",
+        "type": "file",
+        "lines": 0,
+        "val": 6,
+        "color": "#4d515a",
+        "baseColor": "#57606f",
+        "originalColor": "#57606f",
+        "defaultGlow": 0.18,
+        "glowIntensity": 0.22,
+        "highlighted": false,
+        "parentPath": "Scaff-pro/backend/app/api",
+        "childFileCount": 0,
+        "x": -367.2521208962171,
+        "y": -347.341700433575,
+        "z": 209.161127794199,
+        "vx": -0.4870124343250311,
+        "vy": 0.12961713701763408,
+        "vz": 0.6151938345090167
+      },
+      {
+        "id": "Scaff-pro/backend/app/schemas",
+        "name": "schemas",
+        "path": "Scaff-pro/backend/app/schemas",
+        "type": "directory",
+        "lines": 0,
+        "val": 14,
+        "color": "#4d515a",
+        "baseColor": "#4ec9b0",
+        "originalColor": "#4ec9b0",
+        "defaultGlow": 0.18,
+        "glowIntensity": 0.22,
+        "highlighted": false,
+        "parentPath": "Scaff-pro/backend/app",
+        "childFileCount": 2,
+        "x": -251.42403360384216,
+        "y": -203.57140429172176,
+        "z": 181.4057518246235,
+        "vx": -0.42293132250342463,
+        "vy": -0.11985235842581597,
+        "vz": 0.2756898627004619
+      },
+      {
+        "id": "Scaff-pro/backend/app/schemas/__init__.py",
+        "name": "__init__.py",
+        "path": "Scaff-pro/backend/app/schemas/__init__.py",
+        "type": "file",
+        "lines": 0,
+        "val": 6,
+        "color": "#4d515a",
+        "baseColor": "#57606f",
+        "originalColor": "#57606f",
+        "defaultGlow": 0.18,
+        "glowIntensity": 0.22,
+        "highlighted": false,
+        "parentPath": "Scaff-pro/backend/app/schemas",
+        "childFileCount": 0,
+        "x": -224.73125482952082,
+        "y": -182.79631369686595,
+        "z": 194.33874214063349,
+        "vx": -0.49142978006502885,
+        "vy": -0.08465953504295846,
+        "vz": 0.35516926776516866
+      },
+      {
+        "id": "Scaff-pro/backend/app/schemas/drawing.py",
+        "name": "drawing.py",
+        "path": "Scaff-pro/backend/app/schemas/drawing.py",
+        "type": "file",
+        "lines": 0,
+        "val": 6,
+        "color": "#4d515a",
+        "baseColor": "#57606f",
+        "originalColor": "#57606f",
+        "defaultGlow": 0.18,
+        "glowIntensity": 0.22,
+        "highlighted": false,
+        "parentPath": "Scaff-pro/backend/app/schemas",
+        "childFileCount": 0,
+        "x": -263.8962897267995,
+        "y": -169.44603299068262,
+        "z": 178.4372659559425,
+        "vx": -0.29917310976208217,
+        "vy": -0.03768082739142888,
+        "vz": 0.35956767827074015
+      },
+      {
+        "id": "Scaff-pro/backend/app/services",
+        "name": "services",
+        "path": "Scaff-pro/backend/app/services",
+        "type": "directory",
+        "lines": 0,
+        "val": 14,
+        "color": "#4d515a",
+        "baseColor": "#4ec9b0",
+        "originalColor": "#4ec9b0",
+        "defaultGlow": 0.18,
+        "glowIntensity": 0.22,
+        "highlighted": false,
+        "parentPath": "Scaff-pro/backend/app",
+        "childFileCount": 2,
+        "x": -195.74566066400234,
+        "y": -294.67208018779365,
+        "z": 242.74808730588853,
+        "vx": -0.11431986798011497,
+        "vy": -0.022917080297109458,
+        "vz": 0.24819866572987942
+      },
+      {
+        "id": "Scaff-pro/backend/app/services/__pycache__",
+        "name": "__pycache__",
+        "path": "Scaff-pro/backend/app/services/__pycache__",
+        "type": "directory",
+        "lines": 0,
+        "val": 14,
+        "color": "#4d515a",
+        "baseColor": "#4ec9b0",
+        "originalColor": "#4ec9b0",
+        "defaultGlow": 0.18,
+        "glowIntensity": 0.22,
+        "highlighted": false,
+        "parentPath": "Scaff-pro/backend/app/services",
+        "childFileCount": 2,
+        "x": -182.83640810462643,
+        "y": -360.8191573270365,
+        "z": 217.0576445074093,
+        "vx": 0.2948139853481258,
+        "vy": 0.13614985720372133,
+        "vz": 0.7702413117310014
+      },
+      {
+        "id": "Scaff-pro/backend/app/services/__pycache__/__init__.cpython-313.pyc",
+        "name": "__init__.cpython-313.pyc",
+        "path": "Scaff-pro/backend/app/services/__pycache__/__init__.cpython-313.pyc",
+        "type": "file",
+        "lines": 0,
+        "val": 6,
+        "color": "#4d515a",
+        "baseColor": "#57606f",
+        "originalColor": "#57606f",
+        "defaultGlow": 0.18,
+        "glowIntensity": 0.22,
+        "highlighted": false,
+        "parentPath": "Scaff-pro/backend/app/services/__pycache__",
+        "childFileCount": 0,
+        "x": -166.58769020088425,
+        "y": -394.7555657443051,
+        "z": 213.3884771280531,
+        "vx": 0.5672313686766747,
+        "vy": 0.1288617126407732,
+        "vz": 1.119616212894954
+      },
+      {
+        "id": "Scaff-pro/backend/app/services/__pycache__/__init__.cpython-314.pyc",
+        "name": "__init__.cpython-314.pyc",
+        "path": "Scaff-pro/backend/app/services/__pycache__/__init__.cpython-314.pyc",
+        "type": "file",
+        "lines": 0,
+        "val": 6,
+        "color": "#4d515a",
+        "baseColor": "#57606f",
+        "originalColor": "#57606f",
+        "defaultGlow": 0.18,
+        "glowIntensity": 0.22,
+        "highlighted": false,
+        "parentPath": "Scaff-pro/backend/app/services/__pycache__",
+        "childFileCount": 0,
+        "x": -190.83420591549242,
+        "y": -392.0331895831871,
+        "z": 196.3941532038321,
+        "vx": 0.5423801455324225,
+        "vy": -0.09035784206657743,
+        "vz": 0.9611120771191484
+      },
+      {
+        "id": "Scaff-pro/backend/app/services/floorplan_analyzer",
+        "name": "floorplan_analyzer",
+        "path": "Scaff-pro/backend/app/services/floorplan_analyzer",
+        "type": "directory",
+        "lines": 0,
+        "val": 14,
+        "color": "#4d515a",
+        "baseColor": "#4ec9b0",
+        "originalColor": "#4ec9b0",
+        "defaultGlow": 0.18,
+        "glowIntensity": 0.22,
+        "highlighted": false,
+        "parentPath": "Scaff-pro/backend/app/services",
+        "childFileCount": 0,
+        "x": -165.80516823447124,
+        "y": -262.15911488171673,
+        "z": 303.85262436607655,
+        "vx": 0.14060998083733084,
+        "vy": -0.4645917051675136,
+        "vz": 0.3620360975913516
+      },
+      {
+        "id": "Scaff-pro/backend/app/services/floorplan_analyzer/__pycache__",
+        "name": "__pycache__",
+        "path": "Scaff-pro/backend/app/services/floorplan_analyzer/__pycache__",
+        "type": "directory",
+        "lines": 0,
+        "val": 14,
+        "color": "#4d515a",
+        "baseColor": "#4ec9b0",
+        "originalColor": "#4ec9b0",
+        "defaultGlow": 0.18,
+        "glowIntensity": 0.22,
+        "highlighted": false,
+        "parentPath": "Scaff-pro/backend/app/services/floorplan_analyzer",
+        "childFileCount": 5,
+        "x": -144.11196818876226,
+        "y": -230.05252516145782,
+        "z": 353.6426776945418,
+        "vx": 0.3465943323967802,
+        "vy": -1.055828052798429,
+        "vz": 0.43101016277152177
+      },
+      {
+        "id": "Scaff-pro/backend/app/services/floorplan_analyzer/__pycache__/__init__.cpython-313.pyc",
+        "name": "__init__.cpython-313.pyc",
+        "path": "Scaff-pro/backend/app/services/floorplan_analyzer/__pycache__/__init__.cpython-313.pyc",
+        "type": "file",
+        "lines": 0,
+        "val": 6,
+        "color": "#4d515a",
+        "baseColor": "#57606f",
+        "originalColor": "#57606f",
+        "defaultGlow": 0.18,
+        "glowIntensity": 0.22,
+        "highlighted": false,
+        "parentPath": "Scaff-pro/backend/app/services/floorplan_analyzer/__pycache__",
+        "childFileCount": 0,
+        "x": -137.95085723548405,
+        "y": -233.58766813853072,
+        "z": 391.5401825235484,
+        "vx": 0.8153010625349167,
+        "vy": -0.8558235327107484,
+        "vz": 0.42101354752685044
+      },
+      {
+        "id": "Scaff-pro/backend/app/services/floorplan_analyzer/__pycache__/__init__.cpython-314.pyc",
+        "name": "__init__.cpython-314.pyc",
+        "path": "Scaff-pro/backend/app/services/floorplan_analyzer/__pycache__/__init__.cpython-314.pyc",
+        "type": "file",
+        "lines": 0,
+        "val": 6,
+        "color": "#4d515a",
+        "baseColor": "#57606f",
+        "originalColor": "#57606f",
+        "defaultGlow": 0.18,
+        "glowIntensity": 0.22,
+        "highlighted": false,
+        "parentPath": "Scaff-pro/backend/app/services/floorplan_analyzer/__pycache__",
+        "childFileCount": 0,
+        "x": -136.78601658986724,
+        "y": -193.008688127185,
+        "z": 355.87459550237094,
+        "vx": 0.5341982797248428,
+        "vy": -1.195403661519635,
+        "vz": 0.23981681410395123
+      },
+      {
+        "id": "Scaff-pro/backend/app/services/floorplan_analyzer/__pycache__/analyzer.cpython-313.pyc",
+        "name": "analyzer.cpython-313.pyc",
+        "path": "Scaff-pro/backend/app/services/floorplan_analyzer/__pycache__/analyzer.cpython-313.pyc",
+        "type": "file",
+        "lines": 0,
+        "val": 6,
+        "color": "#4d515a",
+        "baseColor": "#57606f",
+        "originalColor": "#57606f",
+        "defaultGlow": 0.18,
+        "glowIntensity": 0.22,
+        "highlighted": false,
+        "parentPath": "Scaff-pro/backend/app/services/floorplan_analyzer/__pycache__",
+        "childFileCount": 0,
+        "x": -155.37938253424818,
+        "y": -202.8118536413795,
+        "z": 380.4492303772013,
+        "vx": 0.42731137915986395,
+        "vy": -0.9023507904967056,
+        "vz": 0.37807287751866386
+      },
+      {
+        "id": "Scaff-pro/backend/app/services/floorplan_analyzer/__pycache__/analyzer.cpython-314.pyc",
+        "name": "analyzer.cpython-314.pyc",
+        "path": "Scaff-pro/backend/app/services/floorplan_analyzer/__pycache__/analyzer.cpython-314.pyc",
+        "type": "file",
+        "lines": 0,
+        "val": 6,
+        "color": "#4d515a",
+        "baseColor": "#57606f",
+        "originalColor": "#57606f",
+        "defaultGlow": 0.18,
+        "glowIntensity": 0.22,
+        "highlighted": false,
+        "parentPath": "Scaff-pro/backend/app/services/floorplan_analyzer/__pycache__",
+        "childFileCount": 0,
+        "x": -115.20030143798056,
+        "y": -217.02553313459103,
+        "z": 375.0017479217272,
+        "vx": 0.5039033305382609,
+        "vy": -1.0466608913751227,
+        "vz": -0.05615489912503851
+      },
+      {
+        "id": "Scaff-pro/backend/app/services/floorplan_analyzer/__pycache__/types.cpython-313.pyc",
+        "name": "types.cpython-313.pyc",
+        "path": "Scaff-pro/backend/app/services/floorplan_analyzer/__pycache__/types.cpython-313.pyc",
+        "type": "file",
+        "lines": 0,
+        "val": 6,
+        "color": "#4d515a",
+        "baseColor": "#57606f",
+        "originalColor": "#57606f",
+        "defaultGlow": 0.18,
+        "glowIntensity": 0.22,
+        "highlighted": false,
+        "parentPath": "Scaff-pro/backend/app/services/floorplan_analyzer/__pycache__",
+        "childFileCount": 0,
+        "x": -167.37017708689376,
+        "y": -238.00110198577613,
+        "z": 382.42695339890787,
+        "vx": 0.5425354486820775,
+        "vy": -0.40077708392513706,
+        "vz": 0.8614721874534544
+      },
+      {
+        "id": "Scaff-pro/backend/app/services/__init__.py",
+        "name": "__init__.py",
+        "path": "Scaff-pro/backend/app/services/__init__.py",
+        "type": "file",
+        "lines": 0,
+        "val": 6,
+        "color": "#4d515a",
+        "baseColor": "#57606f",
+        "originalColor": "#57606f",
+        "defaultGlow": 0.18,
+        "glowIntensity": 0.22,
+        "highlighted": false,
+        "parentPath": "Scaff-pro/backend/app/services",
+        "childFileCount": 0,
+        "x": -211.9357107622581,
+        "y": -316.22338746159863,
+        "z": 266.99638047400066,
+        "vx": 0.5984671575901357,
+        "vy": -0.18989267078766459,
+        "vz": 0.6546399008065134
+      },
+      {
+        "id": "Scaff-pro/backend/app/services/drawing_analyzer.py",
+        "name": "drawing_analyzer.py",
+        "path": "Scaff-pro/backend/app/services/drawing_analyzer.py",
+        "type": "file",
+        "lines": 0,
+        "val": 6,
+        "color": "#4d515a",
+        "baseColor": "#57606f",
+        "originalColor": "#57606f",
+        "defaultGlow": 0.18,
+        "glowIntensity": 0.22,
+        "highlighted": false,
+        "parentPath": "Scaff-pro/backend/app/services",
+        "childFileCount": 0,
+        "x": -179.50751121527466,
+        "y": -325.13336040175295,
+        "z": 255.0508280160368,
+        "vx": 0.6982630976871745,
+        "vy": 0.3982366556212076,
+        "vz": 0.4185188272122975
+      },
+      {
+        "id": "Scaff-pro/backend/app/__init__.py",
+        "name": "__init__.py",
+        "path": "Scaff-pro/backend/app/__init__.py",
+        "type": "file",
+        "lines": 0,
+        "val": 6,
+        "color": "#4d515a",
+        "baseColor": "#57606f",
+        "originalColor": "#57606f",
+        "defaultGlow": 0.18,
+        "glowIntensity": 0.22,
+        "highlighted": false,
+        "parentPath": "Scaff-pro/backend/app",
+        "childFileCount": 0,
+        "x": -291.8780224763915,
+        "y": -260.67672683865356,
+        "z": 155.5487183130545,
+        "vx": -0.23733310532282334,
+        "vy": -0.12495263152376013,
+        "vz": 0.49436932837585784
+      },
+      {
+        "id": "Scaff-pro/backend/app/main.py",
+        "name": "main.py",
+        "path": "Scaff-pro/backend/app/main.py",
+        "type": "file",
+        "lines": 0,
+        "val": 6,
+        "color": "#4d515a",
+        "baseColor": "#57606f",
+        "originalColor": "#57606f",
+        "defaultGlow": 0.18,
+        "glowIntensity": 0.22,
+        "highlighted": false,
+        "parentPath": "Scaff-pro/backend/app",
+        "childFileCount": 0,
+        "x": -255.1091619852422,
+        "y": -270.98452205834445,
+        "z": 157.7105347812802,
+        "vx": -0.49870797731726535,
+        "vy": -0.33563538704968904,
+        "vz": 0.16971264745184345
+      },
+      {
+        "id": "Scaff-pro/backend/backend",
+        "name": "backend",
+        "path": "Scaff-pro/backend/backend",
+        "type": "directory",
+        "lines": 0,
+        "val": 14,
+        "color": "#4d515a",
+        "baseColor": "#4ec9b0",
+        "originalColor": "#4ec9b0",
+        "defaultGlow": 0.18,
+        "glowIntensity": 0.22,
+        "highlighted": false,
+        "parentPath": "Scaff-pro/backend",
+        "childFileCount": 0,
+        "x": -176.39763120252925,
+        "y": -115.2818325686572,
+        "z": 58.74936274070032,
+        "vx": -0.09181921383821576,
+        "vy": -0.24798112524032806,
+        "vz": 0.39452727033275065
+      },
+      {
+        "id": "Scaff-pro/backend/scaff_backend.egg-info",
+        "name": "scaff_backend.egg-info",
+        "path": "Scaff-pro/backend/scaff_backend.egg-info",
+        "type": "directory",
+        "lines": 0,
+        "val": 14,
+        "color": "#4d515a",
+        "baseColor": "#4ec9b0",
+        "originalColor": "#4ec9b0",
+        "defaultGlow": 0.18,
+        "glowIntensity": 0.22,
+        "highlighted": false,
+        "parentPath": "Scaff-pro/backend",
+        "childFileCount": 5,
+        "x": -258.17514132734414,
+        "y": -99.2084822041544,
+        "z": 34.97157296715015,
+        "vx": 0.007460330934167889,
+        "vy": -0.44963633744652814,
+        "vz": -0.18205796409399408
+      },
+      {
+        "id": "Scaff-pro/backend/scaff_backend.egg-info/dependency_links.txt",
+        "name": "dependency_links.txt",
+        "path": "Scaff-pro/backend/scaff_backend.egg-info/dependency_links.txt",
+        "type": "file",
+        "lines": 0,
+        "val": 6,
+        "color": "#4d515a",
+        "baseColor": "#95a5a6",
+        "originalColor": "#95a5a6",
+        "defaultGlow": 0.18,
+        "glowIntensity": 0.22,
+        "highlighted": false,
+        "parentPath": "Scaff-pro/backend/scaff_backend.egg-info",
+        "childFileCount": 0,
+        "x": -292.28295552235,
+        "y": -99.1002845307465,
+        "z": 52.50202054748979,
+        "vx": -0.014798084378715307,
+        "vy": -0.2548818960375786,
+        "vz": -0.29545198465761097
+      },
+      {
+        "id": "Scaff-pro/backend/scaff_backend.egg-info/PKG-INFO",
+        "name": "PKG-INFO",
+        "path": "Scaff-pro/backend/scaff_backend.egg-info/PKG-INFO",
+        "type": "file",
+        "lines": 0,
+        "val": 6,
+        "color": "#4d515a",
+        "baseColor": "#57606f",
+        "originalColor": "#57606f",
+        "defaultGlow": 0.18,
+        "glowIntensity": 0.22,
+        "highlighted": false,
+        "parentPath": "Scaff-pro/backend/scaff_backend.egg-info",
+        "childFileCount": 0,
+        "x": -285.70179685261945,
+        "y": -117.9174015474508,
+        "z": 16.648582524284528,
+        "vx": -0.03770479207016384,
+        "vy": -0.1916473994207063,
+        "vz": -0.26820972746063954
+      },
+      {
+        "id": "Scaff-pro/backend/scaff_backend.egg-info/requires.txt",
+        "name": "requires.txt",
+        "path": "Scaff-pro/backend/scaff_backend.egg-info/requires.txt",
+        "type": "file",
+        "lines": 0,
+        "val": 6,
+        "color": "#4d515a",
+        "baseColor": "#95a5a6",
+        "originalColor": "#95a5a6",
+        "defaultGlow": 0.18,
+        "glowIntensity": 0.22,
+        "highlighted": false,
+        "parentPath": "Scaff-pro/backend/scaff_backend.egg-info",
+        "childFileCount": 0,
+        "x": -265.0702789852658,
+        "y": -73.59351333066378,
+        "z": 62.49139784586605,
+        "vx": -0.08993519627794362,
+        "vy": -0.3564392823028033,
+        "vz": -0.29467018237231885
+      },
+      {
+        "id": "Scaff-pro/backend/scaff_backend.egg-info/SOURCES.txt",
+        "name": "SOURCES.txt",
+        "path": "Scaff-pro/backend/scaff_backend.egg-info/SOURCES.txt",
+        "type": "file",
+        "lines": 0,
+        "val": 6,
+        "color": "#4d515a",
+        "baseColor": "#95a5a6",
+        "originalColor": "#95a5a6",
+        "defaultGlow": 0.18,
+        "glowIntensity": 0.22,
+        "highlighted": false,
+        "parentPath": "Scaff-pro/backend/scaff_backend.egg-info",
+        "childFileCount": 0,
+        "x": -275.57709420143203,
+        "y": -63.670313877876076,
+        "z": 33.36547914014834,
+        "vx": 0.13313906568473302,
+        "vy": -0.3955578377219102,
+        "vz": -0.40411304462823944
+      },
+      {
+        "id": "Scaff-pro/backend/scaff_backend.egg-info/top_level.txt",
+        "name": "top_level.txt",
+        "path": "Scaff-pro/backend/scaff_backend.egg-info/top_level.txt",
+        "type": "file",
+        "lines": 0,
+        "val": 6,
+        "color": "#4d515a",
+        "baseColor": "#95a5a6",
+        "originalColor": "#95a5a6",
+        "defaultGlow": 0.18,
+        "glowIntensity": 0.22,
+        "highlighted": false,
+        "parentPath": "Scaff-pro/backend/scaff_backend.egg-info",
+        "childFileCount": 0,
+        "x": -290.2086943027137,
+        "y": -83.97953606548442,
+        "z": 16.050516953244863,
+        "vx": 0.20938584813525807,
+        "vy": -0.20020201771219456,
+        "vz": -0.23599388561362963
+      },
+      {
+        "id": "Scaff-pro/backend/pyproject.toml",
+        "name": "pyproject.toml",
+        "path": "Scaff-pro/backend/pyproject.toml",
+        "type": "file",
+        "lines": 0,
+        "val": 6,
+        "color": "#4d515a",
+        "baseColor": "#57606f",
+        "originalColor": "#57606f",
+        "defaultGlow": 0.18,
+        "glowIntensity": 0.22,
+        "highlighted": false,
+        "parentPath": "Scaff-pro/backend",
+        "childFileCount": 0,
+        "x": -170.4126310090328,
+        "y": -166.9960266270372,
+        "z": 51.38446301936419,
+        "vx": -0.6356174527762564,
+        "vy": -0.619717388827331,
+        "vz": -0.2431398726429704
+      },
+      {
+        "id": "Scaff-pro/frontend",
+        "name": "frontend",
+        "path": "Scaff-pro/frontend",
+        "type": "directory",
+        "lines": 0,
+        "val": 14,
+        "color": "#4d515a",
+        "baseColor": "#4ec9b0",
+        "originalColor": "#4ec9b0",
+        "defaultGlow": 0.18,
+        "glowIntensity": 0.22,
+        "highlighted": false,
+        "parentPath": "Scaff-pro",
+        "childFileCount": 10,
+        "x": 72.52385178037436,
+        "y": 132.8267993735344,
+        "z": -93.53059350065945,
+        "vx": -0.3044634234130836,
+        "vy": -0.22726052019034426,
+        "vz": 0.3532546843799253
+      },
+      {
+        "id": "Scaff-pro/frontend/public",
+        "name": "public",
+        "path": "Scaff-pro/frontend/public",
+        "type": "directory",
+        "lines": 0,
+        "val": 14,
+        "color": "#4d515a",
+        "baseColor": "#4ec9b0",
+        "originalColor": "#4ec9b0",
+        "defaultGlow": 0.18,
+        "glowIntensity": 0.22,
+        "highlighted": false,
+        "parentPath": "Scaff-pro/frontend",
+        "childFileCount": 5,
+        "x": 2.217973859072128,
+        "y": 205.27090607943006,
+        "z": -89.14418862476667,
+        "vx": -0.11056349086967437,
+        "vy": -0.1259660129581833,
+        "vz": -0.22783033598361135
+      },
+      {
+        "id": "Scaff-pro/frontend/public/file.svg",
+        "name": "file.svg",
+        "path": "Scaff-pro/frontend/public/file.svg",
+        "type": "file",
+        "lines": 0,
+        "val": 6,
+        "color": "#4d515a",
+        "baseColor": "#ffb347",
+        "originalColor": "#ffb347",
+        "defaultGlow": 0.18,
+        "glowIntensity": 0.22,
+        "highlighted": false,
+        "parentPath": "Scaff-pro/frontend/public",
+        "childFileCount": 0,
+        "x": -3.434724913275584,
+        "y": 226.81014567847413,
+        "z": -57.19777820248938,
+        "vx": -0.24588592284305105,
+        "vy": 0.04152974485642577,
+        "vz": -0.36473444693614415
+      },
+      {
+        "id": "Scaff-pro/frontend/public/globe.svg",
+        "name": "globe.svg",
+        "path": "Scaff-pro/frontend/public/globe.svg",
+        "type": "file",
+        "lines": 0,
+        "val": 6,
+        "color": "#4d515a",
+        "baseColor": "#ffb347",
+        "originalColor": "#ffb347",
+        "defaultGlow": 0.18,
+        "glowIntensity": 0.22,
+        "highlighted": false,
+        "parentPath": "Scaff-pro/frontend/public",
+        "childFileCount": 0,
+        "x": -33.55443206409168,
+        "y": 211.54813638837194,
+        "z": -103.47925661905393,
+        "vx": -0.12934844416152355,
+        "vy": -0.04906363973182144,
+        "vz": -0.32059973115290474
+      },
+      {
+        "id": "Scaff-pro/frontend/public/next.svg",
+        "name": "next.svg",
+        "path": "Scaff-pro/frontend/public/next.svg",
+        "type": "file",
+        "lines": 0,
+        "val": 6,
+        "color": "#4d515a",
+        "baseColor": "#ffb347",
+        "originalColor": "#ffb347",
+        "defaultGlow": 0.18,
+        "glowIntensity": 0.22,
+        "highlighted": false,
+        "parentPath": "Scaff-pro/frontend/public",
+        "childFileCount": 0,
+        "x": -10.961610699823002,
+        "y": 234.46990604937216,
+        "z": -112.82264020654893,
+        "vx": -0.09123854850539116,
+        "vy": -0.1419116875117869,
+        "vz": -0.2815926577029171
+      },
+      {
+        "id": "Scaff-pro/frontend/public/vercel.svg",
+        "name": "vercel.svg",
+        "path": "Scaff-pro/frontend/public/vercel.svg",
+        "type": "file",
+        "lines": 0,
+        "val": 6,
+        "color": "#4d515a",
+        "baseColor": "#ffb347",
+        "originalColor": "#ffb347",
+        "defaultGlow": 0.18,
+        "glowIntensity": 0.22,
+        "highlighted": false,
+        "parentPath": "Scaff-pro/frontend/public",
+        "childFileCount": 0,
+        "x": -31.819188429623733,
+        "y": 215.52669656429947,
+        "z": -71.80913692109375,
+        "vx": -0.33819392304747836,
+        "vy": -0.16410978245269214,
+        "vz": -0.5134867414007593
+      },
+      {
+        "id": "Scaff-pro/frontend/public/window.svg",
+        "name": "window.svg",
+        "path": "Scaff-pro/frontend/public/window.svg",
+        "type": "file",
+        "lines": 0,
+        "val": 6,
+        "color": "#4d515a",
+        "baseColor": "#ffb347",
+        "originalColor": "#ffb347",
+        "defaultGlow": 0.18,
+        "glowIntensity": 0.22,
+        "highlighted": false,
+        "parentPath": "Scaff-pro/frontend/public",
+        "childFileCount": 0,
+        "x": -8.52421432061795,
+        "y": 243.96295521483376,
+        "z": -83.87104974870536,
+        "vx": 0.03518128992720045,
+        "vy": -0.13977516810199708,
+        "vz": -0.2941492822330913
+      },
+      {
+        "id": "Scaff-pro/frontend/src",
+        "name": "src",
+        "path": "Scaff-pro/frontend/src",
+        "type": "directory",
+        "lines": 0,
+        "val": 14,
+        "color": "#4d515a",
+        "baseColor": "#4ec9b0",
+        "originalColor": "#4ec9b0",
+        "defaultGlow": 0.18,
+        "glowIntensity": 0.22,
+        "highlighted": false,
+        "parentPath": "Scaff-pro/frontend",
+        "childFileCount": 0,
+        "x": 229.4765532573461,
+        "y": 228.04646587937125,
+        "z": -108.3198551960994,
+        "vx": -0.07558171774527092,
+        "vy": 0.051017772898323634,
+        "vz": -0.024159831431024157
+      },
+      {
+        "id": "Scaff-pro/frontend/src/app",
+        "name": "app",
+        "path": "Scaff-pro/frontend/src/app",
+        "type": "directory",
+        "lines": 0,
+        "val": 14,
+        "color": "#4d515a",
+        "baseColor": "#4ec9b0",
+        "originalColor": "#4ec9b0",
+        "defaultGlow": 0.18,
+        "glowIntensity": 0.22,
+        "highlighted": false,
+        "parentPath": "Scaff-pro/frontend/src",
+        "childFileCount": 4,
+        "x": 205.4196904842239,
+        "y": 315.37870565443296,
+        "z": -134.71683865211693,
+        "vx": 0.0029016504787677364,
+        "vy": 0.040443366229264345,
+        "vz": -0.7236414974188203
+      },
+      {
+        "id": "Scaff-pro/frontend/src/app/planning",
+        "name": "planning",
+        "path": "Scaff-pro/frontend/src/app/planning",
+        "type": "directory",
+        "lines": 0,
+        "val": 14,
+        "color": "#4d515a",
+        "baseColor": "#4ec9b0",
+        "originalColor": "#4ec9b0",
+        "defaultGlow": 0.18,
+        "glowIntensity": 0.22,
+        "highlighted": false,
+        "parentPath": "Scaff-pro/frontend/src/app",
+        "childFileCount": 1,
+        "x": 184.59923500753646,
+        "y": 341.8818397482027,
+        "z": -175.43589043828212,
+        "vx": 0.056601515066444244,
+        "vy": 0.4931988509768925,
+        "vz": -0.580887890441156
+      },
+      {
+        "id": "Scaff-pro/frontend/src/app/planning/page.tsx",
+        "name": "page.tsx",
+        "path": "Scaff-pro/frontend/src/app/planning/page.tsx",
+        "type": "file",
+        "lines": 0,
+        "val": 6,
+        "color": "#4d515a",
+        "baseColor": "#61dafb",
+        "originalColor": "#61dafb",
+        "defaultGlow": 0.1,
+        "glowIntensity": 0.22,
+        "highlighted": false,
+        "parentPath": "Scaff-pro/frontend/src/app/planning",
+        "childFileCount": 0,
+        "x": 170.59594469459728,
+        "y": 364.8802964936033,
+        "z": -201.27652263988406,
+        "vx": 0.19796588315370164,
+        "vy": 0.9395764649741891,
+        "vz": -0.38221975187408214
+      },
+      {
+        "id": "Scaff-pro/frontend/src/app/favicon.ico",
+        "name": "favicon.ico",
+        "path": "Scaff-pro/frontend/src/app/favicon.ico",
+        "type": "file",
+        "lines": 0,
+        "val": 6,
+        "color": "#4d515a",
+        "baseColor": "#57606f",
+        "originalColor": "#57606f",
+        "defaultGlow": 0.18,
+        "glowIntensity": 0.22,
+        "highlighted": false,
+        "parentPath": "Scaff-pro/frontend/src/app",
+        "childFileCount": 0,
+        "x": 207.14205198401817,
+        "y": 337.5813790638805,
+        "z": -103.29127232056655,
+        "vx": 0.011381876547342304,
+        "vy": 0.11176156224948403,
+        "vz": -0.6674974164713671
+      },
+      {
+        "id": "Scaff-pro/frontend/src/app/globals.css",
+        "name": "globals.css",
+        "path": "Scaff-pro/frontend/src/app/globals.css",
+        "type": "file",
+        "lines": 0,
+        "val": 6,
+        "color": "#4d515a",
+        "baseColor": "#1572b6",
+        "originalColor": "#1572b6",
+        "defaultGlow": 0.18,
+        "glowIntensity": 0.22,
+        "highlighted": false,
+        "parentPath": "Scaff-pro/frontend/src/app",
+        "childFileCount": 0,
+        "x": 180.05282155240917,
+        "y": 341.2981167132774,
+        "z": -120.75768836527705,
+        "vx": -0.13727045170434882,
+        "vy": -0.09922704906496027,
+        "vz": -0.6828321302438966
+      },
+      {
+        "id": "Scaff-pro/frontend/src/app/layout.tsx",
+        "name": "layout.tsx",
+        "path": "Scaff-pro/frontend/src/app/layout.tsx",
+        "type": "file",
+        "lines": 0,
+        "val": 6,
+        "color": "#4d515a",
+        "baseColor": "#61dafb",
+        "originalColor": "#61dafb",
+        "defaultGlow": 0.1,
+        "glowIntensity": 0.22,
+        "highlighted": false,
+        "parentPath": "Scaff-pro/frontend/src/app",
+        "childFileCount": 0,
+        "x": 229.4445588405724,
+        "y": 345.27540918609776,
+        "z": -128.6361153768288,
+        "vx": 0.25890831917659624,
+        "vy": -0.11379458965813757,
+        "vz": -0.7372740489972939
+      },
+      {
+        "id": "Scaff-pro/frontend/src/app/page.tsx",
+        "name": "page.tsx",
+        "path": "Scaff-pro/frontend/src/app/page.tsx",
+        "type": "file",
+        "lines": 0,
+        "val": 6,
+        "color": "#4d515a",
+        "baseColor": "#61dafb",
+        "originalColor": "#61dafb",
+        "defaultGlow": 0.1,
+        "glowIntensity": 0.22,
+        "highlighted": false,
+        "parentPath": "Scaff-pro/frontend/src/app",
+        "childFileCount": 0,
+        "x": 206.34966199766842,
+        "y": 353.34657824321516,
+        "z": -144.91121563220017,
+        "vx": 0.09389012909847999,
+        "vy": 0.030229727322425286,
+        "vz": -0.5701704363670612
+      },
+      {
+        "id": "Scaff-pro/frontend/src/components",
+        "name": "components",
+        "path": "Scaff-pro/frontend/src/components",
+        "type": "directory",
+        "lines": 0,
+        "val": 14,
+        "color": "#4d515a",
+        "baseColor": "#4ec9b0",
+        "originalColor": "#4ec9b0",
+        "defaultGlow": 0.18,
+        "glowIntensity": 0.22,
+        "highlighted": false,
+        "parentPath": "Scaff-pro/frontend/src",
+        "childFileCount": 1,
+        "x": 290.92413801839194,
+        "y": 257.8529586938368,
+        "z": -15.118150066789527,
+        "vx": 0.2101760098868036,
+        "vy": 0.16688944442346768,
+        "vz": -0.14421908408666123
+      },
+      {
+        "id": "Scaff-pro/frontend/src/components/icons",
+        "name": "icons",
+        "path": "Scaff-pro/frontend/src/components/icons",
+        "type": "directory",
+        "lines": 0,
+        "val": 14,
+        "color": "#4d515a",
+        "baseColor": "#4ec9b0",
+        "originalColor": "#4ec9b0",
+        "defaultGlow": 0.18,
+        "glowIntensity": 0.22,
+        "highlighted": false,
+        "parentPath": "Scaff-pro/frontend/src/components",
+        "childFileCount": 1,
+        "x": 325.9975438522112,
+        "y": 236.6996632975064,
+        "z": 14.431400762440171,
+        "vx": 0.30358816204765277,
+        "vy": 0.07502429964423735,
+        "vz": -0.04083892342528231
+      },
+      {
+        "id": "Scaff-pro/frontend/src/components/icons/index.tsx",
+        "name": "index.tsx",
+        "path": "Scaff-pro/frontend/src/components/icons/index.tsx",
+        "type": "file",
+        "lines": 0,
+        "val": 6,
+        "color": "#4d515a",
+        "baseColor": "#61dafb",
+        "originalColor": "#61dafb",
+        "defaultGlow": 0.1,
+        "glowIntensity": 0.22,
+        "highlighted": false,
+        "parentPath": "Scaff-pro/frontend/src/components/icons",
+        "childFileCount": 0,
+        "x": 351.25333146736983,
+        "y": 221.3122620324204,
+        "z": 37.656977600243586,
+        "vx": 0.393287281549021,
+        "vy": 0.29694809152487667,
+        "vz": 0.13798553617576703
+      },
+      {
+        "id": "Scaff-pro/frontend/src/components/ui",
+        "name": "ui",
+        "path": "Scaff-pro/frontend/src/components/ui",
+        "type": "directory",
+        "lines": 0,
+        "val": 14,
+        "color": "#4d515a",
+        "baseColor": "#4ec9b0",
+        "originalColor": "#4ec9b0",
+        "defaultGlow": 0.18,
+        "glowIntensity": 0.22,
+        "highlighted": false,
+        "parentPath": "Scaff-pro/frontend/src/components",
+        "childFileCount": 2,
+        "x": 327.5870102700605,
+        "y": 289.9714762545368,
+        "z": 43.589953900003906,
+        "vx": 0.15710069729299436,
+        "vy": 0.32882877446265046,
+        "vz": -0.17446315886164923
+      },
+      {
+        "id": "Scaff-pro/frontend/src/components/ui/GlassPanel.tsx",
+        "name": "GlassPanel.tsx",
+        "path": "Scaff-pro/frontend/src/components/ui/GlassPanel.tsx",
+        "type": "file",
+        "lines": 0,
+        "val": 6,
+        "color": "#4d515a",
+        "baseColor": "#61dafb",
+        "originalColor": "#61dafb",
+        "defaultGlow": 0.1,
+        "glowIntensity": 0.22,
+        "highlighted": false,
+        "parentPath": "Scaff-pro/frontend/src/components/ui",
+        "childFileCount": 0,
+        "x": 335.55459391210246,
+        "y": 315.30781755244715,
+        "z": 69.5504333651464,
+        "vx": 0.09661964753593846,
+        "vy": 0.4280894395747517,
+        "vz": -0.21569243475728012
+      },
+      {
+        "id": "Scaff-pro/frontend/src/components/ui/NeonButton.tsx",
+        "name": "NeonButton.tsx",
+        "path": "Scaff-pro/frontend/src/components/ui/NeonButton.tsx",
+        "type": "file",
+        "lines": 0,
+        "val": 6,
+        "color": "#4d515a",
+        "baseColor": "#61dafb",
+        "originalColor": "#61dafb",
+        "defaultGlow": 0.1,
+        "glowIntensity": 0.22,
+        "highlighted": false,
+        "parentPath": "Scaff-pro/frontend/src/components/ui",
+        "childFileCount": 0,
+        "x": 352.75235204744547,
+        "y": 290.4692439006863,
+        "z": 72.35052061415789,
+        "vx": 0.1514060793333274,
+        "vy": 0.4678402844734333,
+        "vz": -0.16523229397887454
+      },
+      {
+        "id": "Scaff-pro/frontend/src/components/ThemeRegistry.tsx",
+        "name": "ThemeRegistry.tsx",
+        "path": "Scaff-pro/frontend/src/components/ThemeRegistry.tsx",
+        "type": "file",
+        "lines": 0,
+        "val": 6,
+        "color": "#4d515a",
+        "baseColor": "#61dafb",
+        "originalColor": "#61dafb",
+        "defaultGlow": 0.1,
+        "glowIntensity": 0.22,
+        "highlighted": false,
+        "parentPath": "Scaff-pro/frontend/src/components",
+        "childFileCount": 0,
+        "x": 288.5491136458952,
+        "y": 284.0657970161695,
+        "z": 9.49779943015309,
+        "vx": 0.17276903586429082,
+        "vy": 0.211607088942789,
+        "vz": -0.1766789023948983
+      },
+      {
+        "id": "Scaff-pro/frontend/src/features",
+        "name": "features",
+        "path": "Scaff-pro/frontend/src/features",
+        "type": "directory",
+        "lines": 0,
+        "val": 14,
+        "color": "#4d515a",
+        "baseColor": "#4ec9b0",
+        "originalColor": "#4ec9b0",
+        "defaultGlow": 0.18,
+        "glowIntensity": 0.22,
+        "highlighted": false,
+        "parentPath": "Scaff-pro/frontend/src",
+        "childFileCount": 0,
+        "x": 315.6666452827337,
+        "y": 258.02748877797274,
+        "z": -166.2318862699219,
+        "vx": 0.033277273304346676,
+        "vy": 0.07196356255342613,
+        "vz": -0.08420651735787675
+      },
+      {
+        "id": "Scaff-pro/frontend/src/features/planning",
+        "name": "planning",
+        "path": "Scaff-pro/frontend/src/features/planning",
+        "type": "directory",
+        "lines": 0,
+        "val": 14,
+        "color": "#4d515a",
+        "baseColor": "#4ec9b0",
+        "originalColor": "#4ec9b0",
+        "defaultGlow": 0.18,
+        "glowIntensity": 0.22,
+        "highlighted": false,
+        "parentPath": "Scaff-pro/frontend/src/features",
+        "childFileCount": 2,
+        "x": 393.6525046931291,
+        "y": 283.8876447371437,
+        "z": -217.82540996830602,
+        "vx": 0.12453926670039345,
+        "vy": 0.07276790108873273,
+        "vz": -0.06350617324937098
+      },
+      {
+        "id": "Scaff-pro/frontend/src/features/planning/components",
+        "name": "components",
+        "path": "Scaff-pro/frontend/src/features/planning/components",
+        "type": "directory",
+        "lines": 0,
+        "val": 14,
+        "color": "#ff3b30",
+        "baseColor": "#4ec9b0",
+        "originalColor": "#4ec9b0",
+        "defaultGlow": 0.18,
+        "glowIntensity": 1.9,
+        "highlighted": false,
+        "parentPath": "Scaff-pro/frontend/src/features/planning",
+        "childFileCount": 12,
+        "x": 472.12900414956806,
+        "y": 330.4553613343271,
+        "z": -251.47243132277123,
+        "vx": 0.1533439403493094,
+        "vy": 0.0430614943962467,
+        "vz": -0.305336903574094
+      },
+      {
+        "id": "Scaff-pro/frontend/src/features/planning/components/Canvas2D.tsx",
+        "name": "Canvas2D.tsx",
+        "path": "Scaff-pro/frontend/src/features/planning/components/Canvas2D.tsx",
+        "type": "file",
+        "lines": 0,
+        "val": 6,
+        "color": "#4d515a",
+        "baseColor": "#61dafb",
+        "originalColor": "#61dafb",
+        "defaultGlow": 0.1,
+        "glowIntensity": 0.22,
+        "highlighted": false,
+        "parentPath": "Scaff-pro/frontend/src/features/planning/components",
+        "childFileCount": 0,
+        "x": 493.8355725764187,
+        "y": 334.2208450117643,
+        "z": -216.6159707189912,
+        "vx": 0.10852197949207895,
+        "vy": 0.09436121408158621,
+        "vz": -0.33948726321671696
+      },
+      {
+        "id": "Scaff-pro/frontend/src/features/planning/components/Canvas3D.tsx",
+        "name": "Canvas3D.tsx",
+        "path": "Scaff-pro/frontend/src/features/planning/components/Canvas3D.tsx",
+        "type": "file",
+        "lines": 0,
+        "val": 6,
+        "color": "#4d515a",
+        "baseColor": "#61dafb",
+        "originalColor": "#61dafb",
+        "defaultGlow": 0.1,
+        "glowIntensity": 0.22,
+        "highlighted": false,
+        "parentPath": "Scaff-pro/frontend/src/features/planning/components",
+        "childFileCount": 0,
+        "x": 503.2415794155839,
+        "y": 304.4381593920093,
+        "z": -261.7699935418761,
+        "vx": 0.18734021067068737,
+        "vy": 0.15134236488805347,
+        "vz": -0.17421012907995434
+      },
+      {
+        "id": "Scaff-pro/frontend/src/features/planning/components/DrawingImportDialog.tsx",
+        "name": "DrawingImportDialog.tsx",
+        "path": "Scaff-pro/frontend/src/features/planning/components/DrawingImportDialog.tsx",
+        "type": "file",
+        "lines": 0,
+        "val": 6,
+        "color": "#4d515a",
+        "baseColor": "#61dafb",
+        "originalColor": "#61dafb",
+        "defaultGlow": 0.1,
+        "glowIntensity": 0.22,
+        "highlighted": false,
+        "parentPath": "Scaff-pro/frontend/src/features/planning/components",
+        "childFileCount": 0,
+        "x": 490.7485146037089,
+        "y": 363.02876809889307,
+        "z": -232.8855665312479,
+        "vx": 0.2651432596249929,
+        "vy": 0.07272671686778173,
+        "vz": -0.5388266975624597
+      },
+      {
+        "id": "Scaff-pro/frontend/src/features/planning/components/FloatingReferenceViewer.tsx",
+        "name": "FloatingReferenceViewer.tsx",
+        "path": "Scaff-pro/frontend/src/features/planning/components/FloatingReferenceViewer.tsx",
+        "type": "file",
+        "lines": 0,
+        "val": 6,
+        "color": "#4d515a",
+        "baseColor": "#61dafb",
+        "originalColor": "#61dafb",
+        "defaultGlow": 0.1,
+        "glowIntensity": 0.22,
+        "highlighted": false,
+        "parentPath": "Scaff-pro/frontend/src/features/planning/components",
+        "childFileCount": 0,
+        "x": 459.6961286020213,
+        "y": 361.317106202273,
+        "z": -229.7639944381761,
+        "vx": 0.426520813381206,
+        "vy": 0.19541684977668222,
+        "vz": -0.4155143585153565
+      },
+      {
+        "id": "Scaff-pro/frontend/src/features/planning/components/Header.tsx",
+        "name": "Header.tsx",
+        "path": "Scaff-pro/frontend/src/features/planning/components/Header.tsx",
+        "type": "file",
+        "lines": 0,
+        "val": 6,
+        "color": "#4d515a",
+        "baseColor": "#61dafb",
+        "originalColor": "#61dafb",
+        "defaultGlow": 0.1,
+        "glowIntensity": 0.22,
+        "highlighted": false,
+        "parentPath": "Scaff-pro/frontend/src/features/planning/components",
+        "childFileCount": 0,
+        "x": 475.63619425468335,
+        "y": 304.9191396348509,
+        "z": -281.5987281348025,
+        "vx": 0.24829906556375977,
+        "vy": 0.3682904786704767,
+        "vz": -0.4257733456518615
+      },
+      {
+        "id": "Scaff-pro/frontend/src/features/planning/components/index.ts",
+        "name": "index.ts",
+        "path": "Scaff-pro/frontend/src/features/planning/components/index.ts",
+        "type": "file",
+        "lines": 0,
+        "val": 6,
+        "color": "#4d515a",
+        "baseColor": "#3178c6",
+        "originalColor": "#3178c6",
+        "defaultGlow": 0.1,
+        "glowIntensity": 0.22,
+        "highlighted": false,
+        "parentPath": "Scaff-pro/frontend/src/features/planning/components",
+        "childFileCount": 0,
+        "x": 459.49286900527665,
+        "y": 337.77869753855276,
+        "z": -289.1446436889224,
+        "vx": 0.49483813550033295,
+        "vy": -0.023813375482926488,
+        "vz": -0.30048706235342926
+      },
+      {
+        "id": "Scaff-pro/frontend/src/features/planning/components/ReferenceViewer.tsx",
+        "name": "ReferenceViewer.tsx",
+        "path": "Scaff-pro/frontend/src/features/planning/components/ReferenceViewer.tsx",
+        "type": "file",
+        "lines": 0,
+        "val": 6,
+        "color": "#4d515a",
+        "baseColor": "#61dafb",
+        "originalColor": "#61dafb",
+        "defaultGlow": 0.1,
+        "glowIntensity": 0.22,
+        "highlighted": false,
+        "parentPath": "Scaff-pro/frontend/src/features/planning/components",
+        "childFileCount": 0,
+        "x": 456.4475710045229,
+        "y": 366.13477675736226,
+        "z": -265.9551160858428,
+        "vx": 0.18185424642007172,
+        "vy": 0.012258874070534848,
+        "vz": -0.1812142672925393
+      },
+      {
+        "id": "Scaff-pro/frontend/src/features/planning/components/ScaleInputModal.tsx",
+        "name": "ScaleInputModal.tsx",
+        "path": "Scaff-pro/frontend/src/features/planning/components/ScaleInputModal.tsx",
+        "type": "file",
+        "lines": 0,
+        "val": 6,
+        "color": "#4d515a",
+        "baseColor": "#61dafb",
+        "originalColor": "#61dafb",
+        "defaultGlow": 0.1,
+        "glowIntensity": 0.22,
+        "highlighted": false,
+        "parentPath": "Scaff-pro/frontend/src/features/planning/components",
+        "childFileCount": 0,
+        "x": 503.25665239144377,
+        "y": 309.96451464352725,
+        "z": -233.64114304426369,
+        "vx": 0.23124816880349525,
+        "vy": 0.0908712545138746,
+        "vz": -0.5411611972908543
+      },
+      {
+        "id": "Scaff-pro/frontend/src/features/planning/components/SidePanel.tsx",
+        "name": "SidePanel.tsx",
+        "path": "Scaff-pro/frontend/src/features/planning/components/SidePanel.tsx",
+        "type": "file",
+        "lines": 0,
+        "val": 6,
+        "color": "#4d515a",
+        "baseColor": "#61dafb",
+        "originalColor": "#61dafb",
+        "defaultGlow": 0.1,
+        "glowIntensity": 0.22,
+        "highlighted": false,
+        "parentPath": "Scaff-pro/frontend/src/features/planning/components",
+        "childFileCount": 0,
+        "x": 513.2147329840888,
+        "y": 343.4947138089167,
+        "z": -250.89574782743162,
+        "vx": 0.1045411465099735,
+        "vy": -0.09812926330619,
+        "vz": -0.2194846644234052
+      },
+      {
+        "id": "Scaff-pro/frontend/src/features/planning/components/ToolPalette.tsx",
+        "name": "ToolPalette.tsx",
+        "path": "Scaff-pro/frontend/src/features/planning/components/ToolPalette.tsx",
+        "type": "file",
+        "lines": 0,
+        "val": 6,
+        "color": "#4d515a",
+        "baseColor": "#61dafb",
+        "originalColor": "#61dafb",
+        "defaultGlow": 0.1,
+        "glowIntensity": 0.22,
+        "highlighted": false,
+        "parentPath": "Scaff-pro/frontend/src/features/planning/components",
+        "childFileCount": 0,
+        "x": 485.83914602945157,
+        "y": 350.4657491079319,
+        "z": -286.9289295548443,
+        "vx": 0.14258472451230086,
+        "vy": -0.06892434283417925,
+        "vz": -0.22508980582795984
+      },
+      {
+        "id": "Scaff-pro/frontend/src/features/planning/components/View3D.tsx",
+        "name": "View3D.tsx",
+        "path": "Scaff-pro/frontend/src/features/planning/components/View3D.tsx",
+        "type": "file",
+        "lines": 0,
+        "val": 6,
+        "color": "#4d515a",
+        "baseColor": "#61dafb",
+        "originalColor": "#61dafb",
+        "defaultGlow": 0.1,
+        "glowIntensity": 0.22,
+        "highlighted": false,
+        "parentPath": "Scaff-pro/frontend/src/features/planning/components",
+        "childFileCount": 0,
+        "x": 504.4795510254163,
+        "y": 328.54582830598116,
+        "z": -281.0389533908304,
+        "vx": 0.1355935779301141,
+        "vy": 0.02387862279058312,
+        "vz": -0.14900916115954824
+      },
+      {
+        "id": "Scaff-pro/frontend/src/features/planning/components/ViewSwitcher.tsx",
+        "name": "ViewSwitcher.tsx",
+        "path": "Scaff-pro/frontend/src/features/planning/components/ViewSwitcher.tsx",
+        "type": "file",
+        "lines": 0,
+        "val": 6,
+        "color": "#4d515a",
+        "baseColor": "#61dafb",
+        "originalColor": "#61dafb",
+        "defaultGlow": 0.1,
+        "glowIntensity": 0.22,
+        "highlighted": false,
+        "parentPath": "Scaff-pro/frontend/src/features/planning/components",
+        "childFileCount": 0,
+        "x": 493.4890499804307,
+        "y": 367.4834949973528,
+        "z": -262.18010233616326,
+        "vx": 0.0627986302514205,
+        "vy": -0.03480624911582743,
+        "vz": -0.2854161672645834
+      },
+      {
+        "id": "Scaff-pro/frontend/src/features/planning/layouts",
+        "name": "layouts",
+        "path": "Scaff-pro/frontend/src/features/planning/layouts",
+        "type": "directory",
+        "lines": 0,
+        "val": 14,
+        "color": "#4d515a",
+        "baseColor": "#4ec9b0",
+        "originalColor": "#4ec9b0",
+        "defaultGlow": 0.18,
+        "glowIntensity": 0.22,
+        "highlighted": false,
+        "parentPath": "Scaff-pro/frontend/src/features/planning",
+        "childFileCount": 1,
+        "x": 402.57114842381907,
+        "y": 251.79683017752868,
+        "z": -259.8295574428672,
+        "vx": 0.06297715457184701,
+        "vy": 0.10645060134581859,
+        "vz": -0.04393801267096152
+      },
+      {
+        "id": "Scaff-pro/frontend/src/features/planning/layouts/PlanningLayout.tsx",
+        "name": "PlanningLayout.tsx",
+        "path": "Scaff-pro/frontend/src/features/planning/layouts/PlanningLayout.tsx",
+        "type": "file",
+        "lines": 0,
+        "val": 6,
+        "color": "#4d515a",
+        "baseColor": "#61dafb",
+        "originalColor": "#61dafb",
+        "defaultGlow": 0.1,
+        "glowIntensity": 0.22,
+        "highlighted": false,
+        "parentPath": "Scaff-pro/frontend/src/features/planning/layouts",
+        "childFileCount": 0,
+        "x": 410.7435433892926,
+        "y": 228.88577511661776,
+        "z": -289.0011844847056,
+        "vx": 0.23121846346495623,
+        "vy": 0.1972359313704624,
+        "vz": -0.12399069163243318
+      },
+      {
+        "id": "Scaff-pro/frontend/src/features/planning/index.ts",
+        "name": "index.ts",
+        "path": "Scaff-pro/frontend/src/features/planning/index.ts",
+        "type": "file",
+        "lines": 0,
+        "val": 6,
+        "color": "#4d515a",
+        "baseColor": "#3178c6",
+        "originalColor": "#3178c6",
+        "defaultGlow": 0.1,
+        "glowIntensity": 0.22,
+        "highlighted": false,
+        "parentPath": "Scaff-pro/frontend/src/features/planning",
+        "childFileCount": 0,
+        "x": 408.45210028766,
+        "y": 251.65993755156282,
+        "z": -210.07229038884748,
+        "vx": 0.4473913954753183,
+        "vy": 0.3051142781732482,
+        "vz": 0.18316764489645618
+      },
+      {
+        "id": "Scaff-pro/frontend/src/features/planning/PlanningScreen.tsx",
+        "name": "PlanningScreen.tsx",
+        "path": "Scaff-pro/frontend/src/features/planning/PlanningScreen.tsx",
+        "type": "file",
+        "lines": 0,
+        "val": 6,
+        "color": "#4d515a",
+        "baseColor": "#61dafb",
+        "originalColor": "#61dafb",
+        "defaultGlow": 0.1,
+        "glowIntensity": 0.22,
+        "highlighted": false,
+        "parentPath": "Scaff-pro/frontend/src/features/planning",
+        "childFileCount": 0,
+        "x": 376.31386642301965,
+        "y": 305.04551447032384,
+        "z": -241.19442675682595,
+        "vx": 0.1394521213521042,
+        "vy": 0.08128974175623471,
+        "vz": 0.015078926599208686
+      },
+      {
+        "id": "Scaff-pro/frontend/src/store",
+        "name": "store",
+        "path": "Scaff-pro/frontend/src/store",
+        "type": "directory",
+        "lines": 0,
+        "val": 14,
+        "color": "#4d515a",
+        "baseColor": "#4ec9b0",
+        "originalColor": "#4ec9b0",
+        "defaultGlow": 0.18,
+        "glowIntensity": 0.22,
+        "highlighted": false,
+        "parentPath": "Scaff-pro/frontend/src",
+        "childFileCount": 2,
+        "x": 270.34942733475486,
+        "y": 193.20497641829664,
+        "z": -127.47504891730487,
+        "vx": -0.07347141114133668,
+        "vy": 0.28715316839090343,
+        "vz": -0.22767814985576004
+      },
+      {
+        "id": "Scaff-pro/frontend/src/store/planningStore.ts",
+        "name": "planningStore.ts",
+        "path": "Scaff-pro/frontend/src/store/planningStore.ts",
+        "type": "file",
+        "lines": 0,
+        "val": 6,
+        "color": "#4d515a",
+        "baseColor": "#3178c6",
+        "originalColor": "#3178c6",
+        "defaultGlow": 0.1,
+        "glowIntensity": 0.22,
+        "highlighted": false,
+        "parentPath": "Scaff-pro/frontend/src/store",
+        "childFileCount": 0,
+        "x": 300.22985313939296,
+        "y": 172.74479888604026,
+        "z": -118.23405574004822,
+        "vx": -0.016173981595802578,
+        "vy": 0.24883752963649128,
+        "vz": -0.3256720061337442
+      },
+      {
+        "id": "Scaff-pro/frontend/src/store/themeStore.ts",
+        "name": "themeStore.ts",
+        "path": "Scaff-pro/frontend/src/store/themeStore.ts",
+        "type": "file",
+        "lines": 0,
+        "val": 6,
+        "color": "#4d515a",
+        "baseColor": "#3178c6",
+        "originalColor": "#3178c6",
+        "defaultGlow": 0.1,
+        "glowIntensity": 0.22,
+        "highlighted": false,
+        "parentPath": "Scaff-pro/frontend/src/store",
+        "childFileCount": 0,
+        "x": 287.11482734273477,
+        "y": 166.8591945720595,
+        "z": -148.663896006277,
+        "vx": -0.1703363311891675,
+        "vy": 0.3332339892443258,
+        "vz": -0.3045813339608727
+      },
+      {
+        "id": "Scaff-pro/frontend/src/types",
+        "name": "types",
+        "path": "Scaff-pro/frontend/src/types",
+        "type": "directory",
+        "lines": 0,
+        "val": 14,
+        "color": "#4d515a",
+        "baseColor": "#4ec9b0",
+        "originalColor": "#4ec9b0",
+        "defaultGlow": 0.18,
+        "glowIntensity": 0.22,
+        "highlighted": false,
+        "parentPath": "Scaff-pro/frontend/src",
+        "childFileCount": 1,
+        "x": 242.78101058149872,
+        "y": 217.68628538225968,
+        "z": -69.37925441000328,
+        "vx": 0.28222007060877197,
+        "vy": 0.21394829774773033,
+        "vz": -0.085620908317377
+      },
+      {
+        "id": "Scaff-pro/frontend/src/types/index.ts",
+        "name": "index.ts",
+        "path": "Scaff-pro/frontend/src/types/index.ts",
+        "type": "file",
+        "lines": 0,
+        "val": 6,
+        "color": "#4d515a",
+        "baseColor": "#3178c6",
+        "originalColor": "#3178c6",
+        "defaultGlow": 0.1,
+        "glowIntensity": 0.22,
+        "highlighted": false,
+        "parentPath": "Scaff-pro/frontend/src/types",
+        "childFileCount": 0,
+        "x": 248.70647319403383,
+        "y": 200.8319751801284,
+        "z": -37.91605696262528,
+        "vx": 0.4389192991225755,
+        "vy": 0.27754724775483763,
+        "vz": -0.03356731262545784
+      },
+      {
+        "id": "Scaff-pro/frontend/eslint.config.mjs",
+        "name": "eslint.config.mjs",
+        "path": "Scaff-pro/frontend/eslint.config.mjs",
+        "type": "file",
+        "lines": 0,
+        "val": 6,
+        "color": "#4d515a",
+        "baseColor": "#57606f",
+        "originalColor": "#57606f",
+        "defaultGlow": 0.18,
+        "glowIntensity": 0.22,
+        "highlighted": false,
+        "parentPath": "Scaff-pro/frontend",
+        "childFileCount": 0,
+        "x": 36.86185818568385,
+        "y": 131.2957975228119,
+        "z": -109.57090360071675,
+        "vx": -0.32615910620343475,
+        "vy": -0.19656830802107123,
+        "vz": 0.2142451697582135
+      },
+      {
+        "id": "Scaff-pro/frontend/next-env.d.ts",
+        "name": "next-env.d.ts",
+        "path": "Scaff-pro/frontend/next-env.d.ts",
+        "type": "file",
+        "lines": 0,
+        "val": 6,
+        "color": "#4d515a",
+        "baseColor": "#3178c6",
+        "originalColor": "#3178c6",
+        "defaultGlow": 0.1,
+        "glowIntensity": 0.22,
+        "highlighted": false,
+        "parentPath": "Scaff-pro/frontend",
+        "childFileCount": 0,
+        "x": 62.441025974313185,
+        "y": 166.2915063745021,
+        "z": -111.75290408276183,
+        "vx": -0.24616461556012692,
+        "vy": -0.12422644316904427,
+        "vz": 0.37819619717077474
+      },
+      {
+        "id": "Scaff-pro/frontend/next.config.ts",
+        "name": "next.config.ts",
+        "path": "Scaff-pro/frontend/next.config.ts",
+        "type": "file",
+        "lines": 0,
+        "val": 6,
+        "color": "#4d515a",
+        "baseColor": "#3178c6",
+        "originalColor": "#3178c6",
+        "defaultGlow": 0.1,
+        "glowIntensity": 0.22,
+        "highlighted": false,
+        "parentPath": "Scaff-pro/frontend",
+        "childFileCount": 0,
+        "x": 56.33746965666824,
+        "y": 147.90863595377343,
+        "z": -61.709852965361925,
+        "vx": -0.17969645486375194,
+        "vy": -0.2632144229802656,
+        "vz": 0.4428399922631741
+      },
+      {
+        "id": "Scaff-pro/frontend/package-lock.json",
+        "name": "package-lock.json",
+        "path": "Scaff-pro/frontend/package-lock.json",
+        "type": "file",
+        "lines": 0,
+        "val": 6,
+        "color": "#4d515a",
+        "baseColor": "#8e44ad",
+        "originalColor": "#8e44ad",
+        "defaultGlow": 0.18,
+        "glowIntensity": 0.22,
+        "highlighted": false,
+        "parentPath": "Scaff-pro/frontend",
+        "childFileCount": 0,
+        "x": 73.84355817461575,
+        "y": 145.69852308472878,
+        "z": -132.9406662034114,
+        "vx": -0.16974884416429228,
+        "vy": -0.2973248825558441,
+        "vz": 0.28299685082240494
+      },
+      {
+        "id": "Scaff-pro/frontend/package.json",
+        "name": "package.json",
+        "path": "Scaff-pro/frontend/package.json",
+        "type": "file",
+        "lines": 0,
+        "val": 6,
+        "color": "#4d515a",
+        "baseColor": "#8e44ad",
+        "originalColor": "#8e44ad",
+        "defaultGlow": 0.18,
+        "glowIntensity": 0.22,
+        "highlighted": false,
+        "parentPath": "Scaff-pro/frontend",
+        "childFileCount": 0,
+        "x": 91.65049025629406,
+        "y": 137.00747309968935,
+        "z": -59.7073733300484,
+        "vx": -0.2663761606345621,
+        "vy": -0.32328852774244815,
+        "vz": 0.35505569741230597
+      },
+      {
+        "id": "Scaff-pro/frontend/pnpm-lock.yaml",
+        "name": "pnpm-lock.yaml",
+        "path": "Scaff-pro/frontend/pnpm-lock.yaml",
+        "type": "file",
+        "lines": 0,
+        "val": 6,
+        "color": "#4d515a",
+        "baseColor": "#f1c40f",
+        "originalColor": "#f1c40f",
+        "defaultGlow": 0.18,
+        "glowIntensity": 0.22,
+        "highlighted": false,
+        "parentPath": "Scaff-pro/frontend",
+        "childFileCount": 0,
+        "x": 59.33166228328108,
+        "y": 97.73771367965482,
+        "z": -100.30446412660524,
+        "vx": -0.27836336823525887,
+        "vy": -0.3201412214816484,
+        "vz": 0.38912412175061
+      },
+      {
+        "id": "Scaff-pro/frontend/postcss.config.mjs",
+        "name": "postcss.config.mjs",
+        "path": "Scaff-pro/frontend/postcss.config.mjs",
+        "type": "file",
+        "lines": 0,
+        "val": 6,
+        "color": "#4d515a",
+        "baseColor": "#57606f",
+        "originalColor": "#57606f",
+        "defaultGlow": 0.18,
+        "glowIntensity": 0.22,
+        "highlighted": false,
+        "parentPath": "Scaff-pro/frontend",
+        "childFileCount": 0,
+        "x": 93.95538696955964,
+        "y": 104.73179351659535,
+        "z": -77.49914588249523,
+        "vx": -0.1666326929970758,
+        "vy": -0.20233783951387155,
+        "vz": 0.3786160351314782
+      },
+      {
+        "id": "Scaff-pro/frontend/README.md",
+        "name": "README.md",
+        "path": "Scaff-pro/frontend/README.md",
+        "type": "file",
+        "lines": 0,
+        "val": 6,
+        "color": "#4d515a",
+        "baseColor": "#3498db",
+        "originalColor": "#3498db",
+        "defaultGlow": 0.18,
+        "glowIntensity": 0.22,
+        "highlighted": false,
+        "parentPath": "Scaff-pro/frontend",
+        "childFileCount": 0,
+        "x": 72.48017020777648,
+        "y": 116.28293748432884,
+        "z": -131.02412748570308,
+        "vx": -0.26256856840642423,
+        "vy": -0.280920882883339,
+        "vz": 0.2900894954836819
+      },
+      {
+        "id": "Scaff-pro/frontend/tsconfig.json",
+        "name": "tsconfig.json",
+        "path": "Scaff-pro/frontend/tsconfig.json",
+        "type": "file",
+        "lines": 0,
+        "val": 6,
+        "color": "#4d515a",
+        "baseColor": "#8e44ad",
+        "originalColor": "#8e44ad",
+        "defaultGlow": 0.18,
+        "glowIntensity": 0.22,
+        "highlighted": false,
+        "parentPath": "Scaff-pro/frontend",
+        "childFileCount": 0,
+        "x": 102.8134230663668,
+        "y": 156.6638978265858,
+        "z": -98.19571927877024,
+        "vx": -0.17363577815276518,
+        "vy": -0.2603856867557283,
+        "vz": 0.3580300632646184
+      },
+      {
+        "id": "Scaff-pro/frontend/UI_DESIGN_SYSTEM.md",
+        "name": "UI_DESIGN_SYSTEM.md",
+        "path": "Scaff-pro/frontend/UI_DESIGN_SYSTEM.md",
+        "type": "file",
+        "lines": 0,
+        "val": 6,
+        "color": "#4d515a",
+        "baseColor": "#3498db",
+        "originalColor": "#3498db",
+        "defaultGlow": 0.18,
+        "glowIntensity": 0.22,
+        "highlighted": false,
+        "parentPath": "Scaff-pro/frontend",
+        "childFileCount": 0,
+        "x": 104.3129420812151,
+        "y": 120.23435563952023,
+        "z": -115.19140549728165,
+        "vx": -0.14754948097778334,
+        "vy": -0.1975359212925212,
+        "vz": 0.35173712404216895
+      },
+      {
+        "id": "Scaff-pro/scaffold_logic",
+        "name": "scaffold_logic",
+        "path": "Scaff-pro/scaffold_logic",
+        "type": "directory",
+        "lines": 0,
+        "val": 14,
+        "color": "#4d515a",
+        "baseColor": "#4ec9b0",
+        "originalColor": "#4ec9b0",
+        "defaultGlow": 0.18,
+        "glowIntensity": 0.22,
+        "highlighted": false,
+        "parentPath": "Scaff-pro",
+        "childFileCount": 1,
+        "x": -129.7616061198571,
+        "y": -85.42142645144249,
+        "z": -141.92689342256247,
+        "vx": -0.2216040013620305,
+        "vy": -0.05127962573381039,
+        "vz": 0.113324982334682
+      },
+      {
+        "id": "Scaff-pro/scaffold_logic/src",
+        "name": "src",
+        "path": "Scaff-pro/scaffold_logic/src",
+        "type": "directory",
+        "lines": 0,
+        "val": 14,
+        "color": "#4d515a",
+        "baseColor": "#4ec9b0",
+        "originalColor": "#4ec9b0",
+        "defaultGlow": 0.18,
+        "glowIntensity": 0.22,
+        "highlighted": false,
+        "parentPath": "Scaff-pro/scaffold_logic",
+        "childFileCount": 0,
+        "x": -176.62780555290595,
+        "y": -108.4366810645726,
+        "z": -203.01597233126978,
+        "vx": -0.03311053415438958,
+        "vy": 0.05212624030586526,
+        "vz": -0.08697068892054466
+      },
+      {
+        "id": "Scaff-pro/scaffold_logic/src/scaffold_logic",
+        "name": "scaffold_logic",
+        "path": "Scaff-pro/scaffold_logic/src/scaffold_logic",
+        "type": "directory",
+        "lines": 0,
+        "val": 14,
+        "color": "#4d515a",
+        "baseColor": "#4ec9b0",
+        "originalColor": "#4ec9b0",
+        "defaultGlow": 0.18,
+        "glowIntensity": 0.22,
+        "highlighted": false,
+        "parentPath": "Scaff-pro/scaffold_logic/src",
+        "childFileCount": 3,
+        "x": -213.7123391895026,
+        "y": -126.36105308453736,
+        "z": -247.34047844451842,
+        "vx": 0.09695017373741723,
+        "vy": 0.11485148984423287,
+        "vz": -0.28332964994791376
+      },
+      {
+        "id": "Scaff-pro/scaffold_logic/src/scaffold_logic/__init__.py",
+        "name": "__init__.py",
+        "path": "Scaff-pro/scaffold_logic/src/scaffold_logic/__init__.py",
+        "type": "file",
+        "lines": 0,
+        "val": 6,
+        "color": "#4d515a",
+        "baseColor": "#57606f",
+        "originalColor": "#57606f",
+        "defaultGlow": 0.18,
+        "glowIntensity": 0.22,
+        "highlighted": false,
+        "parentPath": "Scaff-pro/scaffold_logic/src/scaffold_logic",
+        "childFileCount": 0,
+        "x": -216.1361160787336,
+        "y": -149.82912857431566,
+        "z": -276.3033588698758,
+        "vx": 0.13635076085492948,
+        "vy": 0.1796979331670373,
+        "vz": -0.38482008747385227
+      },
+      {
+        "id": "Scaff-pro/scaffold_logic/src/scaffold_logic/core.py",
+        "name": "core.py",
+        "path": "Scaff-pro/scaffold_logic/src/scaffold_logic/core.py",
+        "type": "file",
+        "lines": 0,
+        "val": 6,
+        "color": "#4d515a",
+        "baseColor": "#57606f",
+        "originalColor": "#57606f",
+        "defaultGlow": 0.18,
+        "glowIntensity": 0.22,
+        "highlighted": false,
+        "parentPath": "Scaff-pro/scaffold_logic/src/scaffold_logic",
+        "childFileCount": 0,
+        "x": -235.87780895601952,
+        "y": -116.45623299801994,
+        "z": -276.2267631094904,
+        "vx": 0.19444437925420316,
+        "vy": 0.17254366051079956,
+        "vz": -0.37432827973371957
+      },
+      {
+        "id": "Scaff-pro/scaffold_logic/src/scaffold_logic/types.py",
+        "name": "types.py",
+        "path": "Scaff-pro/scaffold_logic/src/scaffold_logic/types.py",
+        "type": "file",
+        "lines": 0,
+        "val": 6,
+        "color": "#4d515a",
+        "baseColor": "#57606f",
+        "originalColor": "#57606f",
+        "defaultGlow": 0.18,
+        "glowIntensity": 0.22,
+        "highlighted": false,
+        "parentPath": "Scaff-pro/scaffold_logic/src/scaffold_logic",
+        "childFileCount": 0,
+        "x": -246.4291199325071,
+        "y": -143.9237064804966,
+        "z": -256.2934044445259,
+        "vx": 0.093898907765165,
+        "vy": 0.14284671531145282,
+        "vz": -0.36171800223380685
+      },
+      {
+        "id": "Scaff-pro/scaffold_logic/pyproject.toml",
+        "name": "pyproject.toml",
+        "path": "Scaff-pro/scaffold_logic/pyproject.toml",
+        "type": "file",
+        "lines": 0,
+        "val": 6,
+        "color": "#4d515a",
+        "baseColor": "#57606f",
+        "originalColor": "#57606f",
+        "defaultGlow": 0.18,
+        "glowIntensity": 0.22,
+        "highlighted": false,
+        "parentPath": "Scaff-pro/scaffold_logic",
+        "childFileCount": 0,
+        "x": -143.0012528764975,
+        "y": -81.19445978448357,
+        "z": -175.2864154271921,
+        "vx": -0.11609464224217567,
+        "vy": -0.1886701902827724,
+        "vz": -0.014062700366263725
+      },
+      {
+        "id": "Scaff-pro/.gitignore",
+        "name": ".gitignore",
+        "path": "Scaff-pro/.gitignore",
+        "type": "file",
+        "lines": 0,
+        "val": 6,
+        "color": "#4d515a",
+        "baseColor": "#57606f",
+        "originalColor": "#57606f",
+        "defaultGlow": 0.18,
+        "glowIntensity": 0.22,
+        "highlighted": false,
+        "parentPath": "Scaff-pro",
+        "childFileCount": 0,
+        "x": -102.34463280437386,
+        "y": -63.19128417018935,
+        "z": -34.00298524500349,
+        "vx": -0.4056814924221193,
+        "vy": -0.26769210124524917,
+        "vz": 0.23660537694656827
+      },
+      {
+        "id": "Scaff-pro/package-lock.json",
+        "name": "package-lock.json",
+        "path": "Scaff-pro/package-lock.json",
+        "type": "file",
+        "lines": 0,
+        "val": 6,
+        "color": "#4d515a",
+        "baseColor": "#8e44ad",
+        "originalColor": "#8e44ad",
+        "defaultGlow": 0.18,
+        "glowIntensity": 0.22,
+        "highlighted": false,
+        "parentPath": "Scaff-pro",
+        "childFileCount": 0,
+        "x": -43.36719793524111,
+        "y": -69.23589171839365,
+        "z": -60.962414692630695,
+        "vx": -0.5132397095108289,
+        "vy": 0.020955300277891713,
+        "vz": 0.20562634759979015
+      },
+      {
+        "id": "Scaff-pro/README.md",
+        "name": "README.md",
+        "path": "Scaff-pro/README.md",
+        "type": "file",
+        "lines": 0,
+        "val": 6,
+        "color": "#4d515a",
+        "baseColor": "#3498db",
+        "originalColor": "#3498db",
+        "defaultGlow": 0.18,
+        "glowIntensity": 0.22,
+        "highlighted": false,
+        "parentPath": "Scaff-pro",
+        "childFileCount": 0,
+        "x": -90.10422620424741,
+        "y": -27.301745979160632,
+        "z": -56.09314233247955,
+        "vx": -0.5641540553126602,
+        "vy": -0.10104263347959451,
+        "vz": 0.11149768906572155
+      }
+    ],
+    "links": [
+      {
+        "source": "Scaff-pro",
+        "target": "Scaff-pro/.claude",
+        "type": "tree"
+      },
+      {
+        "source": "Scaff-pro",
+        "target": "Scaff-pro/.kamui",
+        "type": "tree"
+      },
+      {
+        "source": "Scaff-pro",
+        "target": "Scaff-pro/.vscode",
+        "type": "tree"
+      },
+      {
+        "source": "Scaff-pro",
+        "target": "Scaff-pro/.worktrees",
+        "type": "tree"
+      },
+      {
+        "source": "Scaff-pro",
+        "target": "Scaff-pro/.yoyo",
+        "type": "tree"
+      },
+      {
+        "source": "Scaff-pro",
+        "target": "Scaff-pro/agent_docs",
+        "type": "tree"
+      },
+      {
+        "source": "Scaff-pro/agent_docs",
+        "target": "Scaff-pro/agent_docs/agent.summary.md",
+        "type": "tree"
+      },
+      {
+        "source": "Scaff-pro/agent_docs",
+        "target": "Scaff-pro/agent_docs/directory_structure.md",
+        "type": "tree"
+      },
+      {
+        "source": "Scaff-pro/agent_docs",
+        "target": "Scaff-pro/agent_docs/requirements.md",
+        "type": "tree"
+      },
+      {
+        "source": "Scaff-pro/agent_docs",
+        "target": "Scaff-pro/agent_docs/roadmap.md",
+        "type": "tree"
+      },
+      {
+        "source": "Scaff-pro/agent_docs",
+        "target": "Scaff-pro/agent_docs/screens.md",
+        "type": "tree"
+      },
+      {
+        "source": "Scaff-pro/agent_docs",
+        "target": "Scaff-pro/agent_docs/tech_stack.md",
+        "type": "tree"
+      },
+      {
+        "source": "Scaff-pro",
+        "target": "Scaff-pro/backend",
+        "type": "tree"
+      },
+      {
+        "source": "Scaff-pro/backend",
+        "target": "Scaff-pro/backend/app",
+        "type": "tree"
+      },
+      {
+        "source": "Scaff-pro/backend/app",
+        "target": "Scaff-pro/backend/app/__pycache__",
+        "type": "tree"
+      },
+      {
+        "source": "Scaff-pro/backend/app/__pycache__",
+        "target": "Scaff-pro/backend/app/__pycache__/__init__.cpython-313.pyc",
+        "type": "tree"
+      },
+      {
+        "source": "Scaff-pro/backend/app/__pycache__",
+        "target": "Scaff-pro/backend/app/__pycache__/__init__.cpython-314.pyc",
+        "type": "tree"
+      },
+      {
+        "source": "Scaff-pro/backend/app/__pycache__",
+        "target": "Scaff-pro/backend/app/__pycache__/main.cpython-313.pyc",
+        "type": "tree"
+      },
+      {
+        "source": "Scaff-pro/backend/app/__pycache__",
+        "target": "Scaff-pro/backend/app/__pycache__/main.cpython-314.pyc",
+        "type": "tree"
+      },
+      {
+        "source": "Scaff-pro/backend/app",
+        "target": "Scaff-pro/backend/app/api",
+        "type": "tree"
+      },
+      {
+        "source": "Scaff-pro/backend/app/api",
+        "target": "Scaff-pro/backend/app/api/__pycache__",
+        "type": "tree"
+      },
+      {
+        "source": "Scaff-pro/backend/app/api/__pycache__",
+        "target": "Scaff-pro/backend/app/api/__pycache__/__init__.cpython-313.pyc",
+        "type": "tree"
+      },
+      {
+        "source": "Scaff-pro/backend/app/api",
+        "target": "Scaff-pro/backend/app/api/v1",
+        "type": "tree"
+      },
+      {
+        "source": "Scaff-pro/backend/app/api/v1",
+        "target": "Scaff-pro/backend/app/api/v1/__pycache__",
+        "type": "tree"
+      },
+      {
+        "source": "Scaff-pro/backend/app/api/v1/__pycache__",
+        "target": "Scaff-pro/backend/app/api/v1/__pycache__/__init__.cpython-313.pyc",
+        "type": "tree"
+      },
+      {
+        "source": "Scaff-pro/backend/app/api/v1/__pycache__",
+        "target": "Scaff-pro/backend/app/api/v1/__pycache__/drawing_mock.cpython-313.pyc",
+        "type": "tree"
+      },
+      {
+        "source": "Scaff-pro/backend/app/api/v1/__pycache__",
+        "target": "Scaff-pro/backend/app/api/v1/__pycache__/drawing.cpython-313.pyc",
+        "type": "tree"
+      },
+      {
+        "source": "Scaff-pro/backend/app/api/v1/__pycache__",
+        "target": "Scaff-pro/backend/app/api/v1/__pycache__/floorplan_extract.cpython-313.pyc",
+        "type": "tree"
+      },
+      {
+        "source": "Scaff-pro/backend/app/api/v1",
+        "target": "Scaff-pro/backend/app/api/v1/__init__.py",
+        "type": "tree"
+      },
+      {
+        "source": "Scaff-pro/backend/app/api/v1",
+        "target": "Scaff-pro/backend/app/api/v1/drawings.py",
+        "type": "tree"
+      },
+      {
+        "source": "Scaff-pro/backend/app/api",
+        "target": "Scaff-pro/backend/app/api/__init__.py",
+        "type": "tree"
+      },
+      {
+        "source": "Scaff-pro/backend/app",
+        "target": "Scaff-pro/backend/app/schemas",
+        "type": "tree"
+      },
+      {
+        "source": "Scaff-pro/backend/app/schemas",
+        "target": "Scaff-pro/backend/app/schemas/__init__.py",
+        "type": "tree"
+      },
+      {
+        "source": "Scaff-pro/backend/app/schemas",
+        "target": "Scaff-pro/backend/app/schemas/drawing.py",
+        "type": "tree"
+      },
+      {
+        "source": "Scaff-pro/backend/app",
+        "target": "Scaff-pro/backend/app/services",
+        "type": "tree"
+      },
+      {
+        "source": "Scaff-pro/backend/app/services",
+        "target": "Scaff-pro/backend/app/services/__pycache__",
+        "type": "tree"
+      },
+      {
+        "source": "Scaff-pro/backend/app/services/__pycache__",
+        "target": "Scaff-pro/backend/app/services/__pycache__/__init__.cpython-313.pyc",
+        "type": "tree"
+      },
+      {
+        "source": "Scaff-pro/backend/app/services/__pycache__",
+        "target": "Scaff-pro/backend/app/services/__pycache__/__init__.cpython-314.pyc",
+        "type": "tree"
+      },
+      {
+        "source": "Scaff-pro/backend/app/services",
+        "target": "Scaff-pro/backend/app/services/floorplan_analyzer",
+        "type": "tree"
+      },
+      {
+        "source": "Scaff-pro/backend/app/services/floorplan_analyzer",
+        "target": "Scaff-pro/backend/app/services/floorplan_analyzer/__pycache__",
+        "type": "tree"
+      },
+      {
+        "source": "Scaff-pro/backend/app/services/floorplan_analyzer/__pycache__",
+        "target": "Scaff-pro/backend/app/services/floorplan_analyzer/__pycache__/__init__.cpython-313.pyc",
+        "type": "tree"
+      },
+      {
+        "source": "Scaff-pro/backend/app/services/floorplan_analyzer/__pycache__",
+        "target": "Scaff-pro/backend/app/services/floorplan_analyzer/__pycache__/__init__.cpython-314.pyc",
+        "type": "tree"
+      },
+      {
+        "source": "Scaff-pro/backend/app/services/floorplan_analyzer/__pycache__",
+        "target": "Scaff-pro/backend/app/services/floorplan_analyzer/__pycache__/analyzer.cpython-313.pyc",
+        "type": "tree"
+      },
+      {
+        "source": "Scaff-pro/backend/app/services/floorplan_analyzer/__pycache__",
+        "target": "Scaff-pro/backend/app/services/floorplan_analyzer/__pycache__/analyzer.cpython-314.pyc",
+        "type": "tree"
+      },
+      {
+        "source": "Scaff-pro/backend/app/services/floorplan_analyzer/__pycache__",
+        "target": "Scaff-pro/backend/app/services/floorplan_analyzer/__pycache__/types.cpython-313.pyc",
+        "type": "tree"
+      },
+      {
+        "source": "Scaff-pro/backend/app/services",
+        "target": "Scaff-pro/backend/app/services/__init__.py",
+        "type": "tree"
+      },
+      {
+        "source": "Scaff-pro/backend/app/services",
+        "target": "Scaff-pro/backend/app/services/drawing_analyzer.py",
+        "type": "tree"
+      },
+      {
+        "source": "Scaff-pro/backend/app",
+        "target": "Scaff-pro/backend/app/__init__.py",
+        "type": "tree"
+      },
+      {
+        "source": "Scaff-pro/backend/app",
+        "target": "Scaff-pro/backend/app/main.py",
+        "type": "tree"
+      },
+      {
+        "source": "Scaff-pro/backend",
+        "target": "Scaff-pro/backend/backend",
+        "type": "tree"
+      },
+      {
+        "source": "Scaff-pro/backend",
+        "target": "Scaff-pro/backend/scaff_backend.egg-info",
+        "type": "tree"
+      },
+      {
+        "source": "Scaff-pro/backend/scaff_backend.egg-info",
+        "target": "Scaff-pro/backend/scaff_backend.egg-info/dependency_links.txt",
+        "type": "tree"
+      },
+      {
+        "source": "Scaff-pro/backend/scaff_backend.egg-info",
+        "target": "Scaff-pro/backend/scaff_backend.egg-info/PKG-INFO",
+        "type": "tree"
+      },
+      {
+        "source": "Scaff-pro/backend/scaff_backend.egg-info",
+        "target": "Scaff-pro/backend/scaff_backend.egg-info/requires.txt",
+        "type": "tree"
+      },
+      {
+        "source": "Scaff-pro/backend/scaff_backend.egg-info",
+        "target": "Scaff-pro/backend/scaff_backend.egg-info/SOURCES.txt",
+        "type": "tree"
+      },
+      {
+        "source": "Scaff-pro/backend/scaff_backend.egg-info",
+        "target": "Scaff-pro/backend/scaff_backend.egg-info/top_level.txt",
+        "type": "tree"
+      },
+      {
+        "source": "Scaff-pro/backend",
+        "target": "Scaff-pro/backend/pyproject.toml",
+        "type": "tree"
+      },
+      {
+        "source": "Scaff-pro",
+        "target": "Scaff-pro/frontend",
+        "type": "tree"
+      },
+      {
+        "source": "Scaff-pro/frontend",
+        "target": "Scaff-pro/frontend/public",
+        "type": "tree"
+      },
+      {
+        "source": "Scaff-pro/frontend/public",
+        "target": "Scaff-pro/frontend/public/file.svg",
+        "type": "tree"
+      },
+      {
+        "source": "Scaff-pro/frontend/public",
+        "target": "Scaff-pro/frontend/public/globe.svg",
+        "type": "tree"
+      },
+      {
+        "source": "Scaff-pro/frontend/public",
+        "target": "Scaff-pro/frontend/public/next.svg",
+        "type": "tree"
+      },
+      {
+        "source": "Scaff-pro/frontend/public",
+        "target": "Scaff-pro/frontend/public/vercel.svg",
+        "type": "tree"
+      },
+      {
+        "source": "Scaff-pro/frontend/public",
+        "target": "Scaff-pro/frontend/public/window.svg",
+        "type": "tree"
+      },
+      {
+        "source": "Scaff-pro/frontend",
+        "target": "Scaff-pro/frontend/src",
+        "type": "tree"
+      },
+      {
+        "source": "Scaff-pro/frontend/src",
+        "target": "Scaff-pro/frontend/src/app",
+        "type": "tree"
+      },
+      {
+        "source": "Scaff-pro/frontend/src/app",
+        "target": "Scaff-pro/frontend/src/app/planning",
+        "type": "tree"
+      },
+      {
+        "source": "Scaff-pro/frontend/src/app/planning",
+        "target": "Scaff-pro/frontend/src/app/planning/page.tsx",
+        "type": "tree"
+      },
+      {
+        "source": "Scaff-pro/frontend/src/app",
+        "target": "Scaff-pro/frontend/src/app/favicon.ico",
+        "type": "tree"
+      },
+      {
+        "source": "Scaff-pro/frontend/src/app",
+        "target": "Scaff-pro/frontend/src/app/globals.css",
+        "type": "tree"
+      },
+      {
+        "source": "Scaff-pro/frontend/src/app",
+        "target": "Scaff-pro/frontend/src/app/layout.tsx",
+        "type": "tree"
+      },
+      {
+        "source": "Scaff-pro/frontend/src/app",
+        "target": "Scaff-pro/frontend/src/app/page.tsx",
+        "type": "tree"
+      },
+      {
+        "source": "Scaff-pro/frontend/src",
+        "target": "Scaff-pro/frontend/src/components",
+        "type": "tree"
+      },
+      {
+        "source": "Scaff-pro/frontend/src/components",
+        "target": "Scaff-pro/frontend/src/components/icons",
+        "type": "tree"
+      },
+      {
+        "source": "Scaff-pro/frontend/src/components/icons",
+        "target": "Scaff-pro/frontend/src/components/icons/index.tsx",
+        "type": "tree"
+      },
+      {
+        "source": "Scaff-pro/frontend/src/components",
+        "target": "Scaff-pro/frontend/src/components/ui",
+        "type": "tree"
+      },
+      {
+        "source": "Scaff-pro/frontend/src/components/ui",
+        "target": "Scaff-pro/frontend/src/components/ui/GlassPanel.tsx",
+        "type": "tree"
+      },
+      {
+        "source": "Scaff-pro/frontend/src/components/ui",
+        "target": "Scaff-pro/frontend/src/components/ui/NeonButton.tsx",
+        "type": "tree"
+      },
+      {
+        "source": "Scaff-pro/frontend/src/components",
+        "target": "Scaff-pro/frontend/src/components/ThemeRegistry.tsx",
+        "type": "tree"
+      },
+      {
+        "source": "Scaff-pro/frontend/src",
+        "target": "Scaff-pro/frontend/src/features",
+        "type": "tree"
+      },
+      {
+        "source": "Scaff-pro/frontend/src/features",
+        "target": "Scaff-pro/frontend/src/features/planning",
+        "type": "tree"
+      },
+      {
+        "source": "Scaff-pro/frontend/src/features/planning",
+        "target": "Scaff-pro/frontend/src/features/planning/components",
+        "type": "tree"
+      },
+      {
+        "source": "Scaff-pro/frontend/src/features/planning/components",
+        "target": "Scaff-pro/frontend/src/features/planning/components/Canvas2D.tsx",
+        "type": "tree"
+      },
+      {
+        "source": "Scaff-pro/frontend/src/features/planning/components",
+        "target": "Scaff-pro/frontend/src/features/planning/components/Canvas3D.tsx",
+        "type": "tree"
+      },
+      {
+        "source": "Scaff-pro/frontend/src/features/planning/components",
+        "target": "Scaff-pro/frontend/src/features/planning/components/DrawingImportDialog.tsx",
+        "type": "tree"
+      },
+      {
+        "source": "Scaff-pro/frontend/src/features/planning/components",
+        "target": "Scaff-pro/frontend/src/features/planning/components/FloatingReferenceViewer.tsx",
+        "type": "tree"
+      },
+      {
+        "source": "Scaff-pro/frontend/src/features/planning/components",
+        "target": "Scaff-pro/frontend/src/features/planning/components/Header.tsx",
+        "type": "tree"
+      },
+      {
+        "source": "Scaff-pro/frontend/src/features/planning/components",
+        "target": "Scaff-pro/frontend/src/features/planning/components/index.ts",
+        "type": "tree"
+      },
+      {
+        "source": "Scaff-pro/frontend/src/features/planning/components",
+        "target": "Scaff-pro/frontend/src/features/planning/components/ReferenceViewer.tsx",
+        "type": "tree"
+      },
+      {
+        "source": "Scaff-pro/frontend/src/features/planning/components",
+        "target": "Scaff-pro/frontend/src/features/planning/components/ScaleInputModal.tsx",
+        "type": "tree"
+      },
+      {
+        "source": "Scaff-pro/frontend/src/features/planning/components",
+        "target": "Scaff-pro/frontend/src/features/planning/components/SidePanel.tsx",
+        "type": "tree"
+      },
+      {
+        "source": "Scaff-pro/frontend/src/features/planning/components",
+        "target": "Scaff-pro/frontend/src/features/planning/components/ToolPalette.tsx",
+        "type": "tree"
+      },
+      {
+        "source": "Scaff-pro/frontend/src/features/planning/components",
+        "target": "Scaff-pro/frontend/src/features/planning/components/View3D.tsx",
+        "type": "tree"
+      },
+      {
+        "source": "Scaff-pro/frontend/src/features/planning/components",
+        "target": "Scaff-pro/frontend/src/features/planning/components/ViewSwitcher.tsx",
+        "type": "tree"
+      },
+      {
+        "source": "Scaff-pro/frontend/src/features/planning",
+        "target": "Scaff-pro/frontend/src/features/planning/layouts",
+        "type": "tree"
+      },
+      {
+        "source": "Scaff-pro/frontend/src/features/planning/layouts",
+        "target": "Scaff-pro/frontend/src/features/planning/layouts/PlanningLayout.tsx",
+        "type": "tree"
+      },
+      {
+        "source": "Scaff-pro/frontend/src/features/planning",
+        "target": "Scaff-pro/frontend/src/features/planning/index.ts",
+        "type": "tree"
+      },
+      {
+        "source": "Scaff-pro/frontend/src/features/planning",
+        "target": "Scaff-pro/frontend/src/features/planning/PlanningScreen.tsx",
+        "type": "tree"
+      },
+      {
+        "source": "Scaff-pro/frontend/src",
+        "target": "Scaff-pro/frontend/src/store",
+        "type": "tree"
+      },
+      {
+        "source": "Scaff-pro/frontend/src/store",
+        "target": "Scaff-pro/frontend/src/store/planningStore.ts",
+        "type": "tree"
+      },
+      {
+        "source": "Scaff-pro/frontend/src/store",
+        "target": "Scaff-pro/frontend/src/store/themeStore.ts",
+        "type": "tree"
+      },
+      {
+        "source": "Scaff-pro/frontend/src",
+        "target": "Scaff-pro/frontend/src/types",
+        "type": "tree"
+      },
+      {
+        "source": "Scaff-pro/frontend/src/types",
+        "target": "Scaff-pro/frontend/src/types/index.ts",
+        "type": "tree"
+      },
+      {
+        "source": "Scaff-pro/frontend",
+        "target": "Scaff-pro/frontend/eslint.config.mjs",
+        "type": "tree"
+      },
+      {
+        "source": "Scaff-pro/frontend",
+        "target": "Scaff-pro/frontend/next-env.d.ts",
+        "type": "tree"
+      },
+      {
+        "source": "Scaff-pro/frontend",
+        "target": "Scaff-pro/frontend/next.config.ts",
+        "type": "tree"
+      },
+      {
+        "source": "Scaff-pro/frontend",
+        "target": "Scaff-pro/frontend/package-lock.json",
+        "type": "tree"
+      },
+      {
+        "source": "Scaff-pro/frontend",
+        "target": "Scaff-pro/frontend/package.json",
+        "type": "tree"
+      },
+      {
+        "source": "Scaff-pro/frontend",
+        "target": "Scaff-pro/frontend/pnpm-lock.yaml",
+        "type": "tree"
+      },
+      {
+        "source": "Scaff-pro/frontend",
+        "target": "Scaff-pro/frontend/postcss.config.mjs",
+        "type": "tree"
+      },
+      {
+        "source": "Scaff-pro/frontend",
+        "target": "Scaff-pro/frontend/README.md",
+        "type": "tree"
+      },
+      {
+        "source": "Scaff-pro/frontend",
+        "target": "Scaff-pro/frontend/tsconfig.json",
+        "type": "tree"
+      },
+      {
+        "source": "Scaff-pro/frontend",
+        "target": "Scaff-pro/frontend/UI_DESIGN_SYSTEM.md",
+        "type": "tree"
+      },
+      {
+        "source": "Scaff-pro",
+        "target": "Scaff-pro/scaffold_logic",
+        "type": "tree"
+      },
+      {
+        "source": "Scaff-pro/scaffold_logic",
+        "target": "Scaff-pro/scaffold_logic/src",
+        "type": "tree"
+      },
+      {
+        "source": "Scaff-pro/scaffold_logic/src",
+        "target": "Scaff-pro/scaffold_logic/src/scaffold_logic",
+        "type": "tree"
+      },
+      {
+        "source": "Scaff-pro/scaffold_logic/src/scaffold_logic",
+        "target": "Scaff-pro/scaffold_logic/src/scaffold_logic/__init__.py",
+        "type": "tree"
+      },
+      {
+        "source": "Scaff-pro/scaffold_logic/src/scaffold_logic",
+        "target": "Scaff-pro/scaffold_logic/src/scaffold_logic/core.py",
+        "type": "tree"
+      },
+      {
+        "source": "Scaff-pro/scaffold_logic/src/scaffold_logic",
+        "target": "Scaff-pro/scaffold_logic/src/scaffold_logic/types.py",
+        "type": "tree"
+      },
+      {
+        "source": "Scaff-pro/scaffold_logic",
+        "target": "Scaff-pro/scaffold_logic/pyproject.toml",
+        "type": "tree"
+      },
+      {
+        "source": "Scaff-pro",
+        "target": "Scaff-pro/.gitignore",
+        "type": "tree"
+      },
+      {
+        "source": "Scaff-pro",
+        "target": "Scaff-pro/package-lock.json",
+        "type": "tree"
+      },
+      {
+        "source": "Scaff-pro",
+        "target": "Scaff-pro/README.md",
+        "type": "tree"
+      }
+    ]
+  },
+  "trackedFiles": [
+    ".claude/agents/_template.md",
+    ".claude/agents/manifests/_template.yaml",
+    ".claude/agents/orchestrator.md",
+    ".claude/commands/task.md",
+    ".gitignore",
+    ".vscode/settings.json",
+    "README.md",
+    "agent_docs/agent.summary.md",
+    "agent_docs/directory_structure.md",
+    "agent_docs/requirements.md",
+    "agent_docs/roadmap.md",
+    "agent_docs/screens.md",
+    "agent_docs/tech_stack.md",
+    "backend/app/__init__.py",
+    "backend/app/__pycache__/__init__.cpython-314.pyc",
+    "backend/app/__pycache__/main.cpython-314.pyc",
+    "backend/app/api/__init__.py",
+    "backend/app/api/v1/__init__.py",
+    "backend/app/api/v1/drawings.py",
+    "backend/app/main.py",
+    "backend/app/schemas/__init__.py",
+    "backend/app/schemas/drawing.py",
+    "backend/app/services/__init__.py",
+    "backend/app/services/drawing_analyzer.py",
+    "backend/pyproject.toml",
+    "backend/scaff_backend.egg-info/PKG-INFO",
+    "backend/scaff_backend.egg-info/SOURCES.txt",
+    "backend/scaff_backend.egg-info/dependency_links.txt",
+    "backend/scaff_backend.egg-info/requires.txt",
+    "backend/scaff_backend.egg-info/top_level.txt",
+    "frontend/.gitignore",
+    "frontend/.kamui/dev.pid",
+    "frontend/README.md",
+    "frontend/UI_DESIGN_SYSTEM.md",
+    "frontend/eslint.config.mjs",
+    "frontend/next.config.ts",
+    "frontend/package-lock.json",
+    "frontend/package.json",
+    "frontend/pnpm-lock.yaml",
+    "frontend/postcss.config.mjs",
+    "frontend/public/file.svg",
+    "frontend/public/globe.svg",
+    "frontend/public/next.svg",
+    "frontend/public/vercel.svg",
+    "frontend/public/window.svg",
+    "frontend/src/app/favicon.ico",
+    "frontend/src/app/globals.css",
+    "frontend/src/app/globals.css",
+    "frontend/src/app/globals.css",
+    "frontend/src/app/layout.tsx",
+    "frontend/src/app/page.tsx",
+    "frontend/src/app/page.tsx",
+    "frontend/src/app/page.tsx",
+    "frontend/src/app/planning/page.tsx",
+    "frontend/src/components/ThemeRegistry.tsx",
+    "frontend/src/components/icons/index.tsx",
+    "frontend/src/components/ui/GlassPanel.tsx",
+    "frontend/src/components/ui/NeonButton.tsx",
+    "frontend/src/features/planning/PlanningScreen.tsx",
+    "frontend/src/features/planning/components/Canvas2D.tsx",
+    "frontend/src/features/planning/components/Canvas2D.tsx",
+    "frontend/src/features/planning/components/Canvas3D.tsx",
+    "frontend/src/features/planning/components/DrawingImportDialog.tsx",
+    "frontend/src/features/planning/components/FloatingReferenceViewer.tsx",
+    "frontend/src/features/planning/components/Header.tsx",
+    "frontend/src/features/planning/components/ReferenceViewer.tsx",
+    "frontend/src/features/planning/components/ScaleInputModal.tsx",
+    "frontend/src/features/planning/components/SidePanel.tsx",
+    "frontend/src/features/planning/components/SidePanel.tsx",
+    "frontend/src/features/planning/components/ToolPalette.tsx",
+    "frontend/src/features/planning/components/ToolPalette.tsx",
+    "frontend/src/features/planning/components/View3D.tsx",
+    "frontend/src/features/planning/components/ViewSwitcher.tsx",
+    "frontend/src/features/planning/components/index.ts",
+    "frontend/src/features/planning/index.ts",
+    "frontend/src/features/planning/layouts/PlanningLayout.tsx",
+    "frontend/src/store/planningStore.ts",
+    "frontend/src/store/planningStore.ts",
+    "frontend/src/store/themeStore.ts",
+    "frontend/src/types/index.ts",
+    "frontend/tsconfig.json",
+    "scaffold_logic/pyproject.toml",
+    "scaffold_logic/src/scaffold_logic/__init__.py",
+    "scaffold_logic/src/scaffold_logic/core.py",
+    "scaffold_logic/src/scaffold_logic/types.py"
+  ],
+  "uiState": {
+    "expandedDirs": [
+      "Scaff-pro",
+      "Scaff-pro/Scaff-pro",
+      "Scaff-pro/.kamui",
+      "Scaff-pro/Scaff-pro/.kamui",
+      "Scaff-pro/.kamui/apps",
+      "Scaff-pro/Scaff-pro/.kamui/apps",
+      "Scaff-pro/.kamui/gantte",
+      "Scaff-pro/Scaff-pro/.kamui/gantte",
+      "Scaff-pro/.kamui/manager",
+      "Scaff-pro/Scaff-pro/.kamui/manager",
+      "Scaff-pro/.kamui/prompt",
+      "Scaff-pro/Scaff-pro/.kamui/prompt",
+      "Scaff-pro/backend",
+      "Scaff-pro/Scaff-pro/backend",
+      "Scaff-pro/backend/app",
+      "Scaff-pro/Scaff-pro/backend/app",
+      "Scaff-pro/backend/app/__pycache__",
+      "Scaff-pro/Scaff-pro/backend/app/__pycache__",
+      "Scaff-pro/backend/app/api",
+      "Scaff-pro/Scaff-pro/backend/app/api",
+      "Scaff-pro/backend/app/api/__pycache__",
+      "Scaff-pro/Scaff-pro/backend/app/api/__pycache__",
+      "Scaff-pro/backend/app/api/v1",
+      "Scaff-pro/Scaff-pro/backend/app/api/v1",
+      "Scaff-pro/backend/app/api/v1/__pycache__",
+      "Scaff-pro/Scaff-pro/backend/app/api/v1/__pycache__",
+      "Scaff-pro/backend/app/services",
+      "Scaff-pro/Scaff-pro/backend/app/services",
+      "Scaff-pro/backend/app/services/__pycache__",
+      "Scaff-pro/Scaff-pro/backend/app/services/__pycache__",
+      "Scaff-pro/backend/app/services/floorplan_analyzer",
+      "Scaff-pro/Scaff-pro/backend/app/services/floorplan_analyzer",
+      "Scaff-pro/backend/app/services/floorplan_analyzer/__pycache__",
+      "Scaff-pro/Scaff-pro/backend/app/services/floorplan_analyzer/__pycache__",
+      "task-1765180981571-e66906",
+      "task-1765180986124-c8ef01",
+      "task-1765180981761-ef6d35",
+      "Scaff-pro/task-1765180981761-ef6d35",
+      "task-1765180981761-ef6d35/backend",
+      "Scaff-pro/task-1765180981761-ef6d35/backend",
+      "task-1765180981761-ef6d35/backend/app",
+      "Scaff-pro/task-1765180981761-ef6d35/backend/app",
+      "task-1765180981761-ef6d35/backend/app/schemas",
+      "Scaff-pro/task-1765180981761-ef6d35/backend/app/schemas",
+      "Scaff-pro/backend/app/schemas",
+      "Scaff-pro/Scaff-pro/backend/app/schemas",
+      "task-1765180981761-ef6d35/backend/app/api",
+      "Scaff-pro/task-1765180981761-ef6d35/backend/app/api",
+      "task-1765180981761-ef6d35/backend/app/api/v1",
+      "Scaff-pro/task-1765180981761-ef6d35/backend/app/api/v1",
+      "task-1765180981761-ef6d35/frontend",
+      "Scaff-pro/task-1765180981761-ef6d35/frontend",
+      "task-1765180981761-ef6d35/frontend/src",
+      "Scaff-pro/task-1765180981761-ef6d35/frontend/src",
+      "task-1765180981761-ef6d35/frontend/src/lib",
+      "Scaff-pro/task-1765180981761-ef6d35/frontend/src/lib",
+      "task-1765180981761-ef6d35/frontend/src/store",
+      "Scaff-pro/task-1765180981761-ef6d35/frontend/src/store",
+      "task-1765180981761-ef6d35/task-1765180981761-ef6d35",
+      "task-1765180981761-ef6d35/task-1765180981761-ef6d35/backend",
+      "task-1765180981761-ef6d35/task-1765180981761-ef6d35/backend/app",
+      "task-1765180981761-ef6d35/task-1765180981761-ef6d35/backend/app/api",
+      "task-1765180981761-ef6d35/task-1765180981761-ef6d35/backend/app/api/v1",
+      "task-1765180981761-ef6d35/task-1765180981761-ef6d35/frontend",
+      "task-1765180981761-ef6d35/task-1765180981761-ef6d35/frontend/src",
+      "task-1765180981761-ef6d35/task-1765180981761-ef6d35/frontend/src/store",
+      "task-1765180981761-ef6d35/task-1765180981761-ef6d35/backend/app/schemas",
+      "task-1765180981761-ef6d35/task-1765180981761-ef6d35/frontend/src/lib",
+      "task-1765180981761-ef6d35/frontend/src/types",
+      "Scaff-pro/task-1765180981761-ef6d35/frontend/src/types",
+      "task-1765180981761-ef6d35/frontend/src/features",
+      "Scaff-pro/task-1765180981761-ef6d35/frontend/src/features",
+      "task-1765180981761-ef6d35/frontend/src/features/planning",
+      "Scaff-pro/task-1765180981761-ef6d35/frontend/src/features/planning",
+      "task-1765180981761-ef6d35/frontend/src/features/planning/components",
+      "Scaff-pro/task-1765180981761-ef6d35/frontend/src/features/planning/components",
+      "Scaff-pro/frontend",
+      "Scaff-pro/Scaff-pro/frontend",
+      "Scaff-pro/frontend/src",
+      "Scaff-pro/Scaff-pro/frontend/src",
+      "Scaff-pro/frontend/src/features",
+      "Scaff-pro/Scaff-pro/frontend/src/features",
+      "Scaff-pro/frontend/src/features/planning",
+      "Scaff-pro/Scaff-pro/frontend/src/features/planning",
+      "Scaff-pro/frontend/src/features/planning/components",
+      "Scaff-pro/Scaff-pro/frontend/src/features/planning/components",
+      "Scaff-pro/frontend/src/store",
+      "Scaff-pro/Scaff-pro/frontend/src/store",
+      "Scaff-pro/frontend/src/types",
+      "Scaff-pro/Scaff-pro/frontend/src/types",
+      "Scaff-pro/frontend/src/lib",
+      "Scaff-pro/Scaff-pro/frontend/src/lib",
+      "task-1765180981761-ef6d35/task-1765180981761-ef6d35/frontend/src/features",
+      "task-1765180981761-ef6d35/task-1765180981761-ef6d35/frontend/src/features/planning",
+      "task-1765180981761-ef6d35/task-1765180981761-ef6d35/frontend/src/features/planning/components",
+      "task-1765180981761-ef6d35/task-1765180981761-ef6d35/frontend/src/types",
+      "Scaff-pro/task-1765180981571-e66906",
+      "task-1765180981571-e66906/backend",
+      "Scaff-pro/task-1765180981571-e66906/backend",
+      "task-1765180981571-e66906/backend/app",
+      "Scaff-pro/task-1765180981571-e66906/backend/app",
+      "task-1765180981571-e66906/backend/app/__pycache__",
+      "Scaff-pro/task-1765180981571-e66906/backend/app/__pycache__",
+      "task-1765180981571-e66906/backend/scaff_backend.egg-info",
+      "Scaff-pro/task-1765180981571-e66906/backend/scaff_backend.egg-info",
+      "task-1765180981571-e66906/frontend",
+      "Scaff-pro/task-1765180981571-e66906/frontend",
+      "task-1765180981571-e66906/frontend/.kamui",
+      "Scaff-pro/task-1765180981571-e66906/frontend/.kamui",
+      "task-1765180981571-e66906/backend/app/api",
+      "Scaff-pro/task-1765180981571-e66906/backend/app/api",
+      "task-1765180981571-e66906/backend/app/api/__pycache__",
+      "Scaff-pro/task-1765180981571-e66906/backend/app/api/__pycache__",
+      "task-1765180981571-e66906/backend/app/api/v1",
+      "Scaff-pro/task-1765180981571-e66906/backend/app/api/v1",
+      "task-1765180981571-e66906/backend/app/api/v1/__pycache__",
+      "Scaff-pro/task-1765180981571-e66906/backend/app/api/v1/__pycache__",
+      "task-1765180981571-e66906/backend/app/schemas",
+      "Scaff-pro/task-1765180981571-e66906/backend/app/schemas",
+      "task-1765180981571-e66906/backend/app/schemas/__pycache__",
+      "Scaff-pro/task-1765180981571-e66906/backend/app/schemas/__pycache__",
+      "task-1765180981571-e66906/backend/app/services",
+      "Scaff-pro/task-1765180981571-e66906/backend/app/services",
+      "task-1765180981571-e66906/backend/app/services/__pycache__",
+      "Scaff-pro/task-1765180981571-e66906/backend/app/services/__pycache__",
+      "task-1765180981571-e66906/backend/uploads",
+      "Scaff-pro/task-1765180981571-e66906/backend/uploads",
+      "Scaff-pro/frontend/src/components",
+      "Scaff-pro/Scaff-pro/frontend/src/components",
+      "Scaff-pro/frontend/src/components/icons",
+      "Scaff-pro/Scaff-pro/frontend/src/components/icons",
+      "Scaff-pro/agent_docs",
+      "Scaff-pro/Scaff-pro/agent_docs"
+    ],
+    "selectedPath": null
+  },
+  "directoryTreeMeta": {
+    "mode": "full",
+    "maxDepthApplied": 10,
+    "maxEntriesPerDirectory": 0,
+    "isPartial": false
+  },
+  "gitHistoryMeta": {
+    "mode": "summary",
+    "isPartial": true,
+    "heavyComputationSkipped": true
+  },
+  "gitHistoryState": {
+    "selectedTimelineIndex": 1,
+    "activeCommitHash": "6a06a1b34507c95d469328eeb7f7fdd73d5a541e",
+    "entries": [
+      {
+        "type": "live",
+        "label": "現在のコードベース",
+        "files": [],
+        "branch": "main",
+        "targetCommitHash": "9d589b9e0e50b1861b8528536e44b12733bff176",
+        "worktreePath": "/Users/kazuto/Desktop/Scaff-pro",
+        "timestamp": 1765184448536,
+        "lane": 0,
+        "branchLabel": "main",
+        "branchTags": [
+          "main"
+        ],
+        "isDefaultWorktree": true,
+        "branchColor": "#4f85e8",
+        "index": 0
+      },
+      {
+        "type": "commit",
+        "label": "Update agent summary with dev branch switch",
+        "commit": {
+          "hash": "6a06a1b34507c95d469328eeb7f7fdd73d5a541e",
+          "subject": "Update agent summary with dev branch switch",
+          "author": "kkk9131",
+          "timestamp": 1765184368,
+          "parents": [
+            "96e57856de15c698802daa34203d79fff807c7d7"
+          ],
+          "parent": "96e57856de15c698802daa34203d79fff807c7d7",
+          "refs": "dev",
+          "branches": [
+            "dev"
+          ]
+        },
+        "commitHash": "6a06a1b34507c95d469328eeb7f7fdd73d5a541e",
+        "lane": 1,
+        "parentLinks": [
+          {
+            "hash": "96e57856de15c698802daa34203d79fff807c7d7",
+            "lane": 0
+          }
+        ],
+        "primaryBranchName": "dev",
+        "branchColor": "#4fe8b8",
+        "branchTags": [
+          "dev"
+        ],
+        "index": 1
+      },
+      {
+        "type": "unstaged",
+        "label": "未ステージ (46)",
+        "files": [
+          "frontend/src/app/globals.css",
+          "frontend/src/app/page.tsx",
+          "frontend/src/features/planning/components/Canvas2D.tsx",
+          "frontend/src/features/planning/components/SidePanel.tsx",
+          "frontend/src/features/planning/components/ToolPalette.tsx",
+          "frontend/src/store/planningStore.ts",
+          ".kamui/apps/kamui-os-intro-20251125.css",
+          ".kamui/apps/kamui-os-intro-20251125.html",
+          ".kamui/apps/kamui-os-intro-20251125.js",
+          ".kamui/gantte/test.yaml",
+          ".kamui/manager/202512081541_monitor_task-1765175963744-5fabed.html",
+          ".kamui/manager/202512081552_monitor_task-1765176562657-9b4c48.html",
+          ".kamui/manager/202512081612_eval_task-1765176562657-9b4c48.html",
+          ".kamui/manager/202512081707_monitor_task-1765180980956-v7kvsf2x.html",
+          ".kamui/manager/202512081710_eval_task-1765180980956-v7kvsf2x.html",
+          ".kamui/manager/monitor_task-1765175963744-5fabed.log",
+          ".kamui/manager/monitor_task-1765175963744-5fabed.sh",
+          ".kamui/manager/monitor_task-1765176562657-9b4c48.html",
+          ".kamui/manager/monitor_task-1765176562657-9b4c48_snapshots.log",
+          ".kamui/manager/monitor_task-1765176562657-9b4c48_snapshots.log.tmp",
+          ".kamui/manager/monitor_task-1765180980956-v7kvsf2x.html",
+          ".kamui/manager/monitor_task-1765180980956-v7kvsf2x.sh",
+          ".kamui/manager/tmux_monitor_loop.sh",
+          ".kamui/model-versions-cache.json",
+          ".kamui/prompt/custom-prompt.txt",
+          ".kamui/prompt/launch-prompt.txt",
+          ".kamui/prompt/merge-prompt.txt",
+          ".kamui/prompt/restart-prompt.txt",
+          ".kamui/prompt/stop-prompt.txt",
+          ".kamui/system-graph-state.json",
+          ".kamui/tasks-state.json",
+          "backend/app/__pycache__/__init__.cpython-313.pyc",
+          "backend/app/__pycache__/main.cpython-313.pyc",
+          "backend/app/api/__pycache__/__init__.cpython-313.pyc",
+          "backend/app/api/v1/__pycache__/__init__.cpython-313.pyc",
+          "backend/app/api/v1/__pycache__/drawing.cpython-313.pyc",
+          "backend/app/api/v1/__pycache__/drawing_mock.cpython-313.pyc",
+          "backend/app/api/v1/__pycache__/floorplan_extract.cpython-313.pyc",
+          "backend/app/services/__pycache__/__init__.cpython-313.pyc",
+          "backend/app/services/__pycache__/__init__.cpython-314.pyc",
+          "backend/app/services/floorplan_analyzer/__pycache__/__init__.cpython-313.pyc",
+          "backend/app/services/floorplan_analyzer/__pycache__/__init__.cpython-314.pyc",
+          "backend/app/services/floorplan_analyzer/__pycache__/analyzer.cpython-313.pyc",
+          "backend/app/services/floorplan_analyzer/__pycache__/analyzer.cpython-314.pyc",
+          "backend/app/services/floorplan_analyzer/__pycache__/types.cpython-313.pyc",
+          "package-lock.json"
+        ],
+        "branch": "main",
+        "targetCommitHash": "9d589b9e0e50b1861b8528536e44b12733bff176",
+        "worktreePath": "/Users/kazuto/Desktop/Scaff-pro",
+        "timestamp": 1765184448536,
+        "sortOrder": 0,
+        "lane": 0,
+        "branchColor": "#4f85e8",
+        "index": 2
+      },
+      {
+        "type": "staged",
+        "label": "ステージ済み (25)",
+        "files": [
+          ".claude/agents/_template.md",
+          ".claude/agents/manifests/_template.yaml",
+          ".claude/agents/orchestrator.md",
+          ".claude/commands/task.md",
+          "agent_docs/agent.summary.md",
+          "agent_docs/roadmap.md",
+          "frontend/UI_DESIGN_SYSTEM.md",
+          "frontend/package-lock.json",
+          "frontend/package.json",
+          "frontend/src/app/globals.css",
+          "frontend/src/app/layout.tsx",
+          "frontend/src/app/page.tsx",
+          "frontend/src/components/ThemeRegistry.tsx",
+          "frontend/src/components/ui/GlassPanel.tsx",
+          "frontend/src/components/ui/NeonButton.tsx",
+          "frontend/src/features/planning/components/Canvas2D.tsx",
+          "frontend/src/features/planning/components/ReferenceViewer.tsx",
+          "frontend/src/features/planning/components/ScaleInputModal.tsx",
+          "frontend/src/features/planning/components/SidePanel.tsx",
+          "frontend/src/features/planning/components/ToolPalette.tsx",
+          "frontend/src/features/planning/components/View3D.tsx",
+          "frontend/src/features/planning/components/ViewSwitcher.tsx",
+          "frontend/src/features/planning/layouts/PlanningLayout.tsx",
+          "frontend/src/store/planningStore.ts",
+          "frontend/src/store/themeStore.ts"
+        ],
+        "branch": "main",
+        "targetCommitHash": "9d589b9e0e50b1861b8528536e44b12733bff176",
+        "worktreePath": "/Users/kazuto/Desktop/Scaff-pro",
+        "timestamp": 1765184448536,
+        "sortOrder": 1,
+        "lane": 0,
+        "branchColor": "#4f85e8",
+        "index": 3
+      },
+      {
+        "type": "anchor",
+        "label": "[main]",
+        "branch": "main",
+        "worktreePath": "/Users/kazuto/Desktop/Scaff-pro",
+        "parentCommitHash": "9d589b9e0e50b1861b8528536e44b12733bff176",
+        "lane": 0,
+        "isMerged": false,
+        "mergeCommitHash": null,
+        "statusChildren": [
+          {
+            "type": "unstaged",
+            "label": "未ステージ (46)",
+            "files": [
+              "frontend/src/app/globals.css",
+              "frontend/src/app/page.tsx",
+              "frontend/src/features/planning/components/Canvas2D.tsx",
+              "frontend/src/features/planning/components/SidePanel.tsx",
+              "frontend/src/features/planning/components/ToolPalette.tsx",
+              "frontend/src/store/planningStore.ts",
+              ".kamui/apps/kamui-os-intro-20251125.css",
+              ".kamui/apps/kamui-os-intro-20251125.html",
+              ".kamui/apps/kamui-os-intro-20251125.js",
+              ".kamui/gantte/test.yaml",
+              ".kamui/manager/202512081541_monitor_task-1765175963744-5fabed.html",
+              ".kamui/manager/202512081552_monitor_task-1765176562657-9b4c48.html",
+              ".kamui/manager/202512081612_eval_task-1765176562657-9b4c48.html",
+              ".kamui/manager/202512081707_monitor_task-1765180980956-v7kvsf2x.html",
+              ".kamui/manager/202512081710_eval_task-1765180980956-v7kvsf2x.html",
+              ".kamui/manager/monitor_task-1765175963744-5fabed.log",
+              ".kamui/manager/monitor_task-1765175963744-5fabed.sh",
+              ".kamui/manager/monitor_task-1765176562657-9b4c48.html",
+              ".kamui/manager/monitor_task-1765176562657-9b4c48_snapshots.log",
+              ".kamui/manager/monitor_task-1765176562657-9b4c48_snapshots.log.tmp",
+              ".kamui/manager/monitor_task-1765180980956-v7kvsf2x.html",
+              ".kamui/manager/monitor_task-1765180980956-v7kvsf2x.sh",
+              ".kamui/manager/tmux_monitor_loop.sh",
+              ".kamui/model-versions-cache.json",
+              ".kamui/prompt/custom-prompt.txt",
+              ".kamui/prompt/launch-prompt.txt",
+              ".kamui/prompt/merge-prompt.txt",
+              ".kamui/prompt/restart-prompt.txt",
+              ".kamui/prompt/stop-prompt.txt",
+              ".kamui/system-graph-state.json",
+              ".kamui/tasks-state.json",
+              "backend/app/__pycache__/__init__.cpython-313.pyc",
+              "backend/app/__pycache__/main.cpython-313.pyc",
+              "backend/app/api/__pycache__/__init__.cpython-313.pyc",
+              "backend/app/api/v1/__pycache__/__init__.cpython-313.pyc",
+              "backend/app/api/v1/__pycache__/drawing.cpython-313.pyc",
+              "backend/app/api/v1/__pycache__/drawing_mock.cpython-313.pyc",
+              "backend/app/api/v1/__pycache__/floorplan_extract.cpython-313.pyc",
+              "backend/app/services/__pycache__/__init__.cpython-313.pyc",
+              "backend/app/services/__pycache__/__init__.cpython-314.pyc",
+              "backend/app/services/floorplan_analyzer/__pycache__/__init__.cpython-313.pyc",
+              "backend/app/services/floorplan_analyzer/__pycache__/__init__.cpython-314.pyc",
+              "backend/app/services/floorplan_analyzer/__pycache__/analyzer.cpython-313.pyc",
+              "backend/app/services/floorplan_analyzer/__pycache__/analyzer.cpython-314.pyc",
+              "backend/app/services/floorplan_analyzer/__pycache__/types.cpython-313.pyc",
+              "package-lock.json"
+            ],
+            "branch": "main",
+            "targetCommitHash": "9d589b9e0e50b1861b8528536e44b12733bff176",
+            "worktreePath": "/Users/kazuto/Desktop/Scaff-pro",
+            "timestamp": 1765184448536,
+            "sortOrder": 0,
+            "lane": 0,
+            "branchColor": "#4f85e8",
+            "index": 2
+          },
+          {
+            "type": "staged",
+            "label": "ステージ済み (25)",
+            "files": [
+              ".claude/agents/_template.md",
+              ".claude/agents/manifests/_template.yaml",
+              ".claude/agents/orchestrator.md",
+              ".claude/commands/task.md",
+              "agent_docs/agent.summary.md",
+              "agent_docs/roadmap.md",
+              "frontend/UI_DESIGN_SYSTEM.md",
+              "frontend/package-lock.json",
+              "frontend/package.json",
+              "frontend/src/app/globals.css",
+              "frontend/src/app/layout.tsx",
+              "frontend/src/app/page.tsx",
+              "frontend/src/components/ThemeRegistry.tsx",
+              "frontend/src/components/ui/GlassPanel.tsx",
+              "frontend/src/components/ui/NeonButton.tsx",
+              "frontend/src/features/planning/components/Canvas2D.tsx",
+              "frontend/src/features/planning/components/ReferenceViewer.tsx",
+              "frontend/src/features/planning/components/ScaleInputModal.tsx",
+              "frontend/src/features/planning/components/SidePanel.tsx",
+              "frontend/src/features/planning/components/ToolPalette.tsx",
+              "frontend/src/features/planning/components/View3D.tsx",
+              "frontend/src/features/planning/components/ViewSwitcher.tsx",
+              "frontend/src/features/planning/layouts/PlanningLayout.tsx",
+              "frontend/src/store/planningStore.ts",
+              "frontend/src/store/themeStore.ts"
+            ],
+            "branch": "main",
+            "targetCommitHash": "9d589b9e0e50b1861b8528536e44b12733bff176",
+            "worktreePath": "/Users/kazuto/Desktop/Scaff-pro",
+            "timestamp": 1765184448536,
+            "sortOrder": 1,
+            "lane": 0,
+            "branchColor": "#4f85e8",
+            "index": 3
+          }
+        ],
+        "isDefaultWorktree": false,
+        "renderMode": "node",
+        "shouldHide": false,
+        "tagLabel": "main",
+        "taskId": "main",
+        "taskStatus": null,
+        "taskStatusLabel": null,
+        "taskName": null,
+        "tooltip": "ID: main\nBranch: main\nWorktree: Users/kazuto/Desktop/Scaff-pro",
+        "branchColor": "#4f85e8",
+        "index": 4
+      },
+      {
+        "type": "commit",
+        "label": "Merge branch 'task/task-1765180981571-e66906' - 図面インポート機能実装",
+        "commit": {
+          "hash": "9d589b9e0e50b1861b8528536e44b12733bff176",
+          "subject": "Merge branch 'task/task-1765180981571-e66906' - 図面インポート機能実装",
+          "author": "kkk9131",
+          "timestamp": 1765184188,
+          "parents": [
+            "6e8c49415be59a56f0e352593feb18aa0d6ee169",
+            "c279243cf69581a017bca8ce255d3ce9dbb9cb85"
+          ],
+          "parent": "6e8c49415be59a56f0e352593feb18aa0d6ee169",
+          "refs": "HEAD -> main, origin/main, origin/HEAD",
+          "branches": [
+            "HEAD -> main",
+            "origin/main",
+            "origin/HEAD",
+            "main"
+          ]
+        },
+        "commitHash": "9d589b9e0e50b1861b8528536e44b12733bff176",
+        "lane": 0,
+        "parentLinks": [
+          {
+            "hash": "6e8c49415be59a56f0e352593feb18aa0d6ee169",
+            "lane": 1
+          },
+          {
+            "hash": "c279243cf69581a017bca8ce255d3ce9dbb9cb85",
+            "lane": 2
+          }
+        ],
+        "primaryBranchName": "main",
+        "branchColor": "#4f85e8",
+        "branchTags": [],
+        "worktrees": [
+          {
+            "path": "/Users/kazuto/Desktop/Scaff-pro",
+            "head": "9d589b9e0e50b1861b8528536e44b12733bff176",
+            "branch": "main",
+            "normalizedPath": "/Users/kazuto/Desktop/Scaff-pro",
+            "lane": 0
+          }
+        ],
+        "index": 5
+      },
+      {
+        "type": "commit",
+        "label": "feat: 図面インポート機能の実装",
+        "commit": {
+          "hash": "c279243cf69581a017bca8ce255d3ce9dbb9cb85",
+          "subject": "feat: 図面インポート機能の実装",
+          "author": "kkk9131",
+          "timestamp": 1765184176,
+          "parents": [
+            "6e8c49415be59a56f0e352593feb18aa0d6ee169"
+          ],
+          "parent": "6e8c49415be59a56f0e352593feb18aa0d6ee169",
+          "refs": "task/task-1765180981571-e66906",
+          "branches": [
+            "task/task-1765180981571-e66906"
+          ]
+        },
+        "commitHash": "c279243cf69581a017bca8ce255d3ce9dbb9cb85",
+        "lane": 2,
+        "parentLinks": [
+          {
+            "hash": "6e8c49415be59a56f0e352593feb18aa0d6ee169",
+            "lane": 1
+          }
+        ],
+        "primaryBranchName": "task/task-1765180981571-e66906",
+        "branchColor": "#4fe8b8",
+        "branchTags": [
+          "task/task-1765180981571-e66906"
+        ],
+        "index": 6
+      },
+      {
+        "type": "commit",
+        "label": "Merge branch 'task/task-1765176559304-c56525' - Screen B実装",
+        "commit": {
+          "hash": "6e8c49415be59a56f0e352593feb18aa0d6ee169",
+          "subject": "Merge branch 'task/task-1765176559304-c56525' - Screen B実装",
+          "author": "kkk9131",
+          "timestamp": 1765180802,
+          "parents": [
+            "5627528b3df6d5bfb41c8077bea0735d5c9fe697",
+            "efcaefbf0a6997131f0a697f8eab97f7810c5b8c"
+          ],
+          "parent": "5627528b3df6d5bfb41c8077bea0735d5c9fe697",
+          "refs": "task/task-1765180986124-c8ef01, task/task-1765180981961-261a04, task/task-1765180981761-ef6d35, task/task-1765180981359-884254, task/task-1765180981157-5286ca, task/task-1765180980957-e4d08a",
+          "branches": [
+            "task/task-1765180986124-c8ef01",
+            "task/task-1765180981961-261a04",
+            "task/task-1765180981761-ef6d35",
+            "task/task-1765180981359-884254",
+            "task/task-1765180981157-5286ca",
+            "task/task-1765180980957-e4d08a"
+          ]
+        },
+        "commitHash": "6e8c49415be59a56f0e352593feb18aa0d6ee169",
+        "lane": 3,
+        "parentLinks": [
+          {
+            "hash": "5627528b3df6d5bfb41c8077bea0735d5c9fe697",
+            "lane": 1
+          },
+          {
+            "hash": "efcaefbf0a6997131f0a697f8eab97f7810c5b8c",
+            "lane": 3
+          }
+        ],
+        "primaryBranchName": "task/task-1765180986124-c8ef01",
+        "branchColor": "#e8a84f",
+        "branchTags": [
+          "task/task-1765180980957-e4d08a",
+          "task/task-1765180981157-5286ca",
+          "task/task-1765180981359-884254",
+          "task/task-1765180981761-ef6d35",
+          "task/task-1765180981961-261a04",
+          "task/task-1765180986124-c8ef01"
+        ],
+        "index": 7
+      },
+      {
+        "type": "commit",
+        "label": "feat: Screen B（足場計画画面）の実装",
+        "commit": {
+          "hash": "efcaefbf0a6997131f0a697f8eab97f7810c5b8c",
+          "subject": "feat: Screen B（足場計画画面）の実装",
+          "author": "kkk9131",
+          "timestamp": 1765180788,
+          "parents": [
+            "5627528b3df6d5bfb41c8077bea0735d5c9fe697"
+          ],
+          "parent": "5627528b3df6d5bfb41c8077bea0735d5c9fe697",
+          "refs": "task/task-1765176559304-c56525",
+          "branches": [
+            "task/task-1765176559304-c56525"
+          ]
+        },
+        "commitHash": "efcaefbf0a6997131f0a697f8eab97f7810c5b8c",
+        "lane": 9,
+        "parentLinks": [
+          {
+            "hash": "5627528b3df6d5bfb41c8077bea0735d5c9fe697",
+            "lane": 1
+          }
+        ],
+        "primaryBranchName": "task/task-1765176559304-c56525",
+        "branchColor": "#4f85e8",
+        "branchTags": [
+          "task/task-1765176559304-c56525"
+        ],
+        "index": 8
+      },
+      {
+        "type": "commit",
+        "label": "chore: パッケージ設定修正とエージェント定義追加",
+        "commit": {
+          "hash": "0aca083126ed15cfac3cafe5f4e2921ac13f3f3b",
+          "subject": "chore: パッケージ設定修正とエージェント定義追加",
+          "author": "kkk9131",
+          "timestamp": 1765082205,
+          "parents": [
+            "2029a9935823a4cd14544efa21eb7dd33f8b413d"
+          ],
+          "parent": "2029a9935823a4cd14544efa21eb7dd33f8b413d",
+          "refs": "feature/phase3",
+          "branches": [
+            "feature/phase3"
+          ]
+        },
+        "commitHash": "0aca083126ed15cfac3cafe5f4e2921ac13f3f3b",
+        "lane": 10,
+        "parentLinks": [
+          {
+            "hash": "2029a9935823a4cd14544efa21eb7dd33f8b413d",
+            "lane": 4
+          }
+        ],
+        "primaryBranchName": "feature/phase3",
+        "branchColor": "#e84f7f",
+        "branchTags": [
+          "feature/phase3"
+        ],
+        "index": 9
+      },
+      {
+        "type": "commit",
+        "label": "feat: Gemini Vision API統合 - 寸法OCR機能追加",
+        "commit": {
+          "hash": "2029a9935823a4cd14544efa21eb7dd33f8b413d",
+          "subject": "feat: Gemini Vision API統合 - 寸法OCR機能追加",
+          "author": "kkk9131",
+          "timestamp": 1765062261,
+          "parents": [
+            "b4cea1841be56a3c6cda34fc1f7b98be82d5ae54"
+          ],
+          "parent": "b4cea1841be56a3c6cda34fc1f7b98be82d5ae54",
+          "refs": "",
+          "branches": []
+        },
+        "commitHash": "2029a9935823a4cd14544efa21eb7dd33f8b413d",
+        "lane": 0,
+        "parentLinks": [
+          {
+            "hash": "b4cea1841be56a3c6cda34fc1f7b98be82d5ae54",
+            "lane": 4
+          }
+        ],
+        "branchColor": "#4f85e8",
+        "branchTags": [],
+        "index": 10
+      },
+      {
+        "type": "commit",
+        "label": "feat: モックAPI追加 - APIキー不要で開発可能",
+        "commit": {
+          "hash": "b4cea1841be56a3c6cda34fc1f7b98be82d5ae54",
+          "subject": "feat: モックAPI追加 - APIキー不要で開発可能",
+          "author": "kkk9131",
+          "timestamp": 1765038281,
+          "parents": [
+            "e528b5adb7f09f96c6e625e8b9a30ecde793ac2a"
+          ],
+          "parent": "e528b5adb7f09f96c6e625e8b9a30ecde793ac2a",
+          "refs": "origin/feature/phase3",
+          "branches": [
+            "origin/feature/phase3"
+          ]
+        },
+        "commitHash": "b4cea1841be56a3c6cda34fc1f7b98be82d5ae54",
+        "lane": 10,
+        "parentLinks": [
+          {
+            "hash": "e528b5adb7f09f96c6e625e8b9a30ecde793ac2a",
+            "lane": 4
+          }
+        ],
+        "primaryBranchName": "feature/phase3",
+        "branchColor": "#e84f7f",
+        "branchTags": [],
+        "index": 11
+      },
+      {
+        "type": "commit",
+        "label": "feat: Claude Vision API統合 - 平面図自動解析機能",
+        "commit": {
+          "hash": "e528b5adb7f09f96c6e625e8b9a30ecde793ac2a",
+          "subject": "feat: Claude Vision API統合 - 平面図自動解析機能",
+          "author": "kkk9131",
+          "timestamp": 1765037564,
+          "parents": [
+            "96e57856de15c698802daa34203d79fff807c7d7"
+          ],
+          "parent": "96e57856de15c698802daa34203d79fff807c7d7",
+          "refs": "",
+          "branches": []
+        },
+        "commitHash": "e528b5adb7f09f96c6e625e8b9a30ecde793ac2a",
+        "lane": 0,
+        "parentLinks": [
+          {
+            "hash": "96e57856de15c698802daa34203d79fff807c7d7",
+            "lane": 0
+          }
+        ],
+        "branchColor": "#4f85e8",
+        "branchTags": [],
+        "index": 12
+      },
+      {
+        "type": "commit",
+        "label": "feat: グリッド間隔設定機能とAgent Orchestrator統合",
+        "commit": {
+          "hash": "96e57856de15c698802daa34203d79fff807c7d7",
+          "subject": "feat: グリッド間隔設定機能とAgent Orchestrator統合",
+          "author": "kkk9131",
+          "timestamp": 1765034786,
+          "parents": [
+            "0282008af5a7bd07a4aa6261ef99e96856ef503e"
+          ],
+          "parent": "0282008af5a7bd07a4aa6261ef99e96856ef503e",
+          "refs": "origin/dev",
+          "branches": [
+            "origin/dev"
+          ]
+        },
+        "commitHash": "96e57856de15c698802daa34203d79fff807c7d7",
+        "lane": 1,
+        "parentLinks": [
+          {
+            "hash": "0282008af5a7bd07a4aa6261ef99e96856ef503e",
+            "lane": 0
+          }
+        ],
+        "primaryBranchName": "dev",
+        "branchColor": "#4fe8b8",
+        "branchTags": [],
+        "index": 13
+      },
+      {
+        "type": "commit",
+        "label": "Merge pull request #2 from kkk9131/feature/phase2",
+        "commit": {
+          "hash": "0282008af5a7bd07a4aa6261ef99e96856ef503e",
+          "subject": "Merge pull request #2 from kkk9131/feature/phase2",
+          "author": "Kaz Trigger",
+          "timestamp": 1764941244,
+          "parents": [
+            "1c9776f6eb4671940ffe9b90e7d4bc2a453bf470",
+            "5d2d5f36e828b96cc3791548fbdf1f32f66785f4"
+          ],
+          "parent": "1c9776f6eb4671940ffe9b90e7d4bc2a453bf470",
+          "refs": "",
+          "branches": []
+        },
+        "commitHash": "0282008af5a7bd07a4aa6261ef99e96856ef503e",
+        "lane": 0,
+        "parentLinks": [
+          {
+            "hash": "1c9776f6eb4671940ffe9b90e7d4bc2a453bf470",
+            "lane": 0
+          },
+          {
+            "hash": "5d2d5f36e828b96cc3791548fbdf1f32f66785f4",
+            "lane": 5
+          }
+        ],
+        "branchColor": "#4f85e8",
+        "branchTags": [],
+        "index": 14
+      },
+      {
+        "type": "commit",
+        "label": "docs: エージェントドキュメントとロードマップを更新",
+        "commit": {
+          "hash": "5d2d5f36e828b96cc3791548fbdf1f32f66785f4",
+          "subject": "docs: エージェントドキュメントとロードマップを更新",
+          "author": "kkk9131",
+          "timestamp": 1764941070,
+          "parents": [
+            "88c68e397f5d0c8517040173432d21a55d00ff5d"
+          ],
+          "parent": "88c68e397f5d0c8517040173432d21a55d00ff5d",
+          "refs": "",
+          "branches": []
+        },
+        "commitHash": "5d2d5f36e828b96cc3791548fbdf1f32f66785f4",
+        "lane": 0,
+        "parentLinks": [
+          {
+            "hash": "88c68e397f5d0c8517040173432d21a55d00ff5d",
+            "lane": 5
+          }
+        ],
+        "branchColor": "#4f85e8",
+        "branchTags": [],
+        "index": 15
+      },
+      {
+        "type": "commit",
+        "label": "feat: フェーズ2のスケール設定と状態管理を追加",
+        "commit": {
+          "hash": "88c68e397f5d0c8517040173432d21a55d00ff5d",
+          "subject": "feat: フェーズ2のスケール設定と状態管理を追加",
+          "author": "kkk9131",
+          "timestamp": 1764927245,
+          "parents": [
+            "1c9776f6eb4671940ffe9b90e7d4bc2a453bf470"
+          ],
+          "parent": "1c9776f6eb4671940ffe9b90e7d4bc2a453bf470",
+          "refs": "",
+          "branches": []
+        },
+        "commitHash": "88c68e397f5d0c8517040173432d21a55d00ff5d",
+        "lane": 0,
+        "parentLinks": [
+          {
+            "hash": "1c9776f6eb4671940ffe9b90e7d4bc2a453bf470",
+            "lane": 0
+          }
+        ],
+        "branchColor": "#4f85e8",
+        "branchTags": [],
+        "index": 16
+      },
+      {
+        "type": "commit",
+        "label": "Merge pull request #1 from kkk9131/feature/phase1",
+        "commit": {
+          "hash": "1c9776f6eb4671940ffe9b90e7d4bc2a453bf470",
+          "subject": "Merge pull request #1 from kkk9131/feature/phase1",
+          "author": "Kaz Trigger",
+          "timestamp": 1764923658,
+          "parents": [
+            "5627528b3df6d5bfb41c8077bea0735d5c9fe697",
+            "1886e574ed55bc42e62a9fcf190e807129b2323b"
+          ],
+          "parent": "5627528b3df6d5bfb41c8077bea0735d5c9fe697",
+          "refs": "",
+          "branches": []
+        },
+        "commitHash": "1c9776f6eb4671940ffe9b90e7d4bc2a453bf470",
+        "lane": 0,
+        "parentLinks": [
+          {
+            "hash": "5627528b3df6d5bfb41c8077bea0735d5c9fe697",
+            "lane": 1
+          },
+          {
+            "hash": "1886e574ed55bc42e62a9fcf190e807129b2323b",
+            "lane": 6
+          }
+        ],
+        "branchColor": "#4f85e8",
+        "branchTags": [],
+        "index": 17
+      },
+      {
+        "type": "commit",
+        "label": "feat: update frontend UI for phase1",
+        "commit": {
+          "hash": "1886e574ed55bc42e62a9fcf190e807129b2323b",
+          "subject": "feat: update frontend UI for phase1",
+          "author": "kkk9131",
+          "timestamp": 1764923629,
+          "parents": [
+            "5627528b3df6d5bfb41c8077bea0735d5c9fe697"
+          ],
+          "parent": "5627528b3df6d5bfb41c8077bea0735d5c9fe697",
+          "refs": "",
+          "branches": []
+        },
+        "commitHash": "1886e574ed55bc42e62a9fcf190e807129b2323b",
+        "lane": 0,
+        "parentLinks": [
+          {
+            "hash": "5627528b3df6d5bfb41c8077bea0735d5c9fe697",
+            "lane": 1
+          }
+        ],
+        "branchColor": "#4f85e8",
+        "branchTags": [],
+        "index": 18
+      },
+      {
+        "type": "commit",
+        "label": "初期フロント・バックエンド構成とエージェント概要を追加",
+        "commit": {
+          "hash": "5627528b3df6d5bfb41c8077bea0735d5c9fe697",
+          "subject": "初期フロント・バックエンド構成とエージェント概要を追加",
+          "author": "kkk9131",
+          "timestamp": 1764921859,
+          "parents": [
+            "d82cc8cf87fad0b0592dee20cfe869c38b3c7494"
+          ],
+          "parent": "d82cc8cf87fad0b0592dee20cfe869c38b3c7494",
+          "refs": "task/task-1765176562657-9b4c48, task/task-1765176559902-40e999, task/task-1765176559702-1f8178, task/task-1765176559502-a05235, task/task-1765176559102-e1c338, task/task-1765175965968-0ab8d3, task/task-1765175963744-5fabed",
+          "branches": [
+            "task/task-1765176562657-9b4c48",
+            "task/task-1765176559902-40e999",
+            "task/task-1765176559702-1f8178",
+            "task/task-1765176559502-a05235",
+            "task/task-1765176559102-e1c338",
+            "task/task-1765175965968-0ab8d3",
+            "task/task-1765175963744-5fabed"
+          ]
+        },
+        "commitHash": "5627528b3df6d5bfb41c8077bea0735d5c9fe697",
+        "lane": 11,
+        "parentLinks": [
+          {
+            "hash": "d82cc8cf87fad0b0592dee20cfe869c38b3c7494",
+            "lane": 1
+          }
+        ],
+        "primaryBranchName": "task/task-1765176562657-9b4c48",
+        "branchColor": "#b84fe8",
+        "branchTags": [
+          "task/task-1765175963744-5fabed",
+          "task/task-1765175965968-0ab8d3",
+          "task/task-1765176559102-e1c338",
+          "task/task-1765176559502-a05235",
+          "task/task-1765176559702-1f8178",
+          "task/task-1765176559902-40e999",
+          "task/task-1765176562657-9b4c48"
+        ],
+        "index": 19
+      },
+      {
+        "type": "commit",
+        "label": "技術スタックとディレクトリ構成ドキュメントを整備",
+        "commit": {
+          "hash": "d82cc8cf87fad0b0592dee20cfe869c38b3c7494",
+          "subject": "技術スタックとディレクトリ構成ドキュメントを整備",
+          "author": "kkk9131",
+          "timestamp": 1764920588,
+          "parents": [
+            "781d385fbe4c3a6e66a16ea3dc21994478bb768a"
+          ],
+          "parent": "781d385fbe4c3a6e66a16ea3dc21994478bb768a",
+          "refs": "",
+          "branches": []
+        },
+        "commitHash": "d82cc8cf87fad0b0592dee20cfe869c38b3c7494",
+        "lane": 0,
+        "parentLinks": [
+          {
+            "hash": "781d385fbe4c3a6e66a16ea3dc21994478bb768a",
+            "lane": 1
+          }
+        ],
+        "branchColor": "#4f85e8",
+        "branchTags": [],
+        "index": 20
+      },
+      {
+        "type": "commit",
+        "label": "ドキュメント更新と開発用設定ファイルを追加",
+        "commit": {
+          "hash": "781d385fbe4c3a6e66a16ea3dc21994478bb768a",
+          "subject": "ドキュメント更新と開発用設定ファイルを追加",
+          "author": "kkk9131",
+          "timestamp": 1764920131,
+          "parents": [
+            "df55d5872edde1ddb0f969bc65b61f2cd19584e7"
+          ],
+          "parent": "df55d5872edde1ddb0f969bc65b61f2cd19584e7",
+          "refs": "",
+          "branches": []
+        },
+        "commitHash": "781d385fbe4c3a6e66a16ea3dc21994478bb768a",
+        "lane": 0,
+        "parentLinks": [
+          {
+            "hash": "df55d5872edde1ddb0f969bc65b61f2cd19584e7",
+            "lane": 1
+          }
+        ],
+        "branchColor": "#4f85e8",
+        "branchTags": [],
+        "index": 21
+      },
+      {
+        "type": "commit",
+        "label": "足場SaaSツールの要件定義と構成ドキュメントを追加",
+        "commit": {
+          "hash": "df55d5872edde1ddb0f969bc65b61f2cd19584e7",
+          "subject": "足場SaaSツールの要件定義と構成ドキュメントを追加",
+          "author": "kkk9131",
+          "timestamp": 1764858355,
+          "parents": [
+            "507924a98967c8d5c6d0d53a03af82c2df58e418"
+          ],
+          "parent": "507924a98967c8d5c6d0d53a03af82c2df58e418",
+          "refs": "",
+          "branches": []
+        },
+        "commitHash": "df55d5872edde1ddb0f969bc65b61f2cd19584e7",
+        "lane": 0,
+        "parentLinks": [
+          {
+            "hash": "507924a98967c8d5c6d0d53a03af82c2df58e418",
+            "lane": 1
+          }
+        ],
+        "branchColor": "#4f85e8",
+        "branchTags": [],
+        "index": 22
+      },
+      {
+        "type": "commit",
+        "label": "first commit",
+        "commit": {
+          "hash": "507924a98967c8d5c6d0d53a03af82c2df58e418",
+          "subject": "first commit",
+          "author": "okamotokazuto",
+          "timestamp": 1764834832,
+          "parents": [],
+          "parent": null,
+          "refs": "",
+          "branches": []
+        },
+        "commitHash": "507924a98967c8d5c6d0d53a03af82c2df58e418",
+        "lane": 0,
+        "parentLinks": [],
+        "branchColor": "#4f85e8",
+        "branchTags": [],
+        "index": 23
+      },
+      {
+        "type": "commit",
+        "label": "Improve analytics",
+        "commit": {
+          "hash": "def4567ghi",
+          "subject": "Improve analytics",
+          "author": "KAMUI",
+          "timestamp": 1765173781,
+          "parents": [
+            "cde3456fgh"
+          ],
+          "parent": "cde3456fgh",
+          "branches": []
+        },
+        "commitHash": "def4567ghi",
+        "lane": 0,
+        "parentLinks": [
+          {
+            "hash": "cde3456fgh",
+            "lane": 7
+          }
+        ],
+        "branchColor": "#4f85e8",
+        "branchTags": [],
+        "index": 24
+      },
+      {
+        "type": "commit",
+        "label": "Integrate 3D graph",
+        "commit": {
+          "hash": "cde3456fgh",
+          "subject": "Integrate 3D graph",
+          "author": "KAMUI",
+          "timestamp": 1765159381,
+          "parents": [
+            "bcd2345efg"
+          ],
+          "parent": "bcd2345efg",
+          "branches": []
+        },
+        "commitHash": "cde3456fgh",
+        "lane": 0,
+        "parentLinks": [
+          {
+            "hash": "bcd2345efg",
+            "lane": 7
+          }
+        ],
+        "branchColor": "#4f85e8",
+        "branchTags": [],
+        "index": 25
+      },
+      {
+        "type": "commit",
+        "label": "Add taskboard UI",
+        "commit": {
+          "hash": "bcd2345efg",
+          "subject": "Add taskboard UI",
+          "author": "KAMUI",
+          "timestamp": 1765137781,
+          "parents": [
+            "abc1234def"
+          ],
+          "parent": "abc1234def",
+          "branches": []
+        },
+        "commitHash": "bcd2345efg",
+        "lane": 0,
+        "parentLinks": [
+          {
+            "hash": "abc1234def",
+            "lane": 7
+          }
+        ],
+        "branchColor": "#4f85e8",
+        "branchTags": [],
+        "index": 26
+      },
+      {
+        "type": "commit",
+        "label": "Initial commit",
+        "commit": {
+          "hash": "abc1234def",
+          "subject": "Initial commit",
+          "author": "KAMUI",
+          "timestamp": 1765094581,
+          "parents": [],
+          "parent": null,
+          "branches": []
+        },
+        "commitHash": "abc1234def",
+        "lane": 0,
+        "parentLinks": [],
+        "branchColor": "#4f85e8",
+        "branchTags": [],
+        "index": 27
+      },
+      {
+        "type": "empty",
+        "label": "初期状態 (初回コミット以前)",
+        "files": [],
+        "marker": "pre-history",
+        "index": 28
+      }
+    ]
+  },
+  "projectRoot": "/Users/kazuto/Desktop/Scaff-pro",
+  "savedAt": 1765184450603
+}

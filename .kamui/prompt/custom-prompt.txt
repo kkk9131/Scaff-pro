@@ -1,0 +1,22 @@
+# このプロンプトで立ち上げたnpm run devだけを停止
+if [ -f .kamui/dev.pid ]; then
+  DEV_PID=$(cat .kamui/dev.pid)
+  if ps -p "$DEV_PID" >/dev/null 2>&1; then
+    kill "$DEV_PID"
+  fi
+  rm -f .kamui/dev.pid
+fi
+# Electron本体には触れず、即座にバックグラウンド起動
+npm run dev >/tmp/kamui-dev.log 2>&1 &
+printf "%s" $! > .kamui/dev.pid
+# 同じ手順で--hostオプションを付与
+if [ -f .kamui/dev.pid ]; then
+  DEV_PID=$(cat .kamui/dev.pid)
+  if ps -p "$DEV_PID" >/dev/null 2>&1; then
+    kill "$DEV_PID"
+  fi
+  rm -f .kamui/dev.pid
+fi
+# Electronのプロセスは止めない
+npm run dev -- --host >/tmp/kamui-dev.log 2>&1 &
+printf "%s" $! > .kamui/dev.pid

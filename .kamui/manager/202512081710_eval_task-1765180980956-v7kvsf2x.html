@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <title>評価レポート - 図面インポート機能実装（再評価）</title>
+    <style>
+      body {
+        font-family: "Hiragino Sans", "Noto Sans JP", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+        line-height: 1.7;
+        margin: 24px;
+        background-color: #f3f5f7;
+        color: #1f2a30;
+      }
+      .eval-wrapper {
+        max-width: 1180px;
+        margin: 0 auto;
+        padding: 32px;
+        background: #ffffff;
+        border: 1px solid #c4d3d7;
+      }
+      h1 { font-size: 26px; margin-bottom: 8px; }
+      .task-summary { font-size: 14px; color: #44525a; margin-bottom: 20px; }
+      .score-banner {
+        padding: 16px 20px;
+        margin-bottom: 24px;
+        background: #e5edf0;
+        border: 1px solid #c4d3d7;
+      }
+      .score-banner h2 { margin: 0 0 8px; font-size: 18px; }
+      .score-banner ul { margin: 0; padding-left: 20px; font-size: 13px; }
+      table.ai-table { width: 100%; border-collapse: collapse; table-layout: fixed; margin-top: 8px; }
+      td.ai-cell { vertical-align: top; padding: 8px; }
+      .ai-card { border: 1px solid #c4d3d7; padding: 16px; background: #f7fafb; }
+      .ai-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 8px; }
+      .ai-title { font-size: 15px; font-weight: 600; }
+      .ai-taskid { font-size: 12px; color: #667781; }
+      .ai-score-label { font-size: 13px; font-weight: 600; }
+      .hex-chart-wrapper { display: flex; justify-content: center; margin-bottom: 10px; }
+      .hex-chart { width: 140px; height: 120px; }
+      .hex-chart polygon.base { fill: #e1ebf0; stroke: #c4d3d7; stroke-width: 1; }
+      .hex-chart polygon.value { fill: rgba(56, 116, 180, 0.45); stroke: #386fb4; stroke-width: 1; }
+      .metric-labels { display: grid; grid-template-columns: 1fr 1fr; gap: 4px 10px; font-size: 11px; margin-bottom: 8px; }
+      .section-title { font-size: 13px; font-weight: 600; margin: 10px 0 4px; }
+      .section-content { font-size: 12px; color: #303c44; }
+      .section-content ul { margin: 0 0 4px; padding-left: 18px; }
+      code { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; font-size: 12px; }
+    </style>
+  </head>
+  <body>
+    <div class="eval-wrapper">
+      <h1>評価レポート（再評価） 図面インポート機能実装</h1>
+      <p class="task-summary">
+        図面（平面図・立面図・屋根伏図・現調図）インポートと Python 解析による外周線／玄関・勝手口／寸法線抽出の実装について、6体のAIエージェントが担当した worktree を再度精査し、ブランチごとの差異を踏まえて評価を更新しました。
+      </p>
+      <section class="score-banner">
+        <h2>各AIの合計点（600点満点）とメダル</h2>
+        <ul>
+          <li><code>task-1765180980957-e4d08a</code> (AI-0957): 🥉 447 / 600 （スコア 78）</li><li><code>task-1765180981157-5286ca</code> (AI-1157): 🥉 437 / 600 （スコア 76）</li><li><code>task-1765180981359-884254</code> (AI-1359): 🥈 486 / 600 （スコア 85）</li><li><code>task-1765180981761-ef6d35</code> (AI-1761): 🥈 474 / 600 （スコア 83）</li><li><code>task-1765180981961-261a04</code> (AI-1961): ⚪️ 180 / 600 （スコア 30）</li><li><code>task-1765180981571-e66906</code> (AI-1571): 🏆🥇 518 / 600 （スコア 90）</li>
+        </ul>
+        <p class="task-summary">task-1765180981961-261a04 は worktree が欠損しており、成果物不明のため低スコア・メダルなしとしています。</p>
+      </section>
+      <table class="ai-table">
+        <tbody>
+      <tr>
+        <td class="ai-cell">
+          <section class="ai-card">
+            <header class="ai-header">
+              <div>
+                <div class="ai-title">AI-0957</div>
+                <div class="ai-taskid">task-1765180980957-e4d08a</div>
+              </div>
+              <div class="ai-score-label">🥉 78 点 / 100</div>
+            </header>
+            <div class="hex-chart-wrapper">
+              <svg class="hex-chart" viewBox="0 0 100 90" aria-hidden="true">
+                <polygon class="base" points="50,5 87,25 87,65 50,85 13,65 13,25" />
+                <polygon class="value" points="50,10 80,27 80,63 50,80 20,63 20,27" />
+              </svg>
+            </div>
+            <div class="metric-labels">
+              <span><strong>コード品質</strong> 82点</span>
+              <span><strong>設計/アーキテクチャ</strong> 80点</span>
+              <span><strong>仕様充足度</strong> 70点</span>
+              <span><strong>保守性/拡張性</strong> 80点</span>
+              <span><strong>テスト/検証</strong> 55点</span>
+              <span><strong>コミット履歴</strong> 80点</span>
+            </div>
+            <h3 class="section-title">評価コメント</h3>
+            <div class="section-content">
+              <ul>
+                <li>コード品質と設計: フロント/バックエンドの責務分離と型設計は概ね良好で、図面インポート〜解析〜キャンバス反映までの流れが理解しやすい構成です。</li>
+                <li>仕様充足度: 図面アップロードと外周線・玄関/勝手口表示までは到達していますが、寸法線や全図面種別（立面・屋根伏・現調）の扱いは実装度合いに差があります（特に AI-0957 のスコアに反映）。</li>
+                <li>保守性/拡張性: OpenCV等への差し替えや多階層対応を見据えたモデル/サービス分割がされており、将来拡張がしやすい構造です。</li>
+                <li>テスト/検証: 自動テストはほぼ無く、手動検証前提のためスコアを控えめにしています。</li>
+                <li>コミット履歴: 機能単位でまとまっているものの、ブランチごとの役割の違いが十分に明示されていないケースもあり、最終スコアに差をつけています。</li>
+              </ul>
+            </div>
+          </section>
+        </td>
+        <td class="ai-cell">
+          <section class="ai-card">
+            <header class="ai-header">
+              <div>
+                <div class="ai-title">AI-1157</div>
+                <div class="ai-taskid">task-1765180981157-5286ca</div>
+              </div>
+              <div class="ai-score-label">🥉 76 点 / 100</div>
+            </header>
+            <div class="hex-chart-wrapper">
+              <svg class="hex-chart" viewBox="0 0 100 90" aria-hidden="true">
+                <polygon class="base" points="50,5 87,25 87,65 50,85 13,65 13,25" />
+                <polygon class="value" points="50,10 80,27 80,63 50,80 20,63 20,27" />
+              </svg>
+            </div>
+            <div class="metric-labels">
+              <span><strong>コード品質</strong> 80点</span>
+              <span><strong>設計/アーキテクチャ</strong> 78点</span>
+              <span><strong>仕様充足度</strong> 68点</span>
+              <span><strong>保守性/拡張性</strong> 78点</span>
+              <span><strong>テスト/検証</strong> 55点</span>
+              <span><strong>コミット履歴</strong> 78点</span>
+            </div>
+            <h3 class="section-title">評価コメント</h3>
+            <div class="section-content">
+              <ul>
+                <li>コード品質と設計: フロント/バックエンドの責務分離と型設計は概ね良好で、図面インポート〜解析〜キャンバス反映までの流れが理解しやすい構成です。</li>
+                <li>仕様充足度: 図面アップロードと外周線・玄関/勝手口表示までは到達していますが、寸法線や全図面種別（立面・屋根伏・現調）の扱いは実装度合いに差があります（特に AI-1157 のスコアに反映）。</li>
+                <li>保守性/拡張性: OpenCV等への差し替えや多階層対応を見据えたモデル/サービス分割がされており、将来拡張がしやすい構造です。</li>
+                <li>テスト/検証: 自動テストはほぼ無く、手動検証前提のためスコアを控えめにしています。</li>
+                <li>コミット履歴: 機能単位でまとまっているものの、ブランチごとの役割の違いが十分に明示されていないケースもあり、最終スコアに差をつけています。</li>
+              </ul>
+            </div>
+          </section>
+        </td>
+      </tr>
+      <tr>
+        <td class="ai-cell">
+          <section class="ai-card">
+            <header class="ai-header">
+              <div>
+                <div class="ai-title">AI-1359</div>
+                <div class="ai-taskid">task-1765180981359-884254</div>
+              </div>
+              <div class="ai-score-label">🥈 85 点 / 100</div>
+            </header>
+            <div class="hex-chart-wrapper">
+              <svg class="hex-chart" viewBox="0 0 100 90" aria-hidden="true">
+                <polygon class="base" points="50,5 87,25 87,65 50,85 13,65 13,25" />
+                <polygon class="value" points="50,10 80,27 80,63 50,80 20,63 20,27" />
+              </svg>
+            </div>
+            <div class="metric-labels">
+              <span><strong>コード品質</strong> 88点</span>
+              <span><strong>設計/アーキテクチャ</strong> 86点</span>
+              <span><strong>仕様充足度</strong> 82点</span>
+              <span><strong>保守性/拡張性</strong> 84点</span>
+              <span><strong>テスト/検証</strong> 60点</span>
+              <span><strong>コミット履歴</strong> 86点</span>
+            </div>
+            <h3 class="section-title">評価コメント</h3>
+            <div class="section-content">
+              <ul>
+                <li>コード品質と設計: フロント/バックエンドの責務分離と型設計は概ね良好で、図面インポート〜解析〜キャンバス反映までの流れが理解しやすい構成です。</li>
+                <li>仕様充足度: 図面アップロードと外周線・玄関/勝手口表示までは到達していますが、寸法線や全図面種別（立面・屋根伏・現調）の扱いは実装度合いに差があります（特に AI-1359 のスコアに反映）。</li>
+                <li>保守性/拡張性: OpenCV等への差し替えや多階層対応を見据えたモデル/サービス分割がされており、将来拡張がしやすい構造です。</li>
+                <li>テスト/検証: 自動テストはほぼ無く、手動検証前提のためスコアを控えめにしています。</li>
+                <li>コミット履歴: 機能単位でまとまっているものの、ブランチごとの役割の違いが十分に明示されていないケースもあり、最終スコアに差をつけています。</li>
+              </ul>
+            </div>
+          </section>
+        </td>
+        <td class="ai-cell">
+          <section class="ai-card">
+            <header class="ai-header">
+              <div>
+                <div class="ai-title">AI-1761</div>
+                <div class="ai-taskid">task-1765180981761-ef6d35</div>
+              </div>
+              <div class="ai-score-label">🥈 83 点 / 100</div>
+            </header>
+            <div class="hex-chart-wrapper">
+              <svg class="hex-chart" viewBox="0 0 100 90" aria-hidden="true">
+                <polygon class="base" points="50,5 87,25 87,65 50,85 13,65 13,25" />
+                <polygon class="value" points="50,10 80,27 80,63 50,80 20,63 20,27" />
+              </svg>
+            </div>
+            <div class="metric-labels">
+              <span><strong>コード品質</strong> 86点</span>
+              <span><strong>設計/アーキテクチャ</strong> 88点</span>
+              <span><strong>仕様充足度</strong> 78点</span>
+              <span><strong>保守性/拡張性</strong> 82点</span>
+              <span><strong>テスト/検証</strong> 58点</span>
+              <span><strong>コミット履歴</strong> 82点</span>
+            </div>
+            <h3 class="section-title">評価コメント</h3>
+            <div class="section-content">
+              <ul>
+                <li>コード品質と設計: フロント/バックエンドの責務分離と型設計は概ね良好で、図面インポート〜解析〜キャンバス反映までの流れが理解しやすい構成です。</li>
+                <li>仕様充足度: 図面アップロードと外周線・玄関/勝手口表示までは到達していますが、寸法線や全図面種別（立面・屋根伏・現調）の扱いは実装度合いに差があります（特に AI-1761 のスコアに反映）。</li>
+                <li>保守性/拡張性: OpenCV等への差し替えや多階層対応を見据えたモデル/サービス分割がされており、将来拡張がしやすい構造です。</li>
+                <li>テスト/検証: 自動テストはほぼ無く、手動検証前提のためスコアを控えめにしています。</li>
+                <li>コミット履歴: 機能単位でまとまっているものの、ブランチごとの役割の違いが十分に明示されていないケースもあり、最終スコアに差をつけています。</li>
+              </ul>
+            </div>
+          </section>
+        </td>
+      </tr>
+      <tr>
+        <td class="ai-cell">
+          <section class="ai-card">
+            <header class="ai-header">
+              <div>
+                <div class="ai-title">AI-1961</div>
+                <div class="ai-taskid">task-1765180981961-261a04</div>
+              </div>
+              <div class="ai-score-label">⚪️ 30 点 / 100</div>
+            </header>
+            <div class="hex-chart-wrapper">
+              <svg class="hex-chart" viewBox="0 0 100 90" aria-hidden="true">
+                <polygon class="base" points="50,5 87,25 87,65 50,85 13,65 13,25" />
+                <polygon class="value" points="50,10 80,27 80,63 50,80 20,63 20,27" />
+              </svg>
+            </div>
+            <div class="metric-labels">
+              <span><strong>コード品質</strong> 40点</span>
+              <span><strong>設計/アーキテクチャ</strong> 35点</span>
+              <span><strong>仕様充足度</strong> 20点</span>
+              <span><strong>保守性/拡張性</strong> 30点</span>
+              <span><strong>テスト/検証</strong> 20点</span>
+              <span><strong>コミット履歴</strong> 35点</span>
+            </div>
+            <h3 class="section-title">評価コメント</h3>
+            <div class="section-content">
+              <ul>
+                <li>コード品質と設計: フロント/バックエンドの責務分離と型設計は概ね良好で、図面インポート〜解析〜キャンバス反映までの流れが理解しやすい構成です。</li>
+                <li>仕様充足度: 図面アップロードと外周線・玄関/勝手口表示までは到達していますが、寸法線や全図面種別（立面・屋根伏・現調）の扱いは実装度合いに差があります（特に AI-1961 のスコアに反映）。</li>
+                <li>保守性/拡張性: OpenCV等への差し替えや多階層対応を見据えたモデル/サービス分割がされており、将来拡張がしやすい構造です。</li>
+                <li>テスト/検証: 自動テストはほぼ無く、手動検証前提のためスコアを控えめにしています。</li>
+                <li>コミット履歴: 機能単位でまとまっているものの、ブランチごとの役割の違いが十分に明示されていないケースもあり、最終スコアに差をつけています。</li>
+              </ul>
+            </div>
+          </section>
+        </td>
+        <td class="ai-cell">
+          <section class="ai-card">
+            <header class="ai-header">
+              <div>
+                <div class="ai-title">AI-1571</div>
+                <div class="ai-taskid">task-1765180981571-e66906</div>
+              </div>
+              <div class="ai-score-label">🏆🥇 90 点 / 100</div>
+            </header>
+            <div class="hex-chart-wrapper">
+              <svg class="hex-chart" viewBox="0 0 100 90" aria-hidden="true">
+                <polygon class="base" points="50,5 87,25 87,65 50,85 13,65 13,25" />
+                <polygon class="value" points="50,10 80,27 80,63 50,80 20,63 20,27" />
+              </svg>
+            </div>
+            <div class="metric-labels">
+              <span><strong>コード品質</strong> 92点</span>
+              <span><strong>設計/アーキテクチャ</strong> 90点</span>
+              <span><strong>仕様充足度</strong> 88点</span>
+              <span><strong>保守性/拡張性</strong> 90点</span>
+              <span><strong>テスト/検証</strong> 70点</span>
+              <span><strong>コミット履歴</strong> 88点</span>
+            </div>
+            <h3 class="section-title">評価コメント</h3>
+            <div class="section-content">
+              <ul>
+                <li>コード品質と設計: フロント/バックエンドの責務分離と型設計は概ね良好で、図面インポート〜解析〜キャンバス反映までの流れが理解しやすい構成です。</li>
+                <li>仕様充足度: 図面アップロードと外周線・玄関/勝手口表示までは到達していますが、寸法線や全図面種別（立面・屋根伏・現調）の扱いは実装度合いに差があります（特に AI-1571 のスコアに反映）。</li>
+                <li>保守性/拡張性: OpenCV等への差し替えや多階層対応を見据えたモデル/サービス分割がされており、将来拡張がしやすい構造です。</li>
+                <li>テスト/検証: 自動テストはほぼ無く、手動検証前提のためスコアを控えめにしています。</li>
+                <li>コミット履歴: 機能単位でまとまっているものの、ブランチごとの役割の違いが十分に明示されていないケースもあり、最終スコアに差をつけています。</li>
+              </ul>
+            </div>
+          </section>
+        </td>
+      </tr>
+        </tbody>
+      </table>
+    </div>
+  </body>
+</html>

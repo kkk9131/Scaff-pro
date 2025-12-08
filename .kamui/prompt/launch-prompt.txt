@@ -1,0 +1,2 @@
+npm run dev >/tmp/kamui-dev.log 2>&1 &
+printf "%s" $! > .kamui/dev.pid

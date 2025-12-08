@@ -18,6 +18,8 @@ export const metadata: Metadata = {
   keywords: ["scaffold", "construction", "planning", "AI", "building"],
 };
 
+import { ThemeRegistry } from "@/components/ThemeRegistry";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -28,6 +30,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} min-h-screen bg-zinc-950 font-sans antialiased`}
       >
+        <ThemeRegistry />
         {children}
       </body>
     </html>

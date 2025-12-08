@@ -1,0 +1,2561 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <title>監査レポート</title>
+    <style>
+      body {
+        font-family: "Hiragino Sans", "Noto Sans JP", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+        line-height: 1.6;
+        margin: 24px;
+        background-color: #e9f0f2;
+        color: #1f2a30;
+      }
+      .monitor-wrapper {
+        max-width: 1180px;
+        margin: 0 auto;
+        padding: 32px;
+        background: #ffffff;
+        border: 1px solid #c4d3d7;
+      }
+      .monitor-header {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        margin-bottom: 24px;
+      }
+      .monitor-title {
+        font-size: 26px;
+        font-weight: 700;
+        letter-spacing: 0.04em;
+        color: #1f2a30;
+      }
+      .monitor-description {
+        font-size: 14px;
+        color: #3a4b53;
+      }
+      table.monitor-report {
+        width: 100%;
+        border-collapse: collapse;
+        table-layout: fixed;
+        background: #ffffff;
+        border: 1px solid #c4d3d7;
+      }
+      col.timestamp-column {
+        width: 180px;
+      }
+      col.agent-column {
+        width: calc((100% - 180px) / 5);
+      }
+      th,
+      td {
+        border: 1px solid #c4d3d7;
+        padding: 16px;
+        vertical-align: top;
+        background-color: #ffffff;
+      }
+      th {
+        background: #d8e6e9;
+        text-align: left;
+        font-size: 13px;
+        font-weight: 600;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        color: #2c3a40;
+      }
+      tbody tr:nth-child(even) td {
+        background-color: #eef3f4;
+      }
+      details {
+        display: block;
+        margin: 0;
+      }
+      details summary {
+        list-style: none;
+      }
+      details[open] summary {
+        margin-bottom: 12px;
+      }
+      .details-toggle {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        cursor: pointer;
+        font-weight: 500;
+        font-size: 13px;
+        color: #1f2a30;
+        padding: 0;
+        background: transparent;
+        border: none;
+      }
+      .details-toggle::before {
+        content: "▶";
+        font-size: 10px;
+        transition: transform 160ms ease;
+        display: inline-block;
+      }
+      details[open] .details-toggle::before {
+        transform: rotate(90deg);
+      }
+      .timestamp {
+        font-weight: 600;
+        color: #2c3a40;
+        overflow-wrap: anywhere;
+      }
+      .snapshot-summary {
+        margin-bottom: 12px;
+        font-weight: 500;
+        color: #2c3a40;
+      }
+      pre {
+        white-space: pre-wrap;
+        word-break: break-word;
+        margin: 0;
+        font-size: 12px;
+        line-height: 1.55;
+        color: #1f2a30;
+        background: #f2f6f7;
+        border: 1px solid #c4d3d7;
+        padding: 16px;
+      }
+      .status-badge {
+        display: inline-block;
+        font-size: 10px;
+        font-weight: 600;
+        letter-spacing: 0.02em;
+        padding: 1px 6px;
+        background: #d8e6e9;
+        border: 1px solid #c4d3d7;
+        color: #1f2a30;
+        white-space: nowrap;
+        line-height: 1.3;
+        vertical-align: top;
+      }
+      .status-badge--running {
+        background: #d8e6e9;
+        border-color: #c4d3d7;
+      }
+      .status-badge--completed {
+        background: #cfdde1;
+        border-color: #b8c9cd;
+      }
+      .status-badge--pending {
+        background: #e2ecef;
+        border-color: #cfdde1;
+      }
+      .status-badge--error {
+        background: #e2ecef;
+        border-color: #c4d3d7;
+      }
+      .agent-meta {
+        display: block;
+        margin-bottom: 8px;
+        line-height: 1.5;
+      }
+      .agent-meta .status-badge {
+        margin-right: 6px;
+      }
+      .agent-meta .agent-label {
+        display: inline;
+        font-size: 13px;
+        color: #3a4b53;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="monitor-wrapper">
+      <header class="monitor-header">
+        <h1 class="monitor-title">監査レポート</h1>
+        <p class="monitor-description">
+          tmuxセッションを巡回し、出力の要約と詳細を1分ごとに蓄積します。ステータスごとの色付きラベルで進捗を即座に把握できます。
+        </p>
+      </header>
+      <table class="monitor-report">
+        <colgroup>
+          <col class="timestamp-column" />
+          <col class="agent-column" />
+          <col class="agent-column" />
+          <col class="agent-column" />
+          <col class="agent-column" />
+          <col class="agent-column" />
+        </colgroup>
+        <thead>
+          <tr>
+            <th>Timestamp</th>
+            <th>Agent task-1765175963744-5fabed</th>
+            <th>Agent task-BBB</th>
+            <th>Agent task-CCC</th>
+            <th>Agent task-DDD</th>
+            <th>Agent task-EEE</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="timestamp">2025-12-08 15:42</td>
+            <td>
+              <div class="agent-meta">
+                <span class="status-badge status-badge--pending">接続待ち</span>
+                <span class="agent-label">指定されたtmuxソケットに接続できず、現時点ではエージェント出力が存在しない可能性があります（セッション終了または未起動）。</span>
+              </div>
+              <details class="snapshot-details">
+                <summary class="details-toggle">ログ詳細</summary>
+                <pre>error connecting to /private/tmp/tmux-501/kamui-task-1765175963744-5fabed-1765175963897-socket (No such file or directory)</pre>
+              </details>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+        <tr>
+            <td class="timestamp">2025-12-08 15:43</td>
+            <td>
+              <div class="agent-meta">
+                <span class="status-badge status-badge--pending">接続待ち</span>
+                <span class="agent-label">tmuxソケットに接続できず、エージェントが終了または未起動の可能性があります。</span>
+              </div>
+              <details class="snapshot-details">
+                <summary class="details-toggle">ログ詳細</summary>
+                <pre></pre>
+              </details>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+<tr>
+            <td class="timestamp">2025-12-08 15:44</td>
+            <td>
+              <div class="agent-meta">
+                <span class="status-badge status-badge--pending">接続待ち</span>
+                <span class="agent-label">tmuxソケットに接続できず、エージェントが終了または未起動の可能性があります。</span>
+              </div>
+              <details class="snapshot-details">
+                <summary class="details-toggle">ログ詳細</summary>
+                <pre></pre>
+              </details>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+<tr>
+            <td class="timestamp">2025-12-08 15:45</td>
+            <td>
+              <div class="agent-meta">
+                <span class="status-badge status-badge--pending">接続待ち</span>
+                <span class="agent-label">tmuxソケットに接続できず、エージェントが終了または未起動の可能性があります。</span>
+              </div>
+              <details class="snapshot-details">
+                <summary class="details-toggle">ログ詳細</summary>
+                <pre></pre>
+              </details>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+<tr>
+            <td class="timestamp">2025-12-08 15:46</td>
+            <td>
+              <div class="agent-meta">
+                <span class="status-badge status-badge--pending">接続待ち</span>
+                <span class="agent-label">tmuxソケットに接続できず、エージェントが終了または未起動の可能性があります。</span>
+              </div>
+              <details class="snapshot-details">
+                <summary class="details-toggle">ログ詳細</summary>
+                <pre></pre>
+              </details>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+<tr>
+            <td class="timestamp">2025-12-08 15:47</td>
+            <td>
+              <div class="agent-meta">
+                <span class="status-badge status-badge--pending">接続待ち</span>
+                <span class="agent-label">tmuxソケットに接続できず、エージェントが終了または未起動の可能性があります。</span>
+              </div>
+              <details class="snapshot-details">
+                <summary class="details-toggle">ログ詳細</summary>
+                <pre></pre>
+              </details>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+<tr>
+            <td class="timestamp">2025-12-08 15:48</td>
+            <td>
+              <div class="agent-meta">
+                <span class="status-badge status-badge--pending">接続待ち</span>
+                <span class="agent-label">tmuxソケットに接続できず、エージェントが終了または未起動の可能性があります。</span>
+              </div>
+              <details class="snapshot-details">
+                <summary class="details-toggle">ログ詳細</summary>
+                <pre></pre>
+              </details>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+<tr>
+            <td class="timestamp">2025-12-08 15:49</td>
+            <td>
+              <div class="agent-meta">
+                <span class="status-badge status-badge--pending">接続待ち</span>
+                <span class="agent-label">tmuxソケットに接続できず、エージェントが終了または未起動の可能性があります。</span>
+              </div>
+              <details class="snapshot-details">
+                <summary class="details-toggle">ログ詳細</summary>
+                <pre></pre>
+              </details>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+<tr>
+            <td class="timestamp">2025-12-08 15:50</td>
+            <td>
+              <div class="agent-meta">
+                <span class="status-badge status-badge--pending">接続待ち</span>
+                <span class="agent-label">tmuxソケットに接続できず、エージェントが終了または未起動の可能性があります。</span>
+              </div>
+              <details class="snapshot-details">
+                <summary class="details-toggle">ログ詳細</summary>
+                <pre></pre>
+              </details>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+<tr>
+            <td class="timestamp">2025-12-08 15:51</td>
+            <td>
+              <div class="agent-meta">
+                <span class="status-badge status-badge--pending">接続待ち</span>
+                <span class="agent-label">tmuxソケットに接続できず、エージェントが終了または未起動の可能性があります。</span>
+              </div>
+              <details class="snapshot-details">
+                <summary class="details-toggle">ログ詳細</summary>
+                <pre></pre>
+              </details>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+<tr>
+            <td class="timestamp">2025-12-08 15:52</td>
+            <td>
+              <div class="agent-meta">
+                <span class="status-badge status-badge--pending">接続待ち</span>
+                <span class="agent-label">tmuxソケットに接続できず、エージェントが終了または未起動の可能性があります。</span>
+              </div>
+              <details class="snapshot-details">
+                <summary class="details-toggle">ログ詳細</summary>
+                <pre></pre>
+              </details>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+<tr>
+            <td class="timestamp">2025-12-08 15:53</td>
+            <td>
+              <div class="agent-meta">
+                <span class="status-badge status-badge--pending">接続待ち</span>
+                <span class="agent-label">tmuxソケットに接続できず、エージェントが終了または未起動の可能性があります。</span>
+              </div>
+              <details class="snapshot-details">
+                <summary class="details-toggle">ログ詳細</summary>
+                <pre></pre>
+              </details>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+<tr>
+            <td class="timestamp">2025-12-08 15:54</td>
+            <td>
+              <div class="agent-meta">
+                <span class="status-badge status-badge--pending">接続待ち</span>
+                <span class="agent-label">tmuxソケットに接続できず、エージェントが終了または未起動の可能性があります。</span>
+              </div>
+              <details class="snapshot-details">
+                <summary class="details-toggle">ログ詳細</summary>
+                <pre></pre>
+              </details>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+<tr>
+            <td class="timestamp">2025-12-08 15:55</td>
+            <td>
+              <div class="agent-meta">
+                <span class="status-badge status-badge--pending">接続待ち</span>
+                <span class="agent-label">tmuxソケットに接続できず、エージェントが終了または未起動の可能性があります。</span>
+              </div>
+              <details class="snapshot-details">
+                <summary class="details-toggle">ログ詳細</summary>
+                <pre></pre>
+              </details>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+<tr>
+            <td class="timestamp">2025-12-08 15:56</td>
+            <td>
+              <div class="agent-meta">
+                <span class="status-badge status-badge--pending">接続待ち</span>
+                <span class="agent-label">tmuxソケットに接続できず、エージェントが終了または未起動の可能性があります。</span>
+              </div>
+              <details class="snapshot-details">
+                <summary class="details-toggle">ログ詳細</summary>
+                <pre></pre>
+              </details>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+<tr>
+            <td class="timestamp">2025-12-08 15:57</td>
+            <td>
+              <div class="agent-meta">
+                <span class="status-badge status-badge--pending">接続待ち</span>
+                <span class="agent-label">tmuxソケットに接続できず、エージェントが終了または未起動の可能性があります。</span>
+              </div>
+              <details class="snapshot-details">
+                <summary class="details-toggle">ログ詳細</summary>
+                <pre></pre>
+              </details>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+<tr>
+            <td class="timestamp">2025-12-08 15:58</td>
+            <td>
+              <div class="agent-meta">
+                <span class="status-badge status-badge--pending">接続待ち</span>
+                <span class="agent-label">tmuxソケットに接続できず、エージェントが終了または未起動の可能性があります。</span>
+              </div>
+              <details class="snapshot-details">
+                <summary class="details-toggle">ログ詳細</summary>
+                <pre></pre>
+              </details>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+<tr>
+            <td class="timestamp">2025-12-08 15:59</td>
+            <td>
+              <div class="agent-meta">
+                <span class="status-badge status-badge--pending">接続待ち</span>
+                <span class="agent-label">tmuxソケットに接続できず、エージェントが終了または未起動の可能性があります。</span>
+              </div>
+              <details class="snapshot-details">
+                <summary class="details-toggle">ログ詳細</summary>
+                <pre></pre>
+              </details>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+<tr>
+            <td class="timestamp">2025-12-08 16:00</td>
+            <td>
+              <div class="agent-meta">
+                <span class="status-badge status-badge--pending">接続待ち</span>
+                <span class="agent-label">tmuxソケットに接続できず、エージェントが終了または未起動の可能性があります。</span>
+              </div>
+              <details class="snapshot-details">
+                <summary class="details-toggle">ログ詳細</summary>
+                <pre></pre>
+              </details>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+<tr>
+            <td class="timestamp">2025-12-08 16:01</td>
+            <td>
+              <div class="agent-meta">
+                <span class="status-badge status-badge--pending">接続待ち</span>
+                <span class="agent-label">tmuxソケットに接続できず、エージェントが終了または未起動の可能性があります。</span>
+              </div>
+              <details class="snapshot-details">
+                <summary class="details-toggle">ログ詳細</summary>
+                <pre></pre>
+              </details>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+<tr>
+            <td class="timestamp">2025-12-08 16:02</td>
+            <td>
+              <div class="agent-meta">
+                <span class="status-badge status-badge--pending">接続待ち</span>
+                <span class="agent-label">tmuxソケットに接続できず、エージェントが終了または未起動の可能性があります。</span>
+              </div>
+              <details class="snapshot-details">
+                <summary class="details-toggle">ログ詳細</summary>
+                <pre></pre>
+              </details>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+<tr>
+            <td class="timestamp">2025-12-08 16:03</td>
+            <td>
+              <div class="agent-meta">
+                <span class="status-badge status-badge--pending">接続待ち</span>
+                <span class="agent-label">tmuxソケットに接続できず、エージェントが終了または未起動の可能性があります。</span>
+              </div>
+              <details class="snapshot-details">
+                <summary class="details-toggle">ログ詳細</summary>
+                <pre></pre>
+              </details>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+<tr>
+            <td class="timestamp">2025-12-08 16:04</td>
+            <td>
+              <div class="agent-meta">
+                <span class="status-badge status-badge--pending">接続待ち</span>
+                <span class="agent-label">tmuxソケットに接続できず、エージェントが終了または未起動の可能性があります。</span>
+              </div>
+              <details class="snapshot-details">
+                <summary class="details-toggle">ログ詳細</summary>
+                <pre></pre>
+              </details>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+<tr>
+            <td class="timestamp">2025-12-08 16:05</td>
+            <td>
+              <div class="agent-meta">
+                <span class="status-badge status-badge--pending">接続待ち</span>
+                <span class="agent-label">tmuxソケットに接続できず、エージェントが終了または未起動の可能性があります。</span>
+              </div>
+              <details class="snapshot-details">
+                <summary class="details-toggle">ログ詳細</summary>
+                <pre></pre>
+              </details>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+<tr>
+            <td class="timestamp">2025-12-08 16:06</td>
+            <td>
+              <div class="agent-meta">
+                <span class="status-badge status-badge--pending">接続待ち</span>
+                <span class="agent-label">tmuxソケットに接続できず、エージェントが終了または未起動の可能性があります。</span>
+              </div>
+              <details class="snapshot-details">
+                <summary class="details-toggle">ログ詳細</summary>
+                <pre></pre>
+              </details>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+<tr>
+            <td class="timestamp">2025-12-08 16:07</td>
+            <td>
+              <div class="agent-meta">
+                <span class="status-badge status-badge--pending">接続待ち</span>
+                <span class="agent-label">tmuxソケットに接続できず、エージェントが終了または未起動の可能性があります。</span>
+              </div>
+              <details class="snapshot-details">
+                <summary class="details-toggle">ログ詳細</summary>
+                <pre></pre>
+              </details>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+<tr>
+            <td class="timestamp">2025-12-08 16:08</td>
+            <td>
+              <div class="agent-meta">
+                <span class="status-badge status-badge--pending">接続待ち</span>
+                <span class="agent-label">tmuxソケットに接続できず、エージェントが終了または未起動の可能性があります。</span>
+              </div>
+              <details class="snapshot-details">
+                <summary class="details-toggle">ログ詳細</summary>
+                <pre></pre>
+              </details>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+<tr>
+            <td class="timestamp">2025-12-08 16:09</td>
+            <td>
+              <div class="agent-meta">
+                <span class="status-badge status-badge--pending">接続待ち</span>
+                <span class="agent-label">tmuxソケットに接続できず、エージェントが終了または未起動の可能性があります。</span>
+              </div>
+              <details class="snapshot-details">
+                <summary class="details-toggle">ログ詳細</summary>
+                <pre></pre>
+              </details>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+<tr>
+            <td class="timestamp">2025-12-08 16:10</td>
+            <td>
+              <div class="agent-meta">
+                <span class="status-badge status-badge--pending">接続待ち</span>
+                <span class="agent-label">tmuxソケットに接続できず、エージェントが終了または未起動の可能性があります。</span>
+              </div>
+              <details class="snapshot-details">
+                <summary class="details-toggle">ログ詳細</summary>
+                <pre></pre>
+              </details>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+<tr>
+            <td class="timestamp">2025-12-08 16:11</td>
+            <td>
+              <div class="agent-meta">
+                <span class="status-badge status-badge--pending">接続待ち</span>
+                <span class="agent-label">tmuxソケットに接続できず、エージェントが終了または未起動の可能性があります。</span>
+              </div>
+              <details class="snapshot-details">
+                <summary class="details-toggle">ログ詳細</summary>
+                <pre></pre>
+              </details>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+<tr>
+            <td class="timestamp">2025-12-08 16:12</td>
+            <td>
+              <div class="agent-meta">
+                <span class="status-badge status-badge--pending">接続待ち</span>
+                <span class="agent-label">tmuxソケットに接続できず、エージェントが終了または未起動の可能性があります。</span>
+              </div>
+              <details class="snapshot-details">
+                <summary class="details-toggle">ログ詳細</summary>
+                <pre></pre>
+              </details>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+<tr>
+            <td class="timestamp">2025-12-08 16:13</td>
+            <td>
+              <div class="agent-meta">
+                <span class="status-badge status-badge--pending">接続待ち</span>
+                <span class="agent-label">tmuxソケットに接続できず、エージェントが終了または未起動の可能性があります。</span>
+              </div>
+              <details class="snapshot-details">
+                <summary class="details-toggle">ログ詳細</summary>
+                <pre></pre>
+              </details>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+<tr>
+            <td class="timestamp">2025-12-08 16:14</td>
+            <td>
+              <div class="agent-meta">
+                <span class="status-badge status-badge--pending">接続待ち</span>
+                <span class="agent-label">tmuxソケットに接続できず、エージェントが終了または未起動の可能性があります。</span>
+              </div>
+              <details class="snapshot-details">
+                <summary class="details-toggle">ログ詳細</summary>
+                <pre></pre>
+              </details>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+<tr>
+            <td class="timestamp">2025-12-08 16:15</td>
+            <td>
+              <div class="agent-meta">
+                <span class="status-badge status-badge--pending">接続待ち</span>
+                <span class="agent-label">tmuxソケットに接続できず、エージェントが終了または未起動の可能性があります。</span>
+              </div>
+              <details class="snapshot-details">
+                <summary class="details-toggle">ログ詳細</summary>
+                <pre></pre>
+              </details>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+<tr>
+            <td class="timestamp">2025-12-08 16:16</td>
+            <td>
+              <div class="agent-meta">
+                <span class="status-badge status-badge--pending">接続待ち</span>
+                <span class="agent-label">tmuxソケットに接続できず、エージェントが終了または未起動の可能性があります。</span>
+              </div>
+              <details class="snapshot-details">
+                <summary class="details-toggle">ログ詳細</summary>
+                <pre></pre>
+              </details>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+<tr>
+            <td class="timestamp">2025-12-08 16:17</td>
+            <td>
+              <div class="agent-meta">
+                <span class="status-badge status-badge--pending">接続待ち</span>
+                <span class="agent-label">tmuxソケットに接続できず、エージェントが終了または未起動の可能性があります。</span>
+              </div>
+              <details class="snapshot-details">
+                <summary class="details-toggle">ログ詳細</summary>
+                <pre></pre>
+              </details>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+<tr>
+            <td class="timestamp">2025-12-08 16:18</td>
+            <td>
+              <div class="agent-meta">
+                <span class="status-badge status-badge--pending">接続待ち</span>
+                <span class="agent-label">tmuxソケットに接続できず、エージェントが終了または未起動の可能性があります。</span>
+              </div>
+              <details class="snapshot-details">
+                <summary class="details-toggle">ログ詳細</summary>
+                <pre></pre>
+              </details>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+<tr>
+            <td class="timestamp">2025-12-08 16:19</td>
+            <td>
+              <div class="agent-meta">
+                <span class="status-badge status-badge--pending">接続待ち</span>
+                <span class="agent-label">tmuxソケットに接続できず、エージェントが終了または未起動の可能性があります。</span>
+              </div>
+              <details class="snapshot-details">
+                <summary class="details-toggle">ログ詳細</summary>
+                <pre></pre>
+              </details>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+<tr>
+            <td class="timestamp">2025-12-08 16:20</td>
+            <td>
+              <div class="agent-meta">
+                <span class="status-badge status-badge--pending">接続待ち</span>
+                <span class="agent-label">tmuxソケットに接続できず、エージェントが終了または未起動の可能性があります。</span>
+              </div>
+              <details class="snapshot-details">
+                <summary class="details-toggle">ログ詳細</summary>
+                <pre></pre>
+              </details>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+<tr>
+            <td class="timestamp">2025-12-08 16:21</td>
+            <td>
+              <div class="agent-meta">
+                <span class="status-badge status-badge--pending">接続待ち</span>
+                <span class="agent-label">tmuxソケットに接続できず、エージェントが終了または未起動の可能性があります。</span>
+              </div>
+              <details class="snapshot-details">
+                <summary class="details-toggle">ログ詳細</summary>
+                <pre></pre>
+              </details>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+<tr>
+            <td class="timestamp">2025-12-08 16:22</td>
+            <td>
+              <div class="agent-meta">
+                <span class="status-badge status-badge--pending">接続待ち</span>
+                <span class="agent-label">tmuxソケットに接続できず、エージェントが終了または未起動の可能性があります。</span>
+              </div>
+              <details class="snapshot-details">
+                <summary class="details-toggle">ログ詳細</summary>
+                <pre></pre>
+              </details>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+<tr>
+            <td class="timestamp">2025-12-08 16:23</td>
+            <td>
+              <div class="agent-meta">
+                <span class="status-badge status-badge--pending">接続待ち</span>
+                <span class="agent-label">tmuxソケットに接続できず、エージェントが終了または未起動の可能性があります。</span>
+              </div>
+              <details class="snapshot-details">
+                <summary class="details-toggle">ログ詳細</summary>
+                <pre></pre>
+              </details>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+<tr>
+            <td class="timestamp">2025-12-08 16:24</td>
+            <td>
+              <div class="agent-meta">
+                <span class="status-badge status-badge--pending">接続待ち</span>
+                <span class="agent-label">tmuxソケットに接続できず、エージェントが終了または未起動の可能性があります。</span>
+              </div>
+              <details class="snapshot-details">
+                <summary class="details-toggle">ログ詳細</summary>
+                <pre></pre>
+              </details>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+<tr>
+            <td class="timestamp">2025-12-08 16:25</td>
+            <td>
+              <div class="agent-meta">
+                <span class="status-badge status-badge--pending">接続待ち</span>
+                <span class="agent-label">tmuxソケットに接続できず、エージェントが終了または未起動の可能性があります。</span>
+              </div>
+              <details class="snapshot-details">
+                <summary class="details-toggle">ログ詳細</summary>
+                <pre></pre>
+              </details>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+<tr>
+            <td class="timestamp">2025-12-08 16:26</td>
+            <td>
+              <div class="agent-meta">
+                <span class="status-badge status-badge--pending">接続待ち</span>
+                <span class="agent-label">tmuxソケットに接続できず、エージェントが終了または未起動の可能性があります。</span>
+              </div>
+              <details class="snapshot-details">
+                <summary class="details-toggle">ログ詳細</summary>
+                <pre></pre>
+              </details>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+<tr>
+            <td class="timestamp">2025-12-08 16:27</td>
+            <td>
+              <div class="agent-meta">
+                <span class="status-badge status-badge--pending">接続待ち</span>
+                <span class="agent-label">tmuxソケットに接続できず、エージェントが終了または未起動の可能性があります。</span>
+              </div>
+              <details class="snapshot-details">
+                <summary class="details-toggle">ログ詳細</summary>
+                <pre></pre>
+              </details>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+<tr>
+            <td class="timestamp">2025-12-08 16:28</td>
+            <td>
+              <div class="agent-meta">
+                <span class="status-badge status-badge--pending">接続待ち</span>
+                <span class="agent-label">tmuxソケットに接続できず、エージェントが終了または未起動の可能性があります。</span>
+              </div>
+              <details class="snapshot-details">
+                <summary class="details-toggle">ログ詳細</summary>
+                <pre></pre>
+              </details>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+<tr>
+            <td class="timestamp">2025-12-08 16:29</td>
+            <td>
+              <div class="agent-meta">
+                <span class="status-badge status-badge--pending">接続待ち</span>
+                <span class="agent-label">tmuxソケットに接続できず、エージェントが終了または未起動の可能性があります。</span>
+              </div>
+              <details class="snapshot-details">
+                <summary class="details-toggle">ログ詳細</summary>
+                <pre></pre>
+              </details>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+<tr>
+            <td class="timestamp">2025-12-08 16:30</td>
+            <td>
+              <div class="agent-meta">
+                <span class="status-badge status-badge--pending">接続待ち</span>
+                <span class="agent-label">tmuxソケットに接続できず、エージェントが終了または未起動の可能性があります。</span>
+              </div>
+              <details class="snapshot-details">
+                <summary class="details-toggle">ログ詳細</summary>
+                <pre></pre>
+              </details>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+<tr>
+            <td class="timestamp">2025-12-08 16:31</td>
+            <td>
+              <div class="agent-meta">
+                <span class="status-badge status-badge--pending">接続待ち</span>
+                <span class="agent-label">tmuxソケットに接続できず、エージェントが終了または未起動の可能性があります。</span>
+              </div>
+              <details class="snapshot-details">
+                <summary class="details-toggle">ログ詳細</summary>
+                <pre></pre>
+              </details>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+<tr>
+            <td class="timestamp">2025-12-08 16:32</td>
+            <td>
+              <div class="agent-meta">
+                <span class="status-badge status-badge--pending">接続待ち</span>
+                <span class="agent-label">tmuxソケットに接続できず、エージェントが終了または未起動の可能性があります。</span>
+              </div>
+              <details class="snapshot-details">
+                <summary class="details-toggle">ログ詳細</summary>
+                <pre></pre>
+              </details>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+<tr>
+            <td class="timestamp">2025-12-08 16:33</td>
+            <td>
+              <div class="agent-meta">
+                <span class="status-badge status-badge--pending">接続待ち</span>
+                <span class="agent-label">tmuxソケットに接続できず、エージェントが終了または未起動の可能性があります。</span>
+              </div>
+              <details class="snapshot-details">
+                <summary class="details-toggle">ログ詳細</summary>
+                <pre></pre>
+              </details>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+<tr>
+            <td class="timestamp">2025-12-08 16:34</td>
+            <td>
+              <div class="agent-meta">
+                <span class="status-badge status-badge--pending">接続待ち</span>
+                <span class="agent-label">tmuxソケットに接続できず、エージェントが終了または未起動の可能性があります。</span>
+              </div>
+              <details class="snapshot-details">
+                <summary class="details-toggle">ログ詳細</summary>
+                <pre></pre>
+              </details>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+<tr>
+            <td class="timestamp">2025-12-08 16:35</td>
+            <td>
+              <div class="agent-meta">
+                <span class="status-badge status-badge--pending">接続待ち</span>
+                <span class="agent-label">tmuxソケットに接続できず、エージェントが終了または未起動の可能性があります。</span>
+              </div>
+              <details class="snapshot-details">
+                <summary class="details-toggle">ログ詳細</summary>
+                <pre></pre>
+              </details>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+<tr>
+            <td class="timestamp">2025-12-08 16:36</td>
+            <td>
+              <div class="agent-meta">
+                <span class="status-badge status-badge--pending">接続待ち</span>
+                <span class="agent-label">tmuxソケットに接続できず、エージェントが終了または未起動の可能性があります。</span>
+              </div>
+              <details class="snapshot-details">
+                <summary class="details-toggle">ログ詳細</summary>
+                <pre></pre>
+              </details>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+<tr>
+            <td class="timestamp">2025-12-08 16:37</td>
+            <td>
+              <div class="agent-meta">
+                <span class="status-badge status-badge--pending">接続待ち</span>
+                <span class="agent-label">tmuxソケットに接続できず、エージェントが終了または未起動の可能性があります。</span>
+              </div>
+              <details class="snapshot-details">
+                <summary class="details-toggle">ログ詳細</summary>
+                <pre></pre>
+              </details>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+<tr>
+            <td class="timestamp">2025-12-08 16:38</td>
+            <td>
+              <div class="agent-meta">
+                <span class="status-badge status-badge--pending">接続待ち</span>
+                <span class="agent-label">tmuxソケットに接続できず、エージェントが終了または未起動の可能性があります。</span>
+              </div>
+              <details class="snapshot-details">
+                <summary class="details-toggle">ログ詳細</summary>
+                <pre></pre>
+              </details>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+<tr>
+            <td class="timestamp">2025-12-08 16:39</td>
+            <td>
+              <div class="agent-meta">
+                <span class="status-badge status-badge--pending">接続待ち</span>
+                <span class="agent-label">tmuxソケットに接続できず、エージェントが終了または未起動の可能性があります。</span>
+              </div>
+              <details class="snapshot-details">
+                <summary class="details-toggle">ログ詳細</summary>
+                <pre></pre>
+              </details>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+<tr>
+            <td class="timestamp">2025-12-08 16:40</td>
+            <td>
+              <div class="agent-meta">
+                <span class="status-badge status-badge--pending">接続待ち</span>
+                <span class="agent-label">tmuxソケットに接続できず、エージェントが終了または未起動の可能性があります。</span>
+              </div>
+              <details class="snapshot-details">
+                <summary class="details-toggle">ログ詳細</summary>
+                <pre></pre>
+              </details>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+<tr>
+            <td class="timestamp">2025-12-08 16:41</td>
+            <td>
+              <div class="agent-meta">
+                <span class="status-badge status-badge--pending">接続待ち</span>
+                <span class="agent-label">tmuxソケットに接続できず、エージェントが終了または未起動の可能性があります。</span>
+              </div>
+              <details class="snapshot-details">
+                <summary class="details-toggle">ログ詳細</summary>
+                <pre></pre>
+              </details>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+<tr>
+            <td class="timestamp">2025-12-08 16:42</td>
+            <td>
+              <div class="agent-meta">
+                <span class="status-badge status-badge--pending">接続待ち</span>
+                <span class="agent-label">tmuxソケットに接続できず、エージェントが終了または未起動の可能性があります。</span>
+              </div>
+              <details class="snapshot-details">
+                <summary class="details-toggle">ログ詳細</summary>
+                <pre></pre>
+              </details>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+<tr>
+            <td class="timestamp">2025-12-08 16:43</td>
+            <td>
+              <div class="agent-meta">
+                <span class="status-badge status-badge--pending">接続待ち</span>
+                <span class="agent-label">tmuxソケットに接続できず、エージェントが終了または未起動の可能性があります。</span>
+              </div>
+              <details class="snapshot-details">
+                <summary class="details-toggle">ログ詳細</summary>
+                <pre></pre>
+              </details>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+<tr>
+            <td class="timestamp">2025-12-08 16:44</td>
+            <td>
+              <div class="agent-meta">
+                <span class="status-badge status-badge--pending">接続待ち</span>
+                <span class="agent-label">tmuxソケットに接続できず、エージェントが終了または未起動の可能性があります。</span>
+              </div>
+              <details class="snapshot-details">
+                <summary class="details-toggle">ログ詳細</summary>
+                <pre></pre>
+              </details>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+<tr>
+            <td class="timestamp">2025-12-08 16:45</td>
+            <td>
+              <div class="agent-meta">
+                <span class="status-badge status-badge--pending">接続待ち</span>
+                <span class="agent-label">tmuxソケットに接続できず、エージェントが終了または未起動の可能性があります。</span>
+              </div>
+              <details class="snapshot-details">
+                <summary class="details-toggle">ログ詳細</summary>
+                <pre></pre>
+              </details>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+<tr>
+            <td class="timestamp">2025-12-08 16:46</td>
+            <td>
+              <div class="agent-meta">
+                <span class="status-badge status-badge--pending">接続待ち</span>
+                <span class="agent-label">tmuxソケットに接続できず、エージェントが終了または未起動の可能性があります。</span>
+              </div>
+              <details class="snapshot-details">
+                <summary class="details-toggle">ログ詳細</summary>
+                <pre></pre>
+              </details>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+<tr>
+            <td class="timestamp">2025-12-08 16:47</td>
+            <td>
+              <div class="agent-meta">
+                <span class="status-badge status-badge--pending">接続待ち</span>
+                <span class="agent-label">tmuxソケットに接続できず、エージェントが終了または未起動の可能性があります。</span>
+              </div>
+              <details class="snapshot-details">
+                <summary class="details-toggle">ログ詳細</summary>
+                <pre></pre>
+              </details>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+<tr>
+            <td class="timestamp">2025-12-08 16:48</td>
+            <td>
+              <div class="agent-meta">
+                <span class="status-badge status-badge--pending">接続待ち</span>
+                <span class="agent-label">tmuxソケットに接続できず、エージェントが終了または未起動の可能性があります。</span>
+              </div>
+              <details class="snapshot-details">
+                <summary class="details-toggle">ログ詳細</summary>
+                <pre></pre>
+              </details>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+<tr>
+            <td class="timestamp">2025-12-08 16:49</td>
+            <td>
+              <div class="agent-meta">
+                <span class="status-badge status-badge--pending">接続待ち</span>
+                <span class="agent-label">tmuxソケットに接続できず、エージェントが終了または未起動の可能性があります。</span>
+              </div>
+              <details class="snapshot-details">
+                <summary class="details-toggle">ログ詳細</summary>
+                <pre></pre>
+              </details>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+<tr>
+            <td class="timestamp">2025-12-08 16:50</td>
+            <td>
+              <div class="agent-meta">
+                <span class="status-badge status-badge--pending">接続待ち</span>
+                <span class="agent-label">tmuxソケットに接続できず、エージェントが終了または未起動の可能性があります。</span>
+              </div>
+              <details class="snapshot-details">
+                <summary class="details-toggle">ログ詳細</summary>
+                <pre></pre>
+              </details>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+<tr>
+            <td class="timestamp">2025-12-08 16:51</td>
+            <td>
+              <div class="agent-meta">
+                <span class="status-badge status-badge--pending">接続待ち</span>
+                <span class="agent-label">tmuxソケットに接続できず、エージェントが終了または未起動の可能性があります。</span>
+              </div>
+              <details class="snapshot-details">
+                <summary class="details-toggle">ログ詳細</summary>
+                <pre></pre>
+              </details>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+<tr>
+            <td class="timestamp">2025-12-08 16:52</td>
+            <td>
+              <div class="agent-meta">
+                <span class="status-badge status-badge--pending">接続待ち</span>
+                <span class="agent-label">tmuxソケットに接続できず、エージェントが終了または未起動の可能性があります。</span>
+              </div>
+              <details class="snapshot-details">
+                <summary class="details-toggle">ログ詳細</summary>
+                <pre></pre>
+              </details>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+<tr>
+            <td class="timestamp">2025-12-08 16:53</td>
+            <td>
+              <div class="agent-meta">
+                <span class="status-badge status-badge--pending">接続待ち</span>
+                <span class="agent-label">tmuxソケットに接続できず、エージェントが終了または未起動の可能性があります。</span>
+              </div>
+              <details class="snapshot-details">
+                <summary class="details-toggle">ログ詳細</summary>
+                <pre></pre>
+              </details>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+<tr>
+            <td class="timestamp">2025-12-08 16:54</td>
+            <td>
+              <div class="agent-meta">
+                <span class="status-badge status-badge--pending">接続待ち</span>
+                <span class="agent-label">tmuxソケットに接続できず、エージェントが終了または未起動の可能性があります。</span>
+              </div>
+              <details class="snapshot-details">
+                <summary class="details-toggle">ログ詳細</summary>
+                <pre></pre>
+              </details>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+<tr>
+            <td class="timestamp">2025-12-08 16:55</td>
+            <td>
+              <div class="agent-meta">
+                <span class="status-badge status-badge--pending">接続待ち</span>
+                <span class="agent-label">tmuxソケットに接続できず、エージェントが終了または未起動の可能性があります。</span>
+              </div>
+              <details class="snapshot-details">
+                <summary class="details-toggle">ログ詳細</summary>
+                <pre></pre>
+              </details>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+<tr>
+            <td class="timestamp">2025-12-08 16:56</td>
+            <td>
+              <div class="agent-meta">
+                <span class="status-badge status-badge--pending">接続待ち</span>
+                <span class="agent-label">tmuxソケットに接続できず、エージェントが終了または未起動の可能性があります。</span>
+              </div>
+              <details class="snapshot-details">
+                <summary class="details-toggle">ログ詳細</summary>
+                <pre></pre>
+              </details>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+<tr>
+            <td class="timestamp">2025-12-08 16:57</td>
+            <td>
+              <div class="agent-meta">
+                <span class="status-badge status-badge--pending">接続待ち</span>
+                <span class="agent-label">tmuxソケットに接続できず、エージェントが終了または未起動の可能性があります。</span>
+              </div>
+              <details class="snapshot-details">
+                <summary class="details-toggle">ログ詳細</summary>
+                <pre></pre>
+              </details>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+<tr>
+            <td class="timestamp">2025-12-08 16:58</td>
+            <td>
+              <div class="agent-meta">
+                <span class="status-badge status-badge--pending">接続待ち</span>
+                <span class="agent-label">tmuxソケットに接続できず、エージェントが終了または未起動の可能性があります。</span>
+              </div>
+              <details class="snapshot-details">
+                <summary class="details-toggle">ログ詳細</summary>
+                <pre></pre>
+              </details>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+<tr>
+            <td class="timestamp">2025-12-08 16:59</td>
+            <td>
+              <div class="agent-meta">
+                <span class="status-badge status-badge--pending">接続待ち</span>
+                <span class="agent-label">tmuxソケットに接続できず、エージェントが終了または未起動の可能性があります。</span>
+              </div>
+              <details class="snapshot-details">
+                <summary class="details-toggle">ログ詳細</summary>
+                <pre></pre>
+              </details>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+<tr>
+            <td class="timestamp">2025-12-08 17:00</td>
+            <td>
+              <div class="agent-meta">
+                <span class="status-badge status-badge--pending">接続待ち</span>
+                <span class="agent-label">tmuxソケットに接続できず、エージェントが終了または未起動の可能性があります。</span>
+              </div>
+              <details class="snapshot-details">
+                <summary class="details-toggle">ログ詳細</summary>
+                <pre></pre>
+              </details>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+<tr>
+            <td class="timestamp">2025-12-08 17:01</td>
+            <td>
+              <div class="agent-meta">
+                <span class="status-badge status-badge--pending">接続待ち</span>
+                <span class="agent-label">tmuxソケットに接続できず、エージェントが終了または未起動の可能性があります。</span>
+              </div>
+              <details class="snapshot-details">
+                <summary class="details-toggle">ログ詳細</summary>
+                <pre></pre>
+              </details>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+<tr>
+            <td class="timestamp">2025-12-08 17:02</td>
+            <td>
+              <div class="agent-meta">
+                <span class="status-badge status-badge--pending">接続待ち</span>
+                <span class="agent-label">tmuxソケットに接続できず、エージェントが終了または未起動の可能性があります。</span>
+              </div>
+              <details class="snapshot-details">
+                <summary class="details-toggle">ログ詳細</summary>
+                <pre></pre>
+              </details>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+<tr>
+            <td class="timestamp">2025-12-08 17:03</td>
+            <td>
+              <div class="agent-meta">
+                <span class="status-badge status-badge--pending">接続待ち</span>
+                <span class="agent-label">tmuxソケットに接続できず、エージェントが終了または未起動の可能性があります。</span>
+              </div>
+              <details class="snapshot-details">
+                <summary class="details-toggle">ログ詳細</summary>
+                <pre></pre>
+              </details>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+<tr>
+            <td class="timestamp">2025-12-08 17:04</td>
+            <td>
+              <div class="agent-meta">
+                <span class="status-badge status-badge--pending">接続待ち</span>
+                <span class="agent-label">tmuxソケットに接続できず、エージェントが終了または未起動の可能性があります。</span>
+              </div>
+              <details class="snapshot-details">
+                <summary class="details-toggle">ログ詳細</summary>
+                <pre></pre>
+              </details>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+<tr>
+            <td class="timestamp">2025-12-08 17:05</td>
+            <td>
+              <div class="agent-meta">
+                <span class="status-badge status-badge--pending">接続待ち</span>
+                <span class="agent-label">tmuxソケットに接続できず、エージェントが終了または未起動の可能性があります。</span>
+              </div>
+              <details class="snapshot-details">
+                <summary class="details-toggle">ログ詳細</summary>
+                <pre></pre>
+              </details>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+<tr>
+            <td class="timestamp">2025-12-08 17:06</td>
+            <td>
+              <div class="agent-meta">
+                <span class="status-badge status-badge--pending">接続待ち</span>
+                <span class="agent-label">tmuxソケットに接続できず、エージェントが終了または未起動の可能性があります。</span>
+              </div>
+              <details class="snapshot-details">
+                <summary class="details-toggle">ログ詳細</summary>
+                <pre></pre>
+              </details>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+<tr>
+            <td class="timestamp">2025-12-08 17:07</td>
+            <td>
+              <div class="agent-meta">
+                <span class="status-badge status-badge--pending">接続待ち</span>
+                <span class="agent-label">tmuxソケットに接続できず、エージェントが終了または未起動の可能性があります。</span>
+              </div>
+              <details class="snapshot-details">
+                <summary class="details-toggle">ログ詳細</summary>
+                <pre></pre>
+              </details>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+<tr>
+            <td class="timestamp">2025-12-08 17:08</td>
+            <td>
+              <div class="agent-meta">
+                <span class="status-badge status-badge--pending">接続待ち</span>
+                <span class="agent-label">tmuxソケットに接続できず、エージェントが終了または未起動の可能性があります。</span>
+              </div>
+              <details class="snapshot-details">
+                <summary class="details-toggle">ログ詳細</summary>
+                <pre></pre>
+              </details>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+<tr>
+            <td class="timestamp">2025-12-08 17:09</td>
+            <td>
+              <div class="agent-meta">
+                <span class="status-badge status-badge--pending">接続待ち</span>
+                <span class="agent-label">tmuxソケットに接続できず、エージェントが終了または未起動の可能性があります。</span>
+              </div>
+              <details class="snapshot-details">
+                <summary class="details-toggle">ログ詳細</summary>
+                <pre></pre>
+              </details>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+<tr>
+            <td class="timestamp">2025-12-08 17:10</td>
+            <td>
+              <div class="agent-meta">
+                <span class="status-badge status-badge--pending">接続待ち</span>
+                <span class="agent-label">tmuxソケットに接続できず、エージェントが終了または未起動の可能性があります。</span>
+              </div>
+              <details class="snapshot-details">
+                <summary class="details-toggle">ログ詳細</summary>
+                <pre></pre>
+              </details>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+<tr>
+            <td class="timestamp">2025-12-08 17:11</td>
+            <td>
+              <div class="agent-meta">
+                <span class="status-badge status-badge--pending">接続待ち</span>
+                <span class="agent-label">tmuxソケットに接続できず、エージェントが終了または未起動の可能性があります。</span>
+              </div>
+              <details class="snapshot-details">
+                <summary class="details-toggle">ログ詳細</summary>
+                <pre></pre>
+              </details>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+<tr>
+            <td class="timestamp">2025-12-08 17:12</td>
+            <td>
+              <div class="agent-meta">
+                <span class="status-badge status-badge--pending">接続待ち</span>
+                <span class="agent-label">tmuxソケットに接続できず、エージェントが終了または未起動の可能性があります。</span>
+              </div>
+              <details class="snapshot-details">
+                <summary class="details-toggle">ログ詳細</summary>
+                <pre></pre>
+              </details>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+<tr>
+            <td class="timestamp">2025-12-08 17:13</td>
+            <td>
+              <div class="agent-meta">
+                <span class="status-badge status-badge--pending">接続待ち</span>
+                <span class="agent-label">tmuxソケットに接続できず、エージェントが終了または未起動の可能性があります。</span>
+              </div>
+              <details class="snapshot-details">
+                <summary class="details-toggle">ログ詳細</summary>
+                <pre></pre>
+              </details>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+<tr>
+            <td class="timestamp">2025-12-08 17:14</td>
+            <td>
+              <div class="agent-meta">
+                <span class="status-badge status-badge--pending">接続待ち</span>
+                <span class="agent-label">tmuxソケットに接続できず、エージェントが終了または未起動の可能性があります。</span>
+              </div>
+              <details class="snapshot-details">
+                <summary class="details-toggle">ログ詳細</summary>
+                <pre></pre>
+              </details>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+<tr>
+            <td class="timestamp">2025-12-08 17:15</td>
+            <td>
+              <div class="agent-meta">
+                <span class="status-badge status-badge--pending">接続待ち</span>
+                <span class="agent-label">tmuxソケットに接続できず、エージェントが終了または未起動の可能性があります。</span>
+              </div>
+              <details class="snapshot-details">
+                <summary class="details-toggle">ログ詳細</summary>
+                <pre></pre>
+              </details>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+<tr>
+            <td class="timestamp">2025-12-08 17:16</td>
+            <td>
+              <div class="agent-meta">
+                <span class="status-badge status-badge--pending">接続待ち</span>
+                <span class="agent-label">tmuxソケットに接続できず、エージェントが終了または未起動の可能性があります。</span>
+              </div>
+              <details class="snapshot-details">
+                <summary class="details-toggle">ログ詳細</summary>
+                <pre></pre>
+              </details>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+<tr>
+            <td class="timestamp">2025-12-08 17:17</td>
+            <td>
+              <div class="agent-meta">
+                <span class="status-badge status-badge--pending">接続待ち</span>
+                <span class="agent-label">tmuxソケットに接続できず、エージェントが終了または未起動の可能性があります。</span>
+              </div>
+              <details class="snapshot-details">
+                <summary class="details-toggle">ログ詳細</summary>
+                <pre></pre>
+              </details>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+<tr>
+            <td class="timestamp">2025-12-08 17:18</td>
+            <td>
+              <div class="agent-meta">
+                <span class="status-badge status-badge--pending">接続待ち</span>
+                <span class="agent-label">tmuxソケットに接続できず、エージェントが終了または未起動の可能性があります。</span>
+              </div>
+              <details class="snapshot-details">
+                <summary class="details-toggle">ログ詳細</summary>
+                <pre></pre>
+              </details>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+<tr>
+            <td class="timestamp">2025-12-08 17:19</td>
+            <td>
+              <div class="agent-meta">
+                <span class="status-badge status-badge--pending">接続待ち</span>
+                <span class="agent-label">tmuxソケットに接続できず、エージェントが終了または未起動の可能性があります。</span>
+              </div>
+              <details class="snapshot-details">
+                <summary class="details-toggle">ログ詳細</summary>
+                <pre></pre>
+              </details>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+<tr>
+            <td class="timestamp">2025-12-08 17:20</td>
+            <td>
+              <div class="agent-meta">
+                <span class="status-badge status-badge--pending">接続待ち</span>
+                <span class="agent-label">tmuxソケットに接続できず、エージェントが終了または未起動の可能性があります。</span>
+              </div>
+              <details class="snapshot-details">
+                <summary class="details-toggle">ログ詳細</summary>
+                <pre></pre>
+              </details>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+<tr>
+            <td class="timestamp">2025-12-08 17:21</td>
+            <td>
+              <div class="agent-meta">
+                <span class="status-badge status-badge--pending">接続待ち</span>
+                <span class="agent-label">tmuxソケットに接続できず、エージェントが終了または未起動の可能性があります。</span>
+              </div>
+              <details class="snapshot-details">
+                <summary class="details-toggle">ログ詳細</summary>
+                <pre></pre>
+              </details>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+<tr>
+            <td class="timestamp">2025-12-08 17:22</td>
+            <td>
+              <div class="agent-meta">
+                <span class="status-badge status-badge--pending">接続待ち</span>
+                <span class="agent-label">tmuxソケットに接続できず、エージェントが終了または未起動の可能性があります。</span>
+              </div>
+              <details class="snapshot-details">
+                <summary class="details-toggle">ログ詳細</summary>
+                <pre></pre>
+              </details>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+<tr>
+            <td class="timestamp">2025-12-08 17:23</td>
+            <td>
+              <div class="agent-meta">
+                <span class="status-badge status-badge--pending">接続待ち</span>
+                <span class="agent-label">tmuxソケットに接続できず、エージェントが終了または未起動の可能性があります。</span>
+              </div>
+              <details class="snapshot-details">
+                <summary class="details-toggle">ログ詳細</summary>
+                <pre></pre>
+              </details>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+<tr>
+            <td class="timestamp">2025-12-08 17:24</td>
+            <td>
+              <div class="agent-meta">
+                <span class="status-badge status-badge--pending">接続待ち</span>
+                <span class="agent-label">tmuxソケットに接続できず、エージェントが終了または未起動の可能性があります。</span>
+              </div>
+              <details class="snapshot-details">
+                <summary class="details-toggle">ログ詳細</summary>
+                <pre></pre>
+              </details>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+<tr>
+            <td class="timestamp">2025-12-08 17:25</td>
+            <td>
+              <div class="agent-meta">
+                <span class="status-badge status-badge--pending">接続待ち</span>
+                <span class="agent-label">tmuxソケットに接続できず、エージェントが終了または未起動の可能性があります。</span>
+              </div>
+              <details class="snapshot-details">
+                <summary class="details-toggle">ログ詳細</summary>
+                <pre></pre>
+              </details>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+<tr>
+            <td class="timestamp">2025-12-08 17:26</td>
+            <td>
+              <div class="agent-meta">
+                <span class="status-badge status-badge--pending">接続待ち</span>
+                <span class="agent-label">tmuxソケットに接続できず、エージェントが終了または未起動の可能性があります。</span>
+              </div>
+              <details class="snapshot-details">
+                <summary class="details-toggle">ログ詳細</summary>
+                <pre></pre>
+              </details>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+<tr>
+            <td class="timestamp">2025-12-08 17:27</td>
+            <td>
+              <div class="agent-meta">
+                <span class="status-badge status-badge--pending">接続待ち</span>
+                <span class="agent-label">tmuxソケットに接続できず、エージェントが終了または未起動の可能性があります。</span>
+              </div>
+              <details class="snapshot-details">
+                <summary class="details-toggle">ログ詳細</summary>
+                <pre></pre>
+              </details>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+<tr>
+            <td class="timestamp">2025-12-08 17:28</td>
+            <td>
+              <div class="agent-meta">
+                <span class="status-badge status-badge--pending">接続待ち</span>
+                <span class="agent-label">tmuxソケットに接続できず、エージェントが終了または未起動の可能性があります。</span>
+              </div>
+              <details class="snapshot-details">
+                <summary class="details-toggle">ログ詳細</summary>
+                <pre></pre>
+              </details>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+<tr>
+            <td class="timestamp">2025-12-08 17:29</td>
+            <td>
+              <div class="agent-meta">
+                <span class="status-badge status-badge--pending">接続待ち</span>
+                <span class="agent-label">tmuxソケットに接続できず、エージェントが終了または未起動の可能性があります。</span>
+              </div>
+              <details class="snapshot-details">
+                <summary class="details-toggle">ログ詳細</summary>
+                <pre></pre>
+              </details>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+<tr>
+            <td class="timestamp">2025-12-08 17:30</td>
+            <td>
+              <div class="agent-meta">
+                <span class="status-badge status-badge--pending">接続待ち</span>
+                <span class="agent-label">tmuxソケットに接続できず、エージェントが終了または未起動の可能性があります。</span>
+              </div>
+              <details class="snapshot-details">
+                <summary class="details-toggle">ログ詳細</summary>
+                <pre></pre>
+              </details>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+<tr>
+            <td class="timestamp">2025-12-08 17:31</td>
+            <td>
+              <div class="agent-meta">
+                <span class="status-badge status-badge--pending">接続待ち</span>
+                <span class="agent-label">tmuxソケットに接続できず、エージェントが終了または未起動の可能性があります。</span>
+              </div>
+              <details class="snapshot-details">
+                <summary class="details-toggle">ログ詳細</summary>
+                <pre></pre>
+              </details>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+<tr>
+            <td class="timestamp">2025-12-08 17:32</td>
+            <td>
+              <div class="agent-meta">
+                <span class="status-badge status-badge--pending">接続待ち</span>
+                <span class="agent-label">tmuxソケットに接続できず、エージェントが終了または未起動の可能性があります。</span>
+              </div>
+              <details class="snapshot-details">
+                <summary class="details-toggle">ログ詳細</summary>
+                <pre></pre>
+              </details>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+<tr>
+            <td class="timestamp">2025-12-08 17:33</td>
+            <td>
+              <div class="agent-meta">
+                <span class="status-badge status-badge--pending">接続待ち</span>
+                <span class="agent-label">tmuxソケットに接続できず、エージェントが終了または未起動の可能性があります。</span>
+              </div>
+              <details class="snapshot-details">
+                <summary class="details-toggle">ログ詳細</summary>
+                <pre></pre>
+              </details>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+<tr>
+            <td class="timestamp">2025-12-08 17:34</td>
+            <td>
+              <div class="agent-meta">
+                <span class="status-badge status-badge--pending">接続待ち</span>
+                <span class="agent-label">tmuxソケットに接続できず、エージェントが終了または未起動の可能性があります。</span>
+              </div>
+              <details class="snapshot-details">
+                <summary class="details-toggle">ログ詳細</summary>
+                <pre></pre>
+              </details>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+<tr>
+            <td class="timestamp">2025-12-08 17:35</td>
+            <td>
+              <div class="agent-meta">
+                <span class="status-badge status-badge--pending">接続待ち</span>
+                <span class="agent-label">tmuxソケットに接続できず、エージェントが終了または未起動の可能性があります。</span>
+              </div>
+              <details class="snapshot-details">
+                <summary class="details-toggle">ログ詳細</summary>
+                <pre></pre>
+              </details>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+<tr>
+            <td class="timestamp">2025-12-08 17:36</td>
+            <td>
+              <div class="agent-meta">
+                <span class="status-badge status-badge--pending">接続待ち</span>
+                <span class="agent-label">tmuxソケットに接続できず、エージェントが終了または未起動の可能性があります。</span>
+              </div>
+              <details class="snapshot-details">
+                <summary class="details-toggle">ログ詳細</summary>
+                <pre></pre>
+              </details>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+<tr>
+            <td class="timestamp">2025-12-08 17:37</td>
+            <td>
+              <div class="agent-meta">
+                <span class="status-badge status-badge--pending">接続待ち</span>
+                <span class="agent-label">tmuxソケットに接続できず、エージェントが終了または未起動の可能性があります。</span>
+              </div>
+              <details class="snapshot-details">
+                <summary class="details-toggle">ログ詳細</summary>
+                <pre></pre>
+              </details>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+<tr>
+            <td class="timestamp">2025-12-08 17:38</td>
+            <td>
+              <div class="agent-meta">
+                <span class="status-badge status-badge--pending">接続待ち</span>
+                <span class="agent-label">tmuxソケットに接続できず、エージェントが終了または未起動の可能性があります。</span>
+              </div>
+              <details class="snapshot-details">
+                <summary class="details-toggle">ログ詳細</summary>
+                <pre></pre>
+              </details>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+<tr>
+            <td class="timestamp">2025-12-08 17:39</td>
+            <td>
+              <div class="agent-meta">
+                <span class="status-badge status-badge--pending">接続待ち</span>
+                <span class="agent-label">tmuxソケットに接続できず、エージェントが終了または未起動の可能性があります。</span>
+              </div>
+              <details class="snapshot-details">
+                <summary class="details-toggle">ログ詳細</summary>
+                <pre></pre>
+              </details>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+<tr>
+            <td class="timestamp">2025-12-08 17:40</td>
+            <td>
+              <div class="agent-meta">
+                <span class="status-badge status-badge--pending">接続待ち</span>
+                <span class="agent-label">tmuxソケットに接続できず、エージェントが終了または未起動の可能性があります。</span>
+              </div>
+              <details class="snapshot-details">
+                <summary class="details-toggle">ログ詳細</summary>
+                <pre></pre>
+              </details>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+<tr>
+            <td class="timestamp">2025-12-08 17:41</td>
+            <td>
+              <div class="agent-meta">
+                <span class="status-badge status-badge--pending">接続待ち</span>
+                <span class="agent-label">tmuxソケットに接続できず、エージェントが終了または未起動の可能性があります。</span>
+              </div>
+              <details class="snapshot-details">
+                <summary class="details-toggle">ログ詳細</summary>
+                <pre></pre>
+              </details>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+<tr>
+            <td class="timestamp">2025-12-08 17:42</td>
+            <td>
+              <div class="agent-meta">
+                <span class="status-badge status-badge--pending">接続待ち</span>
+                <span class="agent-label">tmuxソケットに接続できず、エージェントが終了または未起動の可能性があります。</span>
+              </div>
+              <details class="snapshot-details">
+                <summary class="details-toggle">ログ詳細</summary>
+                <pre></pre>
+              </details>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+<tr>
+            <td class="timestamp">2025-12-08 17:43</td>
+            <td>
+              <div class="agent-meta">
+                <span class="status-badge status-badge--pending">接続待ち</span>
+                <span class="agent-label">tmuxソケットに接続できず、エージェントが終了または未起動の可能性があります。</span>
+              </div>
+              <details class="snapshot-details">
+                <summary class="details-toggle">ログ詳細</summary>
+                <pre></pre>
+              </details>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+<tr>
+            <td class="timestamp">2025-12-08 17:44</td>
+            <td>
+              <div class="agent-meta">
+                <span class="status-badge status-badge--pending">接続待ち</span>
+                <span class="agent-label">tmuxソケットに接続できず、エージェントが終了または未起動の可能性があります。</span>
+              </div>
+              <details class="snapshot-details">
+                <summary class="details-toggle">ログ詳細</summary>
+                <pre></pre>
+              </details>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+<tr>
+            <td class="timestamp">2025-12-08 17:45</td>
+            <td>
+              <div class="agent-meta">
+                <span class="status-badge status-badge--pending">接続待ち</span>
+                <span class="agent-label">tmuxソケットに接続できず、エージェントが終了または未起動の可能性があります。</span>
+              </div>
+              <details class="snapshot-details">
+                <summary class="details-toggle">ログ詳細</summary>
+                <pre></pre>
+              </details>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+<tr>
+            <td class="timestamp">2025-12-08 17:46</td>
+            <td>
+              <div class="agent-meta">
+                <span class="status-badge status-badge--pending">接続待ち</span>
+                <span class="agent-label">tmuxソケットに接続できず、エージェントが終了または未起動の可能性があります。</span>
+              </div>
+              <details class="snapshot-details">
+                <summary class="details-toggle">ログ詳細</summary>
+                <pre></pre>
+              </details>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+<tr>
+            <td class="timestamp">2025-12-08 17:47</td>
+            <td>
+              <div class="agent-meta">
+                <span class="status-badge status-badge--pending">接続待ち</span>
+                <span class="agent-label">tmuxソケットに接続できず、エージェントが終了または未起動の可能性があります。</span>
+              </div>
+              <details class="snapshot-details">
+                <summary class="details-toggle">ログ詳細</summary>
+                <pre></pre>
+              </details>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+<tr>
+            <td class="timestamp">2025-12-08 17:48</td>
+            <td>
+              <div class="agent-meta">
+                <span class="status-badge status-badge--pending">接続待ち</span>
+                <span class="agent-label">tmuxソケットに接続できず、エージェントが終了または未起動の可能性があります。</span>
+              </div>
+              <details class="snapshot-details">
+                <summary class="details-toggle">ログ詳細</summary>
+                <pre></pre>
+              </details>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+<tr>
+            <td class="timestamp">2025-12-08 17:49</td>
+            <td>
+              <div class="agent-meta">
+                <span class="status-badge status-badge--pending">接続待ち</span>
+                <span class="agent-label">tmuxソケットに接続できず、エージェントが終了または未起動の可能性があります。</span>
+              </div>
+              <details class="snapshot-details">
+                <summary class="details-toggle">ログ詳細</summary>
+                <pre></pre>
+              </details>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+<tr>
+            <td class="timestamp">2025-12-08 17:50</td>
+            <td>
+              <div class="agent-meta">
+                <span class="status-badge status-badge--pending">接続待ち</span>
+                <span class="agent-label">tmuxソケットに接続できず、エージェントが終了または未起動の可能性があります。</span>
+              </div>
+              <details class="snapshot-details">
+                <summary class="details-toggle">ログ詳細</summary>
+                <pre></pre>
+              </details>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+<tr>
+            <td class="timestamp">2025-12-08 17:51</td>
+            <td>
+              <div class="agent-meta">
+                <span class="status-badge status-badge--pending">接続待ち</span>
+                <span class="agent-label">tmuxソケットに接続できず、エージェントが終了または未起動の可能性があります。</span>
+              </div>
+              <details class="snapshot-details">
+                <summary class="details-toggle">ログ詳細</summary>
+                <pre></pre>
+              </details>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+<tr>
+            <td class="timestamp">2025-12-08 17:52</td>
+            <td>
+              <div class="agent-meta">
+                <span class="status-badge status-badge--pending">接続待ち</span>
+                <span class="agent-label">tmuxソケットに接続できず、エージェントが終了または未起動の可能性があります。</span>
+              </div>
+              <details class="snapshot-details">
+                <summary class="details-toggle">ログ詳細</summary>
+                <pre></pre>
+              </details>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+<tr>
+            <td class="timestamp">2025-12-08 17:53</td>
+            <td>
+              <div class="agent-meta">
+                <span class="status-badge status-badge--pending">接続待ち</span>
+                <span class="agent-label">tmuxソケットに接続できず、エージェントが終了または未起動の可能性があります。</span>
+              </div>
+              <details class="snapshot-details">
+                <summary class="details-toggle">ログ詳細</summary>
+                <pre></pre>
+              </details>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+<tr>
+            <td class="timestamp">2025-12-08 17:54</td>
+            <td>
+              <div class="agent-meta">
+                <span class="status-badge status-badge--pending">接続待ち</span>
+                <span class="agent-label">tmuxソケットに接続できず、エージェントが終了または未起動の可能性があります。</span>
+              </div>
+              <details class="snapshot-details">
+                <summary class="details-toggle">ログ詳細</summary>
+                <pre></pre>
+              </details>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+<tr>
+            <td class="timestamp">2025-12-08 17:55</td>
+            <td>
+              <div class="agent-meta">
+                <span class="status-badge status-badge--pending">接続待ち</span>
+                <span class="agent-label">tmuxソケットに接続できず、エージェントが終了または未起動の可能性があります。</span>
+              </div>
+              <details class="snapshot-details">
+                <summary class="details-toggle">ログ詳細</summary>
+                <pre></pre>
+              </details>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+<tr>
+            <td class="timestamp">2025-12-08 17:56</td>
+            <td>
+              <div class="agent-meta">
+                <span class="status-badge status-badge--pending">接続待ち</span>
+                <span class="agent-label">tmuxソケットに接続できず、エージェントが終了または未起動の可能性があります。</span>
+              </div>
+              <details class="snapshot-details">
+                <summary class="details-toggle">ログ詳細</summary>
+                <pre></pre>
+              </details>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+<tr>
+            <td class="timestamp">2025-12-08 17:57</td>
+            <td>
+              <div class="agent-meta">
+                <span class="status-badge status-badge--pending">接続待ち</span>
+                <span class="agent-label">tmuxソケットに接続できず、エージェントが終了または未起動の可能性があります。</span>
+              </div>
+              <details class="snapshot-details">
+                <summary class="details-toggle">ログ詳細</summary>
+                <pre></pre>
+              </details>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+<tr>
+            <td class="timestamp">2025-12-08 17:58</td>
+            <td>
+              <div class="agent-meta">
+                <span class="status-badge status-badge--pending">接続待ち</span>
+                <span class="agent-label">tmuxソケットに接続できず、エージェントが終了または未起動の可能性があります。</span>
+              </div>
+              <details class="snapshot-details">
+                <summary class="details-toggle">ログ詳細</summary>
+                <pre></pre>
+              </details>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+<tr>
+            <td class="timestamp">2025-12-08 17:59</td>
+            <td>
+              <div class="agent-meta">
+                <span class="status-badge status-badge--pending">接続待ち</span>
+                <span class="agent-label">tmuxソケットに接続できず、エージェントが終了または未起動の可能性があります。</span>
+              </div>
+              <details class="snapshot-details">
+                <summary class="details-toggle">ログ詳細</summary>
+                <pre></pre>
+              </details>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+<tr>
+            <td class="timestamp">2025-12-08 18:00</td>
+            <td>
+              <div class="agent-meta">
+                <span class="status-badge status-badge--pending">接続待ち</span>
+                <span class="agent-label">tmuxソケットに接続できず、エージェントが終了または未起動の可能性があります。</span>
+              </div>
+              <details class="snapshot-details">
+                <summary class="details-toggle">ログ詳細</summary>
+                <pre></pre>
+              </details>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+</tbody>
+      </table>
+    </div>
+  </body>
+</html>
+

@@ -1,149 +1,85 @@
-'use client';
-
-import React from 'react';
-import { usePlanningStore } from '@/store/planningStore';
-import {
-  SelectIcon,
-  EditOutlineIcon,
-  OpeningIcon,
-  GridIcon,
-  SnapIcon,
-} from '@/components/icons';
-import type { ToolMode } from '@/types';
-
-interface ToolButtonProps {
-  icon: React.ReactNode;
-  label: string;
-  active?: boolean;
-  onClick: () => void;
-  shortcut?: string;
-}
-
-function ToolButton({ icon, label, active, onClick, shortcut }: ToolButtonProps) {
-  return (
-    <button
-      onClick={onClick}
-      title={`${label}${shortcut ? ` (${shortcut})` : ''}`}
-      className={`
-        group relative flex h-10 w-10 items-center justify-center rounded-lg transition-all duration-200
-        ${active
-          ? 'bg-blue-500/20 text-blue-400 shadow-lg shadow-blue-500/20 ring-1 ring-blue-500/50'
-          : 'text-zinc-400 hover:bg-zinc-800 hover:text-zinc-200'
-        }
-      `}
-    >
-      {icon}
-      {/* Tooltip */}
-      <span className="pointer-events-none absolute left-full ml-3 whitespace-nowrap rounded-md bg-zinc-800 px-2 py-1 text-xs font-medium text-zinc-200 opacity-0 shadow-lg transition-opacity group-hover:opacity-100">
-        {label}
-        {shortcut && (
-          <span className="ml-2 text-zinc-400">{shortcut}</span>
-        )}
-      </span>
-    </button>
-  );
-}
-
-interface ToggleButtonProps {
-  icon: React.ReactNode;
-  label: string;
-  enabled: boolean;
-  onClick: () => void;
-  shortcut?: string;
-}
-
-function ToggleButton({ icon, label, enabled, onClick, shortcut }: ToggleButtonProps) {
-  return (
-    <button
-      onClick={onClick}
-      title={`${label}${shortcut ? ` (${shortcut})` : ''}`}
-      className={`
-        group relative flex h-10 w-10 items-center justify-center rounded-lg transition-all duration-200
-        ${enabled
-          ? 'bg-emerald-500/20 text-emerald-400 ring-1 ring-emerald-500/50'
-          : 'text-zinc-500 hover:bg-zinc-800 hover:text-zinc-400'
-        }
-      `}
-    >
-      {icon}
-      {/* Tooltip */}
-      <span className="pointer-events-none absolute left-full ml-3 whitespace-nowrap rounded-md bg-zinc-800 px-2 py-1 text-xs font-medium text-zinc-200 opacity-0 shadow-lg transition-opacity group-hover:opacity-100">
-        {label}: {enabled ? 'ON' : 'OFF'}
-        {shortcut && (
-          <span className="ml-2 text-zinc-400">{shortcut}</span>
-        )}
-      </span>
-    </button>
-  );
-}
+import { GlassPanel } from "@/components/ui/GlassPanel";
+import { MousePointer2, Move, PenTool, Eraser, Ruler, Type, Magnet } from "lucide-react";
+import { clsx } from "clsx";
+import { motion } from "framer-motion";
+import { usePlanningStore, type ToolType } from "@/store/planningStore";
 
 export function ToolPalette() {
-  const {
-    currentTool,
-    setCurrentTool,
-    gridEnabled,
-    toggleGrid,
-    snapEnabled,
-    toggleSnap,
-  } = usePlanningStore();
+    const { currentTool, setCurrentTool, setIsSettingScale, isGridSnapEnabled, toggleGridSnap } = usePlanningStore();
 
-  const tools: { mode: ToolMode; icon: React.ReactNode; label: string; shortcut?: string }[] = [
-    { mode: 'select', icon: <SelectIcon size={18} />, label: 'Select / Move', shortcut: 'V' },
-    { mode: 'edit-outline', icon: <EditOutlineIcon size={18} />, label: 'Edit Outline', shortcut: 'E' },
-    { mode: 'opening-line', icon: <OpeningIcon size={18} />, label: 'Opening Line', shortcut: 'O' },
-  ];
+    const tools: { id: ToolType; icon: typeof MousePointer2; label: string }[] = [
+        { id: "select", icon: MousePointer2, label: "選択" },
+        { id: "move", icon: Move, label: "移動" },
+        { id: "polyline", icon: PenTool, label: "ポリライン" },
+        { id: "scale", icon: Ruler, label: "スケール設定" },
+        { id: "text", icon: Type, label: "テキスト" },
+        { id: "erase", icon: Eraser, label: "削除" },
+    ];
 
-  return (
-    <div className="flex h-full w-14 flex-col border-r border-zinc-800 bg-zinc-900/50 backdrop-blur-xl">
-      {/* Logo / Brand */}
-      <div className="flex h-14 items-center justify-center border-b border-zinc-800">
-        <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-blue-500 to-blue-600 text-sm font-bold text-white shadow-lg shadow-blue-500/30">
-          S
-        </div>
-      </div>
+    const handleToolChange = (toolId: ToolType) => {
+        setCurrentTool(toolId);
+        if (toolId === 'scale') {
+            setIsSettingScale(true);
+        }
+    };
 
-      {/* Tool buttons */}
-      <div className="flex flex-1 flex-col gap-1 p-2">
-        {/* Mode tools */}
-        <div className="flex flex-col gap-1">
-          {tools.map((tool) => (
-            <ToolButton
-              key={tool.mode}
-              icon={tool.icon}
-              label={tool.label}
-              shortcut={tool.shortcut}
-              active={currentTool === tool.mode}
-              onClick={() => setCurrentTool(tool.mode)}
-            />
-          ))}
-        </div>
+    return (
+        <GlassPanel className="flex flex-col gap-2 p-2 w-14 items-center">
+            {tools.map((tool) => (
+                <button
+                    key={tool.id}
+                    onClick={() => handleToolChange(tool.id)}
+                    className={clsx(
+                        "relative p-2.5 rounded-lg transition-all duration-200 group",
+                        currentTool === tool.id
+                            ? "text-primary bg-primary/10 shadow-[0_0_8px_var(--primary-glow)]"
+                            : "text-text-muted hover:text-text-main hover:bg-surface-2"
+                    )}
+                    title={tool.label}
+                >
+                    <tool.icon size={20} strokeWidth={currentTool === tool.id ? 2.5 : 2} />
 
-        {/* Divider */}
-        <div className="my-2 h-px bg-zinc-800" />
+                    {/* Active Indicator Line */}
+                    {currentTool === tool.id && (
+                        <motion.div
+                            layoutId="activeToolIndicator"
+                            className="absolute left-0 top-1/2 -translate-y-1/2 w-0.5 h-6 bg-primary rounded-r-full"
+                        />
+                    )}
 
-        {/* Display toggles */}
-        <div className="flex flex-col gap-1">
-          <ToggleButton
-            icon={<GridIcon size={18} />}
-            label="Grid"
-            shortcut="G"
-            enabled={gridEnabled}
-            onClick={toggleGrid}
-          />
-          <ToggleButton
-            icon={<SnapIcon size={18} />}
-            label="Snap"
-            shortcut="S"
-            enabled={snapEnabled}
-            onClick={toggleSnap}
-          />
-        </div>
-      </div>
+                    {/* Tooltip */}
+                    <span className="absolute left-full ml-3 px-2 py-1 bg-surface-2 border border-surface-3 rounded text-xs text-text-main opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none z-50 shadow-md">
+                        {tool.label}
+                    </span>
+                </button>
+            ))}
 
-      {/* Version indicator */}
-      <div className="flex items-center justify-center border-t border-zinc-800 p-2">
-        <span className="text-[10px] text-zinc-600">v0.1.0</span>
-      </div>
-    </div>
-  );
+            {/* Separator */}
+            <div className="w-8 h-[1px] bg-surface-3 my-1" />
+
+            {/* Grid Snap Toggle */}
+            <button
+                onClick={toggleGridSnap}
+                className={clsx(
+                    "relative p-2.5 rounded-lg transition-all duration-200 group",
+                    isGridSnapEnabled
+                        ? "text-primary bg-primary/10 shadow-[0_0_8px_var(--primary-glow)]"
+                        : "text-text-muted hover:text-text-main hover:bg-surface-2"
+                )}
+                title="グリッド吸着 (ON/OFF)"
+            >
+                <Magnet size={20} strokeWidth={isGridSnapEnabled ? 2.5 : 2} />
+
+                {/* Active Dot for Toggle */}
+                {isGridSnapEnabled && (
+                    <div className="absolute top-2 right-2 w-1.5 h-1.5 bg-primary rounded-full shadow-[0_0_4px_var(--primary-glow)]" />
+                )}
+
+                {/* Tooltip */}
+                <span className="absolute left-full ml-3 px-2 py-1 bg-surface-2 border border-surface-3 rounded text-xs text-text-main opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none z-50 shadow-md">
+                    グリッド吸着 {isGridSnapEnabled ? 'ON' : 'OFF'}
+                </span>
+            </button>
+        </GlassPanel>
+    );
 }
