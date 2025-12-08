@@ -1,13 +1,254 @@
 'use client';
 
-import React, { useRef, useEffect, useCallback } from 'react';
-import { Stage, Layer, Line, Circle, Rect, Group } from 'react-konva';
+import React, { useRef, useCallback, useMemo } from 'react';
+import { Stage, Layer, Line, Circle, Rect, Group, Image, Text, Arrow } from 'react-konva';
 import type Konva from 'konva';
 import { usePlanningStore } from '@/store/planningStore';
+import useImage from 'use-image';
+import type { DrawingFile, ExtractedDimension, ExtractedEntrance, ExtractedOutline } from '@/types';
 
 interface Canvas2DProps {
   width: number;
   height: number;
+}
+
+// Floor colors for visual distinction
+const FLOOR_COLORS: Record<number, string> = {
+  1: '#3b82f6', // blue
+  2: '#10b981', // green
+  3: '#f59e0b', // amber
+  4: '#ef4444', // red
+  5: '#8b5cf6', // purple
+};
+
+// Background image component
+interface BackgroundImageProps {
+  url: string;
+  opacity: number;
+  scale: number;
+}
+
+function BackgroundImage({ url, opacity, scale }: BackgroundImageProps) {
+  const [image] = useImage(url);
+
+  if (!image) return null;
+
+  return (
+    <Image
+      image={image}
+      opacity={opacity}
+      scaleX={scale}
+      scaleY={scale}
+      x={0}
+      y={0}
+    />
+  );
+}
+
+// Extracted outline component
+interface OutlineOverlayProps {
+  outlines: ExtractedOutline[];
+  canvasScale: number;
+}
+
+function OutlineOverlay({ outlines, canvasScale }: OutlineOverlayProps) {
+  return (
+    <Group>
+      {outlines.map((outline, index) => {
+        const points = outline.vertices.flatMap((v) => [v.x, v.y]);
+        // Close the polygon
+        if (outline.vertices.length > 0) {
+          points.push(outline.vertices[0].x, outline.vertices[0].y);
+        }
+
+        return (
+          <React.Fragment key={index}>
+            {/* Outer glow */}
+            <Line
+              points={points}
+              stroke={outline.color}
+              strokeWidth={4 / canvasScale}
+              lineCap="round"
+              lineJoin="round"
+              opacity={0.3}
+            />
+            {/* Main line */}
+            <Line
+              points={points}
+              stroke={outline.color}
+              strokeWidth={2 / canvasScale}
+              lineCap="round"
+              lineJoin="round"
+              shadowColor={outline.color}
+              shadowBlur={8}
+              shadowOpacity={0.5}
+            />
+            {/* Floor label */}
+            {outline.vertices.length > 0 && (
+              <Group x={outline.vertices[0].x + 10} y={outline.vertices[0].y - 20}>
+                <Rect
+                  width={30 / canvasScale}
+                  height={18 / canvasScale}
+                  fill={outline.color}
+                  cornerRadius={3 / canvasScale}
+                />
+                <Text
+                  text={`${outline.floor}F`}
+                  fontSize={12 / canvasScale}
+                  fill="white"
+                  width={30 / canvasScale}
+                  height={18 / canvasScale}
+                  align="center"
+                  verticalAlign="middle"
+                />
+              </Group>
+            )}
+          </React.Fragment>
+        );
+      })}
+    </Group>
+  );
+}
+
+// Entrance markers component
+interface EntranceMarkersProps {
+  entrances: ExtractedEntrance[];
+  canvasScale: number;
+}
+
+function EntranceMarkers({ entrances, canvasScale }: EntranceMarkersProps) {
+  return (
+    <Group>
+      {entrances.map((entrance) => {
+        const markerColor = entrance.type === 'main-entrance' ? '#ef4444' : '#f59e0b';
+
+        return (
+          <Group key={entrance.id} x={entrance.position.x} y={entrance.position.y}>
+            {/* Door symbol */}
+            <Rect
+              width={entrance.width * 0.01}
+              height={8 / canvasScale}
+              fill={markerColor}
+              offsetX={(entrance.width * 0.01) / 2}
+              offsetY={4 / canvasScale}
+              cornerRadius={2 / canvasScale}
+            />
+            {/* Label background */}
+            <Rect
+              y={-25 / canvasScale}
+              width={Math.max(50, entrance.label.length * 8) / canvasScale}
+              height={18 / canvasScale}
+              fill="rgba(0, 0, 0, 0.7)"
+              offsetX={Math.max(50, entrance.label.length * 8) / canvasScale / 2}
+              cornerRadius={3 / canvasScale}
+            />
+            {/* Label text */}
+            <Text
+              text={entrance.label}
+              fontSize={12 / canvasScale}
+              fill="white"
+              y={-25 / canvasScale}
+              width={Math.max(50, entrance.label.length * 8) / canvasScale}
+              height={18 / canvasScale}
+              align="center"
+              verticalAlign="middle"
+              offsetX={Math.max(50, entrance.label.length * 8) / canvasScale / 2}
+            />
+          </Group>
+        );
+      })}
+    </Group>
+  );
+}
+
+// Dimension lines component
+interface DimensionLinesProps {
+  dimensions: ExtractedDimension[];
+  canvasScale: number;
+}
+
+function DimensionLines({ dimensions, canvasScale }: DimensionLinesProps) {
+  return (
+    <Group>
+      {dimensions.map((dim) => {
+        const dx = dim.end.x - dim.start.x;
+        const dy = dim.end.y - dim.start.y;
+        const length = Math.sqrt(dx * dx + dy * dy);
+        const angle = Math.atan2(dy, dx);
+
+        // Midpoint for label
+        const midX = (dim.start.x + dim.end.x) / 2;
+        const midY = (dim.start.y + dim.end.y) / 2;
+
+        // Offset perpendicular to line for label
+        const offsetDist = 15 / canvasScale;
+        const labelX = midX - Math.sin(angle) * offsetDist;
+        const labelY = midY + Math.cos(angle) * offsetDist;
+
+        return (
+          <Group key={dim.id}>
+            {/* Extension lines */}
+            <Line
+              points={[
+                dim.start.x - Math.sin(angle) * (10 / canvasScale),
+                dim.start.y + Math.cos(angle) * (10 / canvasScale),
+                dim.start.x - Math.sin(angle) * (25 / canvasScale),
+                dim.start.y + Math.cos(angle) * (25 / canvasScale),
+              ]}
+              stroke="#888888"
+              strokeWidth={1 / canvasScale}
+            />
+            <Line
+              points={[
+                dim.end.x - Math.sin(angle) * (10 / canvasScale),
+                dim.end.y + Math.cos(angle) * (10 / canvasScale),
+                dim.end.x - Math.sin(angle) * (25 / canvasScale),
+                dim.end.y + Math.cos(angle) * (25 / canvasScale),
+              ]}
+              stroke="#888888"
+              strokeWidth={1 / canvasScale}
+            />
+            {/* Dimension line with arrows */}
+            <Arrow
+              points={[
+                dim.start.x - Math.sin(angle) * (20 / canvasScale),
+                dim.start.y + Math.cos(angle) * (20 / canvasScale),
+                dim.end.x - Math.sin(angle) * (20 / canvasScale),
+                dim.end.y + Math.cos(angle) * (20 / canvasScale),
+              ]}
+              stroke="#888888"
+              strokeWidth={1 / canvasScale}
+              fill="#888888"
+              pointerLength={6 / canvasScale}
+              pointerWidth={4 / canvasScale}
+              pointerAtBeginning={true}
+            />
+            {/* Label background */}
+            <Rect
+              x={labelX}
+              y={labelY}
+              width={dim.label.length * 7 / canvasScale}
+              height={16 / canvasScale}
+              fill="rgba(0, 0, 0, 0.8)"
+              offsetX={(dim.label.length * 7 / canvasScale) / 2}
+              offsetY={8 / canvasScale}
+              cornerRadius={2 / canvasScale}
+            />
+            {/* Dimension text */}
+            <Text
+              x={labelX}
+              y={labelY}
+              text={dim.label}
+              fontSize={11 / canvasScale}
+              fill="#ffffff"
+              offsetX={(dim.label.length * 3.5) / canvasScale}
+              offsetY={5.5 / canvasScale}
+            />
+          </Group>
+        );
+      })}
+    </Group>
+  );
 }
 
 export function Canvas2D({ width, height }: Canvas2DProps) {
@@ -22,7 +263,28 @@ export function Canvas2D({ width, height }: Canvas2DProps) {
     canvasOffset,
     setCanvasOffset,
     updateVertex,
+    // Background drawing state
+    drawings,
+    backgroundDrawingId,
+    backgroundOpacity,
+    showFloorOutlines,
+    showDimensions,
+    showEntrances,
   } = usePlanningStore();
+
+  // Get background drawing
+  const backgroundDrawing = useMemo(() => {
+    if (!backgroundDrawingId) return null;
+    return drawings.find((d: DrawingFile) => d.id === backgroundDrawingId) || null;
+  }, [drawings, backgroundDrawingId]);
+
+  // Debug: log background drawing state
+  React.useEffect(() => {
+    console.log('[Canvas2D] backgroundDrawingId:', backgroundDrawingId);
+    console.log('[Canvas2D] backgroundDrawing:', backgroundDrawing);
+    console.log('[Canvas2D] processedData:', backgroundDrawing?.processedData);
+    console.log('[Canvas2D] showFloorOutlines:', showFloorOutlines);
+  }, [backgroundDrawingId, backgroundDrawing, showFloorOutlines]);
 
   // Grid settings
   const gridSize = 50;
@@ -221,6 +483,50 @@ export function Canvas2D({ width, height }: Canvas2DProps) {
     );
   };
 
+  // Render background drawing overlay
+  const renderBackgroundOverlay = () => {
+    if (!backgroundDrawing || backgroundDrawing.status !== 'ready') return null;
+
+    const processedData = backgroundDrawing.processedData;
+
+    return (
+      <Group>
+        {/* Background image (semi-transparent) */}
+        {backgroundDrawing.url && (
+          <BackgroundImage
+            url={backgroundDrawing.url}
+            opacity={backgroundOpacity * 0.5}
+            scale={processedData?.scale || 1}
+          />
+        )}
+
+        {/* Extracted outlines with floor colors */}
+        {showFloorOutlines && processedData?.outlines && (
+          <OutlineOverlay
+            outlines={processedData.outlines}
+            canvasScale={canvasScale}
+          />
+        )}
+
+        {/* Entrance markers */}
+        {showEntrances && processedData?.entrances && (
+          <EntranceMarkers
+            entrances={processedData.entrances}
+            canvasScale={canvasScale}
+          />
+        )}
+
+        {/* Dimension lines */}
+        {showDimensions && processedData?.dimensions && (
+          <DimensionLines
+            dimensions={processedData.dimensions}
+            canvasScale={canvasScale}
+          />
+        )}
+      </Group>
+    );
+  };
+
   return (
     <div className="relative h-full w-full overflow-hidden bg-zinc-950">
       {/* Gradient overlay for depth */}
@@ -238,6 +544,12 @@ export function Canvas2D({ width, height }: Canvas2DProps) {
         onWheel={handleWheel}
         onDragEnd={handleDragEnd}
       >
+        {/* Background layer for imported drawings */}
+        <Layer>
+          {renderBackgroundOverlay()}
+        </Layer>
+
+        {/* Main working layer */}
         <Layer>
           {renderGrid()}
           {renderOutline()}

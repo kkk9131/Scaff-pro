@@ -12,7 +12,16 @@ import {
   UploadIcon,
   DownloadIcon,
   SendIcon,
+  TrashIcon,
+  EyeIcon,
+  EyeOffIcon,
+  LayersIcon,
+  RulerIcon,
+  DoorIcon,
+  FileIcon,
+  SpinnerIcon,
 } from '@/components/icons';
+import type { DrawingFile } from '@/types';
 import type { SidePanelTab } from '@/types';
 
 interface TabButtonProps {
@@ -40,9 +49,40 @@ function TabButton({ icon, label, active, onClick }: TabButtonProps) {
   );
 }
 
+const DRAWING_TYPE_LABELS: Record<DrawingFile['type'], string> = {
+  'plan': '平面図',
+  'elevation': '立面図',
+  'roof-plan': '屋根伏図',
+  'site-survey': '現調図',
+};
+
+const FLOOR_COLORS: Record<number, string> = {
+  1: '#3b82f6',
+  2: '#10b981',
+  3: '#f59e0b',
+  4: '#ef4444',
+  5: '#8b5cf6',
+};
+
 // Building & Drawing Tab Content
 function BuildingTab() {
-  const { drawings, heightCondition, setHeightCondition } = usePlanningStore();
+  const {
+    drawings,
+    heightCondition,
+    setHeightCondition,
+    setDrawingImportOpen,
+    removeDrawing,
+    backgroundDrawingId,
+    setBackgroundDrawingId,
+    backgroundOpacity,
+    setBackgroundOpacity,
+    showFloorOutlines,
+    toggleShowFloorOutlines,
+    showDimensions,
+    toggleShowDimensions,
+    showEntrances,
+    toggleShowEntrances,
+  } = usePlanningStore();
 
   return (
     <div className="flex flex-col gap-6 p-4">
@@ -50,18 +90,174 @@ function BuildingTab() {
       <section>
         <h3 className="mb-3 flex items-center gap-2 text-sm font-semibold text-zinc-200">
           <UploadIcon size={16} className="text-zinc-400" />
-          Drawing Files
+          図面ファイル
         </h3>
         <div className="flex flex-col gap-2">
-          <button className="flex items-center justify-center gap-2 rounded-lg border border-dashed border-zinc-700 bg-zinc-800/30 py-4 text-sm text-zinc-400 transition-colors hover:border-zinc-600 hover:bg-zinc-800/50 hover:text-zinc-300">
+          <button
+            onClick={() => setDrawingImportOpen(true)}
+            className="flex items-center justify-center gap-2 rounded-lg border border-dashed border-zinc-700 bg-zinc-800/30 py-4 text-sm text-zinc-400 transition-colors hover:border-blue-500 hover:bg-blue-500/10 hover:text-blue-400"
+          >
             <UploadIcon size={18} />
-            <span>Upload Drawing (PDF, DXF, Image)</span>
+            <span>図面をインポート (PDF, DXF, 画像)</span>
           </button>
-          {drawings.length === 0 && (
-            <p className="text-xs text-zinc-500">No drawings uploaded yet</p>
+
+          {/* Uploaded drawings list */}
+          {drawings.length > 0 ? (
+            <div className="mt-2 flex flex-col gap-2">
+              {drawings.map((drawing) => (
+                <div
+                  key={drawing.id}
+                  className={`flex items-center gap-3 rounded-lg border p-2 transition-all ${
+                    backgroundDrawingId === drawing.id
+                      ? 'border-blue-500 bg-blue-500/10'
+                      : 'border-zinc-800 bg-zinc-800/30 hover:border-zinc-700'
+                  }`}
+                >
+                  {/* Status indicator */}
+                  <div className="flex-shrink-0">
+                    {drawing.status === 'uploading' || drawing.status === 'processing' ? (
+                      <SpinnerIcon size={16} className="text-blue-400" />
+                    ) : drawing.status === 'error' ? (
+                      <div className="h-4 w-4 rounded-full bg-red-500" />
+                    ) : (
+                      <FileIcon size={16} className="text-zinc-500" />
+                    )}
+                  </div>
+
+                  {/* Drawing info */}
+                  <div className="flex-1 min-w-0">
+                    <p className="truncate text-xs font-medium text-zinc-300">
+                      {drawing.name}
+                    </p>
+                    <p className="text-xs text-zinc-500">
+                      {DRAWING_TYPE_LABELS[drawing.type]}
+                      {drawing.floor && (
+                        <span
+                          className="ml-1 inline-block rounded px-1.5 py-0.5 text-white"
+                          style={{ backgroundColor: FLOOR_COLORS[drawing.floor] }}
+                        >
+                          {drawing.floor}F
+                        </span>
+                      )}
+                      {drawing.status === 'processing' && (
+                        <span className="ml-1 text-blue-400">解析中...</span>
+                      )}
+                    </p>
+                  </div>
+
+                  {/* Actions */}
+                  <div className="flex gap-1">
+                    {drawing.status === 'ready' && (
+                      <button
+                        onClick={() => setBackgroundDrawingId(
+                          backgroundDrawingId === drawing.id ? null : drawing.id
+                        )}
+                        className={`flex h-7 w-7 items-center justify-center rounded transition-colors ${
+                          backgroundDrawingId === drawing.id
+                            ? 'bg-blue-500 text-white'
+                            : 'text-zinc-500 hover:bg-zinc-700 hover:text-zinc-300'
+                        }`}
+                        title="背景に表示"
+                      >
+                        {backgroundDrawingId === drawing.id ? (
+                          <EyeIcon size={14} />
+                        ) : (
+                          <EyeOffIcon size={14} />
+                        )}
+                      </button>
+                    )}
+                    <button
+                      onClick={() => removeDrawing(drawing.id)}
+                      className="flex h-7 w-7 items-center justify-center rounded text-zinc-500 transition-colors hover:bg-zinc-700 hover:text-red-400"
+                      title="削除"
+                    >
+                      <TrashIcon size={14} />
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <p className="text-xs text-zinc-500">まだ図面がアップロードされていません</p>
           )}
         </div>
       </section>
+
+      {/* Background overlay controls */}
+      {backgroundDrawingId && (
+        <section>
+          <h3 className="mb-3 flex items-center gap-2 text-sm font-semibold text-zinc-200">
+            <LayersIcon size={16} className="text-zinc-400" />
+            背景表示設定
+          </h3>
+          <div className="flex flex-col gap-3">
+            {/* Opacity slider */}
+            <div className="rounded-lg bg-zinc-800/50 p-3">
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-xs text-zinc-400">透明度</span>
+                <span className="text-xs text-zinc-300">{Math.round(backgroundOpacity * 100)}%</span>
+              </div>
+              <input
+                type="range"
+                min="0.05"
+                max="0.8"
+                step="0.05"
+                value={backgroundOpacity}
+                onChange={(e) => setBackgroundOpacity(parseFloat(e.target.value))}
+                className="w-full h-2 bg-zinc-700 rounded-lg appearance-none cursor-pointer"
+              />
+            </div>
+
+            {/* Toggle options */}
+            <div className="flex flex-col gap-2">
+              <button
+                onClick={toggleShowFloorOutlines}
+                className={`flex items-center justify-between rounded-lg px-3 py-2 text-sm transition-colors ${
+                  showFloorOutlines
+                    ? 'bg-blue-500/20 text-blue-300'
+                    : 'bg-zinc-800/50 text-zinc-400 hover:bg-zinc-800'
+                }`}
+              >
+                <span className="flex items-center gap-2">
+                  <LayersIcon size={14} />
+                  階層別外周線
+                </span>
+                <span className="text-xs">{showFloorOutlines ? 'ON' : 'OFF'}</span>
+              </button>
+
+              <button
+                onClick={toggleShowDimensions}
+                className={`flex items-center justify-between rounded-lg px-3 py-2 text-sm transition-colors ${
+                  showDimensions
+                    ? 'bg-blue-500/20 text-blue-300'
+                    : 'bg-zinc-800/50 text-zinc-400 hover:bg-zinc-800'
+                }`}
+              >
+                <span className="flex items-center gap-2">
+                  <RulerIcon size={14} />
+                  寸法線
+                </span>
+                <span className="text-xs">{showDimensions ? 'ON' : 'OFF'}</span>
+              </button>
+
+              <button
+                onClick={toggleShowEntrances}
+                className={`flex items-center justify-between rounded-lg px-3 py-2 text-sm transition-colors ${
+                  showEntrances
+                    ? 'bg-blue-500/20 text-blue-300'
+                    : 'bg-zinc-800/50 text-zinc-400 hover:bg-zinc-800'
+                }`}
+              >
+                <span className="flex items-center gap-2">
+                  <DoorIcon size={14} />
+                  玄関・出入口
+                </span>
+                <span className="text-xs">{showEntrances ? 'ON' : 'OFF'}</span>
+              </button>
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* Scale section */}
       <section>

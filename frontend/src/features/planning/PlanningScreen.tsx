@@ -9,6 +9,7 @@ import {
   Canvas2D,
   Canvas3D,
   FloatingReferenceViewer,
+  DrawingImportDialog,
 } from './components';
 
 export function PlanningScreen() {
@@ -71,6 +72,9 @@ export function PlanningScreen() {
         {/* Right side panel */}
         <SidePanel />
       </div>
+
+      {/* Drawing import dialog */}
+      <DrawingImportDialog />
     </div>
   );
 }
