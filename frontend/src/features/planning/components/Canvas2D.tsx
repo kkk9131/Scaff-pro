@@ -1,11 +1,47 @@
 "use client";
 
-import { Stage, Layer, Line, Circle, Text } from "react-konva";
+import { Stage, Layer, Line, Circle, Text, Image as KonvaImage } from "react-konva";
 import { useEffect, useState, useRef, useCallback } from "react";
 import { usePlanningStore, type Point } from "@/store/planningStore";
 import Konva from "konva";
 import { ScaleInputModal } from "./ScaleInputModal";
 import { useThemeStore } from "@/store/themeStore";
+
+// Custom hook for loading images
+function useImage(url: string | null): [HTMLImageElement | null, 'loading' | 'loaded' | 'error'] {
+    const [image, setImage] = useState<HTMLImageElement | null>(null);
+    const [status, setStatus] = useState<'loading' | 'loaded' | 'error'>('loading');
+
+    useEffect(() => {
+        if (!url) {
+            setImage(null);
+            setStatus('loading');
+            return;
+        }
+
+        const img = new window.Image();
+        img.crossOrigin = 'anonymous';
+
+        img.onload = () => {
+            setImage(img);
+            setStatus('loaded');
+        };
+
+        img.onerror = () => {
+            setImage(null);
+            setStatus('error');
+        };
+
+        img.src = url;
+
+        return () => {
+            img.onload = null;
+            img.onerror = null;
+        };
+    }, [url]);
+
+    return [image, status];
+}
 
 export function Canvas2D() {
     const [size, setSize] = useState({ width: 0, height: 0 });
@@ -49,7 +85,15 @@ export function Canvas2D() {
         setSelectedEdgeIndex,
         scale: canvasScale,
         grid,
+        // Background drawing
+        drawings,
+        backgroundDrawingId,
+        backgroundOpacity,
     } = usePlanningStore();
+
+    // Get background drawing URL
+    const backgroundDrawing = drawings.find(d => d.id === backgroundDrawingId);
+    const [backgroundImage, imageStatus] = useImage(backgroundDrawing?.url || null);
 
     // Calculate grid size in pixels based on real-world spacing and scale
     // grid.spacing is in mm, canvasScale is pixels per mm
@@ -311,6 +355,17 @@ export function Canvas2D() {
                     onDragMove={handleDragMove}
                 >
                     <Layer>
+                        {/* Background Drawing Image */}
+                        {backgroundImage && imageStatus === 'loaded' && (
+                            <KonvaImage
+                                image={backgroundImage}
+                                x={0}
+                                y={0}
+                                opacity={backgroundOpacity}
+                                listening={false}
+                            />
+                        )}
+
                         <Grid />
 
                         {/* Completed Polyline: Render Segments */}

@@ -1,0 +1,58 @@
+name: "frontend-floorplan-specialist"
+version: "1.0"
+created: "2025-12-08"
+tier: specialized
+
+parent_agents: []
+
+domain: "Floor plan management UI features in React/Next.js applications"
+
+capabilities:
+  - "React/Next.js component development with TypeScript"
+  - "Canvas image manipulation and overlay rendering"
+  - "Zustand state management for complex UI state"
+  - "Floor plan categorization (平面図/立面図/屋根伏図/現調図)"
+  - "Multi-tab document viewing interfaces"
+  - "Collapsible dock/panel UI patterns"
+  - "Image opacity and transparency controls"
+
+constraints:
+  - "Should NOT modify backend/API logic"
+  - "Should NOT handle database operations"
+  - "Stays within React/Next.js frontend scope"
+
+synergy_hints:
+  - agent: "backend-api-specialist"
+    reason: "For API integration when floor plan data needs persistence"
+  - agent: "canvas-rendering-specialist"
+    reason: "For complex canvas operations beyond basic overlay"
+
+metrics:
+  usage_count: 2
+  success_rate: 1.0
+  last_used: "2025-12-08"
+  promotion_candidate: false
+
+task_history:
+  - date: "2025-12-08"
+    task: "Implement floor plan import with categorization, canvas overlay, and dock UI"
+    outcome: success
+    notes: |
+      Successfully implemented:
+      - planningStore expansion with drawing management (DrawingFile, types, actions)
+      - Canvas2D background image rendering with Konva.js
+      - DrawingImportDialog with drag-drop, type/floor selection
+      - SidePanel integration with opacity slider and drawing list
+      - DrawingDock with multi-tab viewer and zoom/pan controls
+      - Full integration into PlanningLayout
+      Build passed with no errors.
+  - date: "2025-12-08"
+    task: "Implement wall dimension mode (actual/centerline) with wall thickness offset"
+    outcome: success
+    notes: |
+      Successfully implemented:
+      - planningStore: Added WallConfig (dimensionMode, thickness) state and setWall action
+      - SidePanel: Added wall dimension mode toggle (実寸/芯寸) and wall thickness input UI
+      - View3D: Implemented centerline offset calculation with miter joint handling
+      - 3D visualization shows inner/outer wall lines when centerline mode is active
+      Build passed with no errors.
