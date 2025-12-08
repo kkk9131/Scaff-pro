@@ -8,9 +8,11 @@ import type {
   Opening,
   ScaffoldMember,
   DrawingFile,
+  DrawingFileType,
   ChatMessage,
   FloatingPanelState,
   Point,
+  ProcessedDrawingData,
 } from '@/types';
 
 interface PlanningState {
@@ -38,6 +40,24 @@ interface PlanningState {
   drawings: DrawingFile[];
   addDrawing: (drawing: DrawingFile) => void;
   removeDrawing: (id: string) => void;
+  updateDrawingStatus: (id: string, status: DrawingFile['status'], errorMessage?: string) => void;
+  updateDrawingProcessedData: (id: string, processedData: ProcessedDrawingData) => void;
+
+  // Drawing import dialog
+  drawingImportOpen: boolean;
+  setDrawingImportOpen: (open: boolean) => void;
+
+  // Background drawing overlay
+  backgroundDrawingId: string | null;
+  setBackgroundDrawingId: (id: string | null) => void;
+  backgroundOpacity: number;
+  setBackgroundOpacity: (opacity: number) => void;
+  showFloorOutlines: boolean;
+  toggleShowFloorOutlines: () => void;
+  showDimensions: boolean;
+  toggleShowDimensions: () => void;
+  showEntrances: boolean;
+  toggleShowEntrances: () => void;
 
   outline: BuildingOutline | null;
   setOutline: (outline: BuildingOutline | null) => void;
@@ -100,6 +120,34 @@ export const usePlanningStore = create<PlanningState>((set) => ({
   drawings: [],
   addDrawing: (drawing) => set((state) => ({ drawings: [...state.drawings, drawing] })),
   removeDrawing: (id) => set((state) => ({ drawings: state.drawings.filter((d) => d.id !== id) })),
+  updateDrawingStatus: (id, status, errorMessage) =>
+    set((state) => ({
+      drawings: state.drawings.map((d) =>
+        d.id === id ? { ...d, status, errorMessage } : d
+      ),
+    })),
+  updateDrawingProcessedData: (id, processedData) =>
+    set((state) => ({
+      drawings: state.drawings.map((d) =>
+        d.id === id ? { ...d, processedData, status: 'ready' as const } : d
+      ),
+    })),
+
+  // Drawing import dialog
+  drawingImportOpen: false,
+  setDrawingImportOpen: (open) => set({ drawingImportOpen: open }),
+
+  // Background drawing overlay
+  backgroundDrawingId: null,
+  setBackgroundDrawingId: (id) => set({ backgroundDrawingId: id }),
+  backgroundOpacity: 0.3,
+  setBackgroundOpacity: (opacity) => set({ backgroundOpacity: opacity }),
+  showFloorOutlines: true,
+  toggleShowFloorOutlines: () => set((state) => ({ showFloorOutlines: !state.showFloorOutlines })),
+  showDimensions: true,
+  toggleShowDimensions: () => set((state) => ({ showDimensions: !state.showDimensions })),
+  showEntrances: true,
+  toggleShowEntrances: () => set((state) => ({ showEntrances: !state.showEntrances })),
 
   outline: null,
   setOutline: (outline) => set({ outline }),

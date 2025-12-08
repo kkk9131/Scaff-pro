@@ -70,13 +70,77 @@ export interface ScaffoldMember {
   face: 'north' | 'south' | 'east' | 'west';
 }
 
+// Drawing file types
+export type DrawingFileType = 'plan' | 'elevation' | 'roof-plan' | 'site-survey';
+
+// Floor level for plan drawings
+export interface FloorLevel {
+  id: string;
+  name: string;
+  level: number;  // 1F, 2F, etc.
+  color: string;  // hex color for visual distinction
+}
+
+// Extracted building outline from drawing analysis
+export interface ExtractedOutline {
+  vertices: Point[];
+  floor: number;  // floor level (1, 2, etc.)
+  color: string;  // color for this floor's outline
+}
+
+// Extracted entrance/exit point
+export interface ExtractedEntrance {
+  id: string;
+  position: Point;
+  type: 'main-entrance' | 'back-door' | 'other';
+  width: number;  // mm
+  label: string;
+}
+
+// Extracted dimension line
+export interface ExtractedDimension {
+  id: string;
+  start: Point;
+  end: Point;
+  value: number;  // mm
+  label: string;  // formatted display (e.g., "3,650mm")
+}
+
+// Processed drawing data from Python analysis
+export interface ProcessedDrawingData {
+  originalUrl: string;
+  processedUrl: string;  // URL to processed SVG/PNG with only essential elements
+  outlines: ExtractedOutline[];
+  entrances: ExtractedEntrance[];
+  dimensions: ExtractedDimension[];
+  scale: number;  // calculated pixels per mm
+  bounds: {
+    minX: number;
+    minY: number;
+    maxX: number;
+    maxY: number;
+  };
+}
+
 // Uploaded drawing file
 export interface DrawingFile {
   id: string;
   name: string;
-  type: 'plan' | 'elevation';
+  type: DrawingFileType;
   url: string;
   scale: number;  // pixels per mm
+  floor?: number;  // floor level for plan drawings
+  processedData?: ProcessedDrawingData;  // data from Python analysis
+  status: 'uploading' | 'processing' | 'ready' | 'error';
+  errorMessage?: string;
+}
+
+// Import dialog state
+export interface DrawingImportState {
+  isOpen: boolean;
+  selectedType: DrawingFileType;
+  selectedFloor: number;
+  files: File[];
 }
 
 // Project/Case data
