@@ -17,6 +17,14 @@ export interface GridConfig {
     spacing: number; // Grid spacing in mm (real-world dimension)
 }
 
+// Wall dimension mode
+export type WallDimensionMode = 'actual' | 'centerline';
+
+export interface WallConfig {
+    dimensionMode: WallDimensionMode; // 実寸 or 芯寸
+    thickness: number; // Wall thickness in mm (used in centerline mode)
+}
+
 // Common scale ratios for architectural drawings
 export const SCALE_PRESETS = [
     { ratio: 50, label: '1:50' },
@@ -98,6 +106,9 @@ interface PlanningState {
     // Grid Configuration
     grid: GridConfig;
 
+    // Wall Configuration
+    wall: WallConfig;
+
     // Tool
     currentTool: ToolType;
     isGridSnapEnabled: boolean;
@@ -143,6 +154,7 @@ interface PlanningState {
 
     setBuilding: (config: Partial<BuildingConfig>) => void;
     setGrid: (config: Partial<GridConfig>) => void;
+    setWall: (config: Partial<WallConfig>) => void;
 
     setCurrentTool: (tool: ToolType) => void;
 }
@@ -186,6 +198,10 @@ export const usePlanningStore = create<PlanningState>((set, get) => ({
     },
     grid: {
         spacing: 1000, // 1m (1000mm) default grid spacing
+    },
+    wall: {
+        dimensionMode: 'actual', // Default to actual dimension mode
+        thickness: 160, // Default wall thickness 160mm
     },
     currentTool: 'select',
     isGridSnapEnabled: false,
@@ -290,6 +306,10 @@ export const usePlanningStore = create<PlanningState>((set, get) => ({
 
     setGrid: (config) => set((state) => ({
         grid: { ...state.grid, ...config }
+    })),
+
+    setWall: (config) => set((state) => ({
+        wall: { ...state.wall, ...config }
     })),
 
     setCurrentTool: (tool) => set({ currentTool: tool }),

@@ -28,7 +28,7 @@ synergy_hints:
     reason: "For complex canvas operations beyond basic overlay"
 
 metrics:
-  usage_count: 1
+  usage_count: 2
   success_rate: 1.0
   last_used: "2025-12-08"
   promotion_candidate: false
@@ -45,4 +45,14 @@ task_history:
       - SidePanel integration with opacity slider and drawing list
       - DrawingDock with multi-tab viewer and zoom/pan controls
       - Full integration into PlanningLayout
+      Build passed with no errors.
+  - date: "2025-12-08"
+    task: "Implement wall dimension mode (actual/centerline) with wall thickness offset"
+    outcome: success
+    notes: |
+      Successfully implemented:
+      - planningStore: Added WallConfig (dimensionMode, thickness) state and setWall action
+      - SidePanel: Added wall dimension mode toggle (実寸/芯寸) and wall thickness input UI
+      - View3D: Implemented centerline offset calculation with miter joint handling
+      - 3D visualization shows inner/outer wall lines when centerline mode is active
       Build passed with no errors.

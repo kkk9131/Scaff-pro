@@ -2,7 +2,7 @@ import { GlassPanel } from "@/components/ui/GlassPanel";
 import { useState, useRef } from "react";
 import { clsx } from "clsx";
 import { motion, AnimatePresence } from "framer-motion";
-import { Building2, Layers, Calculator, MessageSquare, Upload, FileImage, Ruler, Check, Trash2, Image, Eye, EyeOff, FolderOpen, Plus } from "lucide-react";
+import { Building2, Layers, Calculator, MessageSquare, Upload, FileImage, Ruler, Check, Trash2, Image, Eye, EyeOff, FolderOpen, Plus, Square, AlignCenter } from "lucide-react";
 import { usePlanningStore, SCALE_PRESETS, DRAWING_TYPE_LABELS, FLOOR_COLORS } from "@/store/planningStore";
 import { NeonButton } from "@/components/ui/NeonButton";
 
@@ -35,6 +35,9 @@ const BuildingTab = () => {
         backgroundOpacity,
         setBackgroundOpacity,
         openDrawingTab,
+        // Wall configuration
+        wall,
+        setWall,
     } = usePlanningStore();
     const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -400,6 +403,83 @@ const BuildingTab = () => {
                         <span className="text-sm text-accent">総高さ</span>
                         <span className="font-mono text-accent font-bold">{(totalHeight / 1000).toFixed(1)}m</span>
                     </div>
+                </div>
+            </div>
+
+            {/* Wall Dimension Settings Section */}
+            <div className="space-y-2">
+                <label className="text-xs text-text-muted uppercase font-bold tracking-wider">壁寸法設定</label>
+
+                {/* Dimension Mode Toggle */}
+                <div className="grid grid-cols-2 gap-2">
+                    <button
+                        onClick={() => setWall({ dimensionMode: 'actual' })}
+                        className={clsx(
+                            "p-2 rounded-lg border text-sm transition-all flex items-center justify-center gap-2",
+                            wall.dimensionMode === 'actual'
+                                ? "border-accent bg-accent/10 text-accent shadow-[0_0_12px_var(--accent-glow)]"
+                                : "border-surface-3 bg-surface-2 text-text-muted hover:border-primary/50 hover:text-text-main"
+                        )}
+                    >
+                        <Square size={14} />
+                        実寸
+                    </button>
+                    <button
+                        onClick={() => setWall({ dimensionMode: 'centerline' })}
+                        className={clsx(
+                            "p-2 rounded-lg border text-sm transition-all flex items-center justify-center gap-2",
+                            wall.dimensionMode === 'centerline'
+                                ? "border-accent bg-accent/10 text-accent shadow-[0_0_12px_var(--accent-glow)]"
+                                : "border-surface-3 bg-surface-2 text-text-muted hover:border-primary/50 hover:text-text-main"
+                        )}
+                    >
+                        <AlignCenter size={14} />
+                        芯寸
+                    </button>
+                </div>
+
+                {/* Wall Thickness Input (only shown in centerline mode) */}
+                <AnimatePresence>
+                    {wall.dimensionMode === 'centerline' && (
+                        <motion.div
+                            initial={{ opacity: 0, height: 0 }}
+                            animate={{ opacity: 1, height: 'auto' }}
+                            exit={{ opacity: 0, height: 0 }}
+                            className="space-y-2 overflow-hidden"
+                        >
+                            <div className="flex items-center gap-2">
+                                <label className="text-xs text-text-muted w-16">壁厚</label>
+                                <input
+                                    type="number"
+                                    value={wall.thickness}
+                                    onChange={(e) => setWall({ thickness: parseInt(e.target.value) || 0 })}
+                                    min={50}
+                                    max={500}
+                                    step={10}
+                                    className="flex-1 px-2 py-1.5 bg-surface-2 border border-surface-3 rounded text-sm font-mono text-right focus:outline-none focus:border-accent"
+                                />
+                                <span className="text-xs text-text-muted">mm</span>
+                            </div>
+                            <div className="p-2 bg-primary/10 rounded-lg border border-primary/30">
+                                <div className="flex justify-between items-center">
+                                    <span className="text-xs text-primary">オフセット量</span>
+                                    <span className="font-mono text-primary text-sm font-bold">±{wall.thickness / 2}mm</span>
+                                </div>
+                                <p className="text-[10px] text-text-muted mt-1">
+                                    芯線から内外に{wall.thickness / 2}mmずつオフセットして立体化
+                                </p>
+                            </div>
+                        </motion.div>
+                    )}
+                </AnimatePresence>
+
+                {/* Mode Description */}
+                <div className="text-xs text-text-muted p-2 bg-surface-2 rounded-lg border border-surface-3">
+                    {wall.dimensionMode === 'actual' ? (
+                        <p>📐 描いた線がそのまま壁の外形線になります</p>
+                    ) : (
+                        <p>📏 描いた線が壁の中心線（芯）として扱われます</p>
+                    )}
                 </div>
             </div>
         </div>
