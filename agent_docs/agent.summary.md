@@ -25,6 +25,7 @@ cd backend && source .venv/bin/activate && uvicorn app.main:app --reload
 ```
 
 ---
+- [x] devブランチに移動 (2025-12-08)
 
 ## フェーズ1: Screen B（キャンバス画面）UI構築 ✅ (2025-12-05)
 
