@@ -1,25 +1,15 @@
 """
-図面アップロード・解析API
+図面アップロードAPI
 """
 import uuid
-import shutil
 from pathlib import Path
 from typing import Optional
 
 import aiofiles
-from fastapi import APIRouter, File, Form, UploadFile, HTTPException, BackgroundTasks
+from fastapi import APIRouter, File, Form, UploadFile, HTTPException
 from fastapi.responses import FileResponse
 
-from app.schemas.drawing import (
-    DrawingUploadResponse,
-    ProcessedDrawingData,
-    ExtractedOutline,
-    ExtractedEntrance,
-    ExtractedDimension,
-    Point,
-    Bounds,
-)
-from app.services.drawing_analyzer import DrawingAnalyzer
+from app.schemas.drawing import DrawingUploadResponse
 
 router = APIRouter(prefix="/drawings", tags=["drawings"])
 
@@ -27,19 +17,15 @@ router = APIRouter(prefix="/drawings", tags=["drawings"])
 UPLOAD_DIR = Path("uploads")
 UPLOAD_DIR.mkdir(exist_ok=True)
 
-# 図面解析サービス
-analyzer = DrawingAnalyzer()
-
 
 @router.post("/upload", response_model=DrawingUploadResponse)
 async def upload_drawing(
-    background_tasks: BackgroundTasks,
     file: UploadFile = File(...),
     type: str = Form(...),
     floor: Optional[int] = Form(None),
 ):
     """
-    図面ファイルをアップロードして解析する
+    図面ファイルをアップロードする
 
     - **file**: 図面ファイル（PDF, PNG, JPG, DXF）
     - **type**: 図面タイプ（plan, elevation, roof-plan, site-survey）
@@ -69,95 +55,13 @@ async def upload_drawing(
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"ファイル保存に失敗しました: {e}")
 
-    # 初期レスポンス
-    response = DrawingUploadResponse(
+    return DrawingUploadResponse(
         id=file_id,
         name=original_name,
         type=type,
         url=f"/api/v1/drawings/file/{file_id}{suffix}",
         floor=floor,
-        status="processing",
-    )
-
-    # バックグラウンドで解析を実行
-    try:
-        processed_data = await process_drawing(file_path, type, floor, file_id)
-        response.processedData = processed_data
-        response.status = "ready"
-    except Exception as e:
-        response.status = "error"
-        response.errorMessage = str(e)
-
-    return response
-
-
-async def process_drawing(
-    file_path: Path,
-    drawing_type: str,
-    floor: Optional[int],
-    file_id: str,
-) -> ProcessedDrawingData:
-    """図面を解析して処理データを生成する"""
-    suffix = file_path.suffix.lower()
-
-    # DXFファイルの場合
-    if suffix == ".dxf":
-        result = await analyzer.parse_dxf(file_path)
-    # PDFファイルの場合
-    elif suffix == ".pdf":
-        image_path = await analyzer.convert_pdf_to_image(file_path, UPLOAD_DIR)
-        result = await analyzer.analyze_drawing(image_path, drawing_type, floor)
-    # 画像ファイルの場合
-    else:
-        result = await analyzer.analyze_drawing(file_path, drawing_type, floor)
-
-    # ProcessedDrawingDataに変換
-    outlines = [
-        ExtractedOutline(
-            vertices=[Point(x=v["x"], y=v["y"]) for v in o["vertices"]],
-            floor=o["floor"],
-            color=o["color"],
-        )
-        for o in result["outlines"]
-    ]
-
-    entrances = [
-        ExtractedEntrance(
-            id=e["id"],
-            position=Point(x=e["position"]["x"], y=e["position"]["y"]),
-            type=e["type"],
-            width=e["width"],
-            label=e["label"],
-        )
-        for e in result["entrances"]
-    ]
-
-    dimensions = [
-        ExtractedDimension(
-            id=d["id"],
-            start=Point(x=d["start"]["x"], y=d["start"]["y"]),
-            end=Point(x=d["end"]["x"], y=d["end"]["y"]),
-            value=d["value"],
-            label=d["label"],
-        )
-        for d in result["dimensions"]
-    ]
-
-    bounds = Bounds(
-        minX=result["bounds"]["minX"],
-        minY=result["bounds"]["minY"],
-        maxX=result["bounds"]["maxX"],
-        maxY=result["bounds"]["maxY"],
-    )
-
-    return ProcessedDrawingData(
-        originalUrl=f"/api/v1/drawings/file/{file_id}{file_path.suffix}",
-        processedUrl=f"/api/v1/drawings/file/{file_id}{file_path.suffix}",
-        outlines=outlines,
-        entrances=entrances,
-        dimensions=dimensions,
-        scale=result["scale"],
-        bounds=bounds,
+        status="ready",
     )
 
 
@@ -185,7 +89,6 @@ async def get_drawing_file(filename: str):
 @router.delete("/{drawing_id}")
 async def delete_drawing(drawing_id: str):
     """図面ファイルを削除する"""
-    # 関連ファイルを検索して削除
     deleted = False
     for file_path in UPLOAD_DIR.glob(f"{drawing_id}*"):
         file_path.unlink()

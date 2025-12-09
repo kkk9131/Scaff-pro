@@ -1,10 +1,20 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import { usePlanningStore } from '@/store/planningStore';
 import { ArrowLeftIcon, ImageIcon, CubeIcon, PlayIcon, ZoomInIcon, ZoomOutIcon, SettingsIcon } from '@/components/icons';
 import type { ViewType } from '@/types';
+
+// Sparkles icon for AI analysis
+function SparklesIcon({ size = 16 }: { size?: number }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707" />
+      <circle cx="12" cy="12" r="4" />
+    </svg>
+  );
+}
 
 interface ViewTabProps {
   view: ViewType;
@@ -42,7 +52,70 @@ export function Header() {
     setCanvasScale,
     referenceViewer,
     setReferenceViewerVisible,
+    backgroundDrawingId,
+    drawings,
+    updateDrawingProcessedData,
   } = usePlanningStore();
+
+  const [isAnalyzing, setIsAnalyzing] = useState(false);
+  const [analysisLog, setAnalysisLog] = useState<string[]>([]);
+
+  // Get the current background drawing
+  const currentDrawing = drawings.find(d => d.id === backgroundDrawingId);
+
+  // AI Analysis handler
+  const handleAnalyze = async () => {
+    if (!backgroundDrawingId || !currentDrawing) {
+      alert('図面を先にインポートしてください');
+      return;
+    }
+
+    setIsAnalyzing(true);
+    setAnalysisLog(['AI解析を開始...']);
+
+    try {
+      // Get the server-side drawing ID from URL
+      const urlMatch = currentDrawing.url?.match(/\/file\/([^.]+)/);
+      const serverDrawingId = urlMatch ? urlMatch[1] : backgroundDrawingId;
+
+      const response = await fetch('/api/v1/drawings/analyze', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          drawing_id: serverDrawingId,
+          floor: currentDrawing.floor || 1,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const result = await response.json();
+      console.log('[Header] Analysis result:', result);
+
+      // Update logs
+      setAnalysisLog(result.processing_log || []);
+
+      if (result.processedData) {
+        // Update the drawing with processed data
+        updateDrawingProcessedData(backgroundDrawingId, result.processedData);
+        console.log('[Header] Updated drawing with processedData');
+      }
+
+      if (result.status === 'error') {
+        alert(`解析エラー: ${result.error_message || '不明なエラー'}`);
+      }
+    } catch (error) {
+      console.error('[Header] Analysis error:', error);
+      setAnalysisLog(prev => [...prev, `エラー: ${error}`]);
+      alert(`解析に失敗しました: ${error}`);
+    } finally {
+      setIsAnalyzing(false);
+    }
+  };
 
   const views: { view: ViewType; label: string; icon?: React.ReactNode }[] = [
     { view: 'building-plan', label: 'Building Plan', icon: <ImageIcon size={16} /> },
@@ -136,6 +209,30 @@ export function Header() {
         >
           <ImageIcon size={16} />
           <span className="hidden md:inline">Reference</span>
+        </button>
+
+        {/* AI Analysis button */}
+        <button
+          onClick={handleAnalyze}
+          disabled={isAnalyzing || !backgroundDrawingId}
+          className={`flex h-8 items-center gap-2 rounded-lg px-4 text-sm font-medium transition-all ${
+            backgroundDrawingId
+              ? 'bg-gradient-to-r from-purple-600 to-purple-500 text-white shadow-lg shadow-purple-500/30 hover:from-purple-500 hover:to-purple-400 hover:shadow-purple-500/40'
+              : 'bg-zinc-700 text-zinc-400 cursor-not-allowed'
+          } ${isAnalyzing ? 'animate-pulse' : ''}`}
+          title={backgroundDrawingId ? 'AI寸法駆動解析を実行' : '図面をインポートしてください'}
+        >
+          {isAnalyzing ? (
+            <>
+              <span className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
+              <span className="hidden md:inline">解析中...</span>
+            </>
+          ) : (
+            <>
+              <SparklesIcon size={16} />
+              <span className="hidden md:inline">AI解析</span>
+            </>
+          )}
         </button>
 
         {/* Run calculation */}

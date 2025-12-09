@@ -8,7 +8,7 @@ import {
   CheckIcon,
   TrashIcon,
 } from '@/components/icons';
-import type { DrawingFileType, DrawingFile } from '@/types';
+import type { DrawingFileType } from '@/types';
 
 // Floor colors for visual distinction
 const FLOOR_COLORS: Record<number, string> = {
@@ -39,7 +39,8 @@ export function DrawingImportDialog() {
     setDrawingImportOpen,
     addDrawing,
     updateDrawingStatus,
-    updateDrawingProcessedData,
+    updateDrawingUrl,
+    updateDrawingServerId,
     setBackgroundDrawingId,
   } = usePlanningStore();
 
@@ -119,19 +120,15 @@ export function DrawingImportDialog() {
     setIsUploading(true);
 
     for (const preview of filePreviews) {
-      const drawingId = crypto.randomUUID();
-
-      // Add drawing with uploading status
-      const newDrawing: DrawingFile = {
-        id: drawingId,
+      // Add drawing with uploading status - addDrawing returns the actual ID used in store
+      const drawingId = addDrawing({
         name: preview.file.name,
         type: preview.type,
         url: preview.previewUrl,
         scale: 1,
         floor: preview.type === 'plan' ? preview.floor : undefined,
         status: 'uploading',
-      };
-      addDrawing(newDrawing);
+      });
 
       try {
         // Upload file to backend
@@ -157,71 +154,25 @@ export function DrawingImportDialog() {
         const result = await response.json();
 
         console.log('[DrawingImportDialog] API Response:', result);
-        if (result.processedData) {
-          console.log('[DrawingImportDialog] Setting processedData:', result.processedData);
-          updateDrawingProcessedData(drawingId, result.processedData);
-          // 自動的に背景に表示
-          setBackgroundDrawingId(drawingId);
-          console.log('[DrawingImportDialog] Set backgroundDrawingId:', drawingId);
-        } else {
-          console.log('[DrawingImportDialog] No processedData in response');
-          updateDrawingStatus(drawingId, 'ready');
-          setBackgroundDrawingId(drawingId);
+
+        // サーバーから返されたIDとURLで更新（重要：これがないとAI解析でIDが見つからない）
+        if (result.id) {
+          console.log('[DrawingImportDialog] Updating serverId to:', result.id);
+          updateDrawingServerId(drawingId, result.id);
         }
-      } catch {
-        // For demo, simulate processing with mock data
-        updateDrawingStatus(drawingId, 'processing');
+        if (result.url) {
+          console.log('[DrawingImportDialog] Updating URL to:', result.url);
+          updateDrawingUrl(drawingId, result.url);
+        }
 
-        // Simulate API delay
-        await new Promise((resolve) => setTimeout(resolve, 1500));
-
-        // Mock processed data
-        const mockProcessedData = {
-          originalUrl: preview.previewUrl,
-          processedUrl: preview.previewUrl,
-          outlines: [
-            {
-              vertices: [
-                { x: 100, y: 100 },
-                { x: 400, y: 100 },
-                { x: 400, y: 300 },
-                { x: 100, y: 300 },
-              ],
-              floor: preview.floor,
-              color: FLOOR_COLORS[preview.floor] || '#3b82f6',
-            },
-          ],
-          entrances: [
-            {
-              id: crypto.randomUUID(),
-              position: { x: 250, y: 300 },
-              type: 'main-entrance' as const,
-              width: 900,
-              label: '玄関',
-            },
-          ],
-          dimensions: [
-            {
-              id: crypto.randomUUID(),
-              start: { x: 100, y: 100 },
-              end: { x: 400, y: 100 },
-              value: 7280,
-              label: '7,280mm',
-            },
-            {
-              id: crypto.randomUUID(),
-              start: { x: 400, y: 100 },
-              end: { x: 400, y: 300 },
-              value: 5460,
-              label: '5,460mm',
-            },
-          ],
-          scale: 0.1,
-          bounds: { minX: 100, minY: 100, maxX: 400, maxY: 300 },
-        };
-
-        updateDrawingProcessedData(drawingId, mockProcessedData);
-        // 自動的に背景に表示
+        // アップロード完了後、背景に表示
+        updateDrawingStatus(drawingId, 'ready');
+        setBackgroundDrawingId(drawingId);
+        console.log('[DrawingImportDialog] Upload complete, set backgroundDrawingId:', drawingId);
+      } catch (error) {
+        console.error('[DrawingImportDialog] Upload error:', error);
+        // アップロード失敗時はreadyステータスに設定
+        updateDrawingStatus(drawingId, 'ready');
         setBackgroundDrawingId(drawingId);
       }
     }
@@ -411,7 +362,7 @@ export function DrawingImportDialog() {
         {/* Footer */}
         <div className="flex items-center justify-between border-t border-zinc-800 px-6 py-4">
           <p className="text-xs text-zinc-500">
-            アップロード後、自動で外周線・玄関位置を解析します
+            図面をキャンバスの背景に表示します
           </p>
           <div className="flex gap-3">
             <button

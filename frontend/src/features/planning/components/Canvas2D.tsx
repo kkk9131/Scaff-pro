@@ -366,6 +366,50 @@ export function Canvas2D() {
                             />
                         )}
 
+                        {/* AI Analysis Result - Outlines from processedData */}
+                        {backgroundDrawing?.processedData?.outlines?.map((outline, outlineIndex) => {
+                            // バックエンドからの座標はmm単位。キャンバス表示用にスケール変換
+                            // bounds情報からスケールを計算するか、固定スケール(0.1px/mm)を適用
+                            const bounds = backgroundDrawing.processedData?.bounds;
+                            const outlineScale = bounds && bounds.maxX > 0
+                                ? Math.min(
+                                    (size.width * 0.6) / (bounds.maxX - bounds.minX),
+                                    (size.height * 0.6) / (bounds.maxY - bounds.minY)
+                                  )
+                                : 0.05; // デフォルト: 1mm = 0.05px
+                            const offsetX = size.width * 0.2;
+                            const offsetY = size.height * 0.2;
+
+                            const flatPoints = outline.vertices.flatMap(v => [
+                                v.x * outlineScale + offsetX,
+                                v.y * outlineScale + offsetY
+                            ]);
+                            return (
+                                <Line
+                                    key={`analysis-outline-${outlineIndex}`}
+                                    points={flatPoints}
+                                    closed={true}
+                                    stroke={outline.color || '#3b82f6'}
+                                    strokeWidth={3}
+                                    fill={`${outline.color || '#3b82f6'}20`}
+                                    listening={false}
+                                />
+                            );
+                        })}
+
+                        {/* AI Analysis Result - Dimension labels */}
+                        {backgroundDrawing?.processedData?.dimensions?.map((dim, dimIndex) => (
+                            <Text
+                                key={`analysis-dim-${dimIndex}`}
+                                x={dim.start.x}
+                                y={dim.start.y - 20}
+                                text={dim.label}
+                                fontSize={12}
+                                fill="#f59e0b"
+                                fontFamily="sans-serif"
+                            />
+                        ))}
+
                         <Grid />
 
                         {/* Completed Polyline: Render Segments */}

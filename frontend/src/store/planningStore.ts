@@ -1,6 +1,16 @@
 import { create } from 'zustand';
+import type { ViewType } from '@/types';
 
 export type ToolType = 'select' | 'move' | 'polyline' | 'scale' | 'text' | 'measure' | 'erase';
+
+// Reference Viewer state
+export interface ReferenceViewerState {
+    visible: boolean;
+    x: number;
+    y: number;
+    width: number;
+    height: number;
+}
 
 export interface Point {
     x: number;
@@ -42,6 +52,38 @@ export interface EdgeAttribute {
 // Drawing file types
 export type DrawingFileType = 'plan' | 'elevation' | 'roof-plan' | 'site-survey';
 
+// Processed drawing data from analysis
+export interface ProcessedDrawingData {
+    originalUrl: string;
+    processedUrl: string;
+    outlines: Array<{
+        vertices: Array<{ x: number; y: number }>;
+        floor: number;
+        color: string;
+    }>;
+    entrances: Array<{
+        id: string;
+        position: { x: number; y: number };
+        type: 'main-entrance' | 'back-door' | 'other';
+        width: number;
+        label: string;
+    }>;
+    dimensions: Array<{
+        id: string;
+        start: { x: number; y: number };
+        end: { x: number; y: number };
+        value: number;
+        label: string;
+    }>;
+    scale: number;
+    bounds: {
+        minX: number;
+        minY: number;
+        maxX: number;
+        maxY: number;
+    };
+}
+
 // Drawing file interface
 export interface DrawingFile {
     id: string;
@@ -50,6 +92,8 @@ export interface DrawingFile {
     type: DrawingFileType;
     floor?: number; // Only for 'plan' type
     status: 'uploading' | 'processing' | 'ready' | 'error';
+    processedData?: ProcessedDrawingData; // Analysis result
+    serverId?: string; // Server-side drawing ID (UUID from backend)
     createdAt: Date;
 }
 
@@ -71,6 +115,24 @@ export const DRAWING_TYPE_LABELS: Record<DrawingFileType, string> = {
 };
 
 interface PlanningState {
+    // Project
+    projectName: string;
+    setProjectName: (name: string) => void;
+
+    // View
+    currentView: ViewType;
+    setCurrentView: (view: ViewType) => void;
+
+    // Canvas
+    canvasScale: number;
+    setCanvasScale: (scale: number) => void;
+
+    // Reference Viewer
+    referenceViewer: ReferenceViewerState;
+    setReferenceViewerVisible: (visible: boolean) => void;
+    updateReferenceViewerPosition: (x: number, y: number) => void;
+    updateReferenceViewerSize: (width: number, height: number) => void;
+
     // Drawing (Legacy - single drawing)
     drawingUrl: string | null;
     drawingName: string | null;
@@ -121,6 +183,9 @@ interface PlanningState {
     addDrawing: (drawing: Omit<DrawingFile, 'id' | 'createdAt'>) => string;
     removeDrawing: (id: string) => void;
     updateDrawingStatus: (id: string, status: DrawingFile['status']) => void;
+    updateDrawingProcessedData: (id: string, processedData: ProcessedDrawingData) => void;
+    updateDrawingUrl: (id: string, url: string) => void;
+    updateDrawingServerId: (id: string, serverId: string) => void;
 
     // Actions - Background Drawing
     setBackgroundDrawingId: (id: string | null) => void;
@@ -166,6 +231,36 @@ const DEFAULT_PIXELS_PER_MM = 3.78;
 const generateId = () => `drawing-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
 
 export const usePlanningStore = create<PlanningState>((set, get) => ({
+    // Initial state - Project
+    projectName: 'New Project',
+    setProjectName: (name) => set({ projectName: name }),
+
+    // Initial state - View
+    currentView: 'building-plan' as ViewType,
+    setCurrentView: (view) => set({ currentView: view }),
+
+    // Initial state - Canvas
+    canvasScale: 1,
+    setCanvasScale: (scale) => set({ canvasScale: scale }),
+
+    // Initial state - Reference Viewer
+    referenceViewer: {
+        visible: false,
+        x: 100,
+        y: 100,
+        width: 400,
+        height: 300,
+    },
+    setReferenceViewerVisible: (visible) => set((state) => ({
+        referenceViewer: { ...state.referenceViewer, visible }
+    })),
+    updateReferenceViewerPosition: (x, y) => set((state) => ({
+        referenceViewer: { ...state.referenceViewer, x, y }
+    })),
+    updateReferenceViewerSize: (width, height) => set((state) => ({
+        referenceViewer: { ...state.referenceViewer, width, height }
+    })),
+
     // Initial state - Legacy Drawing
     drawingUrl: null,
     drawingName: null,
@@ -235,6 +330,24 @@ export const usePlanningStore = create<PlanningState>((set, get) => ({
     updateDrawingStatus: (id, status) => set((state) => ({
         drawings: state.drawings.map((d) =>
             d.id === id ? { ...d, status } : d
+        ),
+    })),
+
+    updateDrawingProcessedData: (id, processedData) => set((state) => ({
+        drawings: state.drawings.map((d) =>
+            d.id === id ? { ...d, processedData, status: 'ready' as const } : d
+        ),
+    })),
+
+    updateDrawingUrl: (id, url) => set((state) => ({
+        drawings: state.drawings.map((d) =>
+            d.id === id ? { ...d, url } : d
+        ),
+    })),
+
+    updateDrawingServerId: (id, serverId) => set((state) => ({
+        drawings: state.drawings.map((d) =>
+            d.id === id ? { ...d, serverId } : d
         ),
     })),
 
