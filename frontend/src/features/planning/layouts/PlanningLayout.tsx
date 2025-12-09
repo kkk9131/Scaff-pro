@@ -1,4 +1,3 @@
-import { GlassPanel } from "@/components/ui/GlassPanel";
 import { ViewSwitcher } from "../components/ViewSwitcher";
 import { NeonButton } from "@/components/ui/NeonButton";
 import { Maximize2, Save, ArrowLeft, Sun, Moon } from "lucide-react";

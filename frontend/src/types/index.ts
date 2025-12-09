@@ -125,6 +125,7 @@ export interface ProcessedDrawingData {
 // Uploaded drawing file
 export interface DrawingFile {
   id: string;
+  serverId?: string;  // Server-side file ID (for AI analysis)
   name: string;
   type: DrawingFileType;
   url: string;
