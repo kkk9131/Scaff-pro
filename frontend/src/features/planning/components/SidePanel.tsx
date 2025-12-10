@@ -2,9 +2,30 @@ import { GlassPanel } from "@/components/ui/GlassPanel";
 import { useState, useRef } from "react";
 import { clsx } from "clsx";
 import { motion, AnimatePresence } from "framer-motion";
-import { Building2, Layers, Calculator, MessageSquare, Upload, FileImage, Ruler, Check, Trash2, Image, Eye, EyeOff, FolderOpen, Plus, Square, AlignCenter } from "lucide-react";
-import { usePlanningStore, SCALE_PRESETS, DRAWING_TYPE_LABELS, FLOOR_COLORS } from "@/store/planningStore";
+import { Building2, Layers, Calculator, MessageSquare, Upload, FileImage, Ruler, Check, Trash2, Image, Eye, EyeOff, FolderOpen, Plus, Square, AlignCenter, Sparkles, Loader2 } from "lucide-react";
+import { usePlanningStore, SCALE_PRESETS, DRAWING_TYPE_LABELS, FLOOR_COLORS, type Point } from "@/store/planningStore";
 import { NeonButton } from "@/components/ui/NeonButton";
+
+// API response types for outline extraction
+interface CoordinatePoint {
+    point: string;
+    x: number;
+    y: number;
+}
+
+interface DimensionLine {
+    label: string;
+    value_mm: number;
+    direction: string;
+    raw_text: string;
+}
+
+interface OutlineExtractionResult {
+    dimensions: DimensionLine[];
+    coordinates: CoordinatePoint[];
+    width_mm: number;
+    height_mm: number;
+}
 
 // Building Tab Component with File Upload
 const BuildingTab = () => {
@@ -23,6 +44,7 @@ const BuildingTab = () => {
         setGrid,
         polylinePoints,
         clearPolyline,
+        addPolylinePoint,
         selectedEdgeIndex,
         edgeAttributes,
         setEdgeAttribute,
@@ -40,6 +62,8 @@ const BuildingTab = () => {
         setWall,
     } = usePlanningStore();
     const fileInputRef = useRef<HTMLInputElement>(null);
+    const [isExtracting, setIsExtracting] = useState<string | null>(null); // Drawing ID being extracted
+    const [extractionError, setExtractionError] = useState<string | null>(null);
 
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
@@ -75,6 +99,65 @@ const BuildingTab = () => {
     const currentEdgeAttr = selectedEdgeIndex !== null
         ? (edgeAttributes[selectedEdgeIndex] || { startFloor: 1, endFloor: building.totalFloors })
         : null;
+
+    // State for extraction result display
+    const [extractionResult, setExtractionResult] = useState<OutlineExtractionResult | null>(null);
+
+    // Handle AI outline extraction
+    const handleExtractOutline = async (drawingId: string) => {
+        const drawing = drawings.find(d => d.id === drawingId);
+        if (!drawing) return;
+
+        setIsExtracting(drawingId);
+        setExtractionError(null);
+        setExtractionResult(null);
+
+        try {
+            // Use the server-side ID (UUID) if available, otherwise fallback to client ID
+            // The backend expects the UUID that was generated during upload.
+            const fileId = drawing.serverId || drawingId;
+
+            console.log('[SidePanel] Extracting outline for file_id:', fileId);
+
+            // Use extract-outline-by-id endpoint with file_id
+            // 直接バックエンドを呼ぶ（Gemini API呼び出しに時間がかかるため、Next.jsプロキシを経由しない）
+            const extractResponse = await fetch('http://localhost:8000/api/v1/drawings/extract-outline-by-id', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ file_id: fileId }),
+            });
+
+            if (!extractResponse.ok) {
+                const errorText = await extractResponse.text();
+                let errorMessage = 'AI解析に失敗しました';
+                try {
+                    const error = JSON.parse(errorText);
+                    errorMessage = error.detail || errorMessage;
+                } catch {
+                    errorMessage = errorText || errorMessage;
+                }
+                throw new Error(errorMessage);
+            }
+
+            const result: OutlineExtractionResult = await extractResponse.json();
+
+            // Display result in console and UI
+            console.log('=== AI外周座標抽出結果 ===');
+            console.log(JSON.stringify(result, null, 2));
+            console.log(`建物サイズ: ${result.width_mm}mm × ${result.height_mm}mm`);
+
+            // Store result for UI display
+            setExtractionResult(result);
+
+        } catch (error) {
+            console.error('[SidePanel] Extraction error:', error);
+            setExtractionError(error instanceof Error ? error.message : 'AI解析に失敗しました');
+        } finally {
+            setIsExtracting(null);
+        }
+    };
 
     return (
         <div className="space-y-4 p-1">
@@ -211,6 +294,27 @@ const BuildingTab = () => {
 
                                 {/* Actions */}
                                 <div className="flex items-center gap-1">
+                                    {/* AI Extraction Button */}
+                                    <button
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            handleExtractOutline(drawing.id);
+                                        }}
+                                        disabled={isExtracting === drawing.id}
+                                        className={clsx(
+                                            "p-1 rounded transition-colors",
+                                            isExtracting === drawing.id
+                                                ? "text-accent bg-accent/20"
+                                                : "text-text-muted hover:text-accent hover:bg-accent/10"
+                                        )}
+                                        title="AI外周解析 (Gemini)"
+                                    >
+                                        {isExtracting === drawing.id ? (
+                                            <Loader2 size={14} className="animate-spin" />
+                                        ) : (
+                                            <Sparkles size={14} />
+                                        )}
+                                    </button>
                                     <button
                                         onClick={(e) => {
                                             e.stopPropagation();
@@ -242,6 +346,130 @@ const BuildingTab = () => {
                             </div>
                         ))}
                     </div>
+
+                    {/* Extraction Error Display */}
+                    {extractionError && (
+                        <div className="mt-2 p-2 bg-danger/10 border border-danger/30 rounded-lg">
+                            <p className="text-xs text-danger">{extractionError}</p>
+                            <button
+                                onClick={() => setExtractionError(null)}
+                                className="text-xs text-danger/70 hover:text-danger underline mt-1"
+                            >
+                                閉じる
+                            </button>
+                        </div>
+                    )}
+
+                    {/* Extraction Result Display */}
+                    {extractionResult && (
+                        <div className="mt-2 p-3 bg-accent/10 border border-accent/30 rounded-lg space-y-3">
+                            <div className="flex items-center justify-between">
+                                <span className="text-xs font-bold text-accent flex items-center gap-1">
+                                    <Sparkles size={12} />
+                                    AI解析結果
+                                </span>
+                                <button
+                                    onClick={() => setExtractionResult(null)}
+                                    className="text-xs text-text-muted hover:text-text-main"
+                                >
+                                    ✕
+                                </button>
+                            </div>
+
+                            {/* 読み取った寸法線 */}
+                            <div>
+                                <div className="text-xs font-bold text-primary mb-1 flex items-center gap-1">
+                                    <Ruler size={12} />
+                                    読み取った寸法線 ({extractionResult.dimensions?.length || 0})
+                                </div>
+                                <div className="max-h-40 overflow-y-auto bg-surface-1 rounded p-2 space-y-1">
+                                    {extractionResult.dimensions?.map((dim, i) => (
+                                        <div key={i} className="flex justify-between items-center text-[11px] border-b border-surface-3 pb-1">
+                                            <span className="text-text-muted">{dim.label}</span>
+                                            <span className="font-mono">
+                                                <span className="text-accent font-bold">{dim.value_mm.toLocaleString()}</span>
+                                                <span className="text-text-muted ml-1">mm</span>
+                                            </span>
+                                            <span className="text-text-muted text-[10px]">
+                                                {dim.direction === 'horizontal' ? '↔' : '↕'}
+                                            </span>
+                                            <span className="text-text-muted text-[10px] italic">"{dim.raw_text}"</span>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+
+                            {/* 算出された座標 */}
+                            <div>
+                                <div className="text-xs font-bold text-primary mb-1">
+                                    算出座標 (サイズ: {extractionResult.width_mm}×{extractionResult.height_mm}mm)
+                                </div>
+                                <div className="max-h-24 overflow-y-auto bg-surface-1 rounded p-2 font-mono text-[10px]">
+                                    {extractionResult.coordinates.map((coord, i) => (
+                                        <div key={i} className="text-text-muted">
+                                            {coord.point}: ({coord.x}, {coord.y})
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+
+                            <button
+                                onClick={() => {
+                                    const json = JSON.stringify(extractionResult, null, 2);
+                                    navigator.clipboard.writeText(json);
+                                }}
+                                className="w-full p-1.5 text-xs bg-surface-2 hover:bg-surface-3 text-text-muted rounded transition-colors"
+                            >
+                                JSONをコピー
+                            </button>
+
+                            <button
+                                onClick={() => {
+                                    if (!extractionResult?.coordinates) return;
+
+                                    // Current scale (pixels per mm)
+                                    // If scale is not set, default to 1:100 (approx 0.0378 px/mm)
+                                    const pixelsPerMm = scaleRatio
+                                        ? (3.78 / scaleRatio)
+                                        : (3.78 / 100);
+
+                                    // Convert mm coordinates to canvas pixels
+                                    // Also apply an offset to place it near the center or top-left visible area
+                                    // Changed to (500, 500) to avoid overlapping with default drawing position (0,0) or (100,100)
+                                    const startX = 500;
+                                    const startY = 500;
+
+                                    const points: Point[] = extractionResult.coordinates.map(coord => ({
+                                        x: startX + (coord.x * pixelsPerMm),
+                                        y: startY + (coord.y * pixelsPerMm)
+                                    }));
+
+                                    // Ensure the shape is closed for 3D generation
+                                    // Check if the last point matches the first point
+                                    if (points.length > 0) {
+                                        const first = points[0];
+                                        const last = points[points.length - 1];
+                                        const distance = Math.sqrt(Math.pow(last.x - first.x, 2) + Math.pow(last.y - first.y, 2));
+
+                                        // If distance is large (not effectively the same point), add the first point to close loop
+                                        if (distance > 1) {
+                                            points.push({ ...first });
+                                        }
+                                    }
+
+                                    // Update store
+                                    usePlanningStore.getState().setPolylinePoints(points);
+
+                                    // Notify user
+                                    console.log('Applied points to canvas (Closed Polygon):', points);
+                                }}
+                                className="w-full p-2 text-xs font-bold bg-accent hover:bg-accent-hover text-white rounded transition-colors flex items-center justify-center gap-2"
+                            >
+                                <Check size={14} />
+                                キャンバスに反映
+                            </button>
+                        </div>
+                    )}
                 </div>
             )}
 

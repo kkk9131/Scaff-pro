@@ -207,6 +207,7 @@ interface PlanningState {
     toggleGridSnap: () => void;
 
     addPolylinePoint: (point: Point) => void;
+    setPolylinePoints: (points: Point[]) => void;
     popPolylinePoint: () => void;
     finishPolyline: () => void;
     cancelPolyline: () => void;
@@ -390,6 +391,12 @@ export const usePlanningStore = create<PlanningState>((set, get) => ({
         polylinePoints: [...state.polylinePoints, point],
         isDrawingPolyline: true,
     })),
+    setPolylinePoints: (points) => set({
+        polylinePoints: points,
+        // If points exist, we are effectively "finished" with the shape or in a valid state
+        isDrawingPolyline: false,
+        edgeAttributes: {} // Reset edge attributes when setting new shape
+    }),
     popPolylinePoint: () => set((state) => {
         const newPoints = state.polylinePoints.slice(0, -1);
         const newAttributes = { ...state.edgeAttributes };
