@@ -35,6 +35,18 @@ export interface WallConfig {
     thickness: number; // Wall thickness in mm (used in centerline mode)
 }
 
+// Roof configuration (extracted from elevation drawings)
+export type RoofType = 'flat' | 'gable' | 'hip' | 'shed';
+
+export interface RoofConfig {
+    eaveOverhang: number; // 軒出 (mm)
+    gableOverhang: number; // ケラバ出幅 (mm)
+    slopeRatio: string | null; // 勾配（例: "4/10"）
+    slopeAngle: number | null; // 傾斜角度（度）
+    roofType: RoofType; // 屋根形状
+    ridgeHeight: number | null; // 棟高さ (mm)
+}
+
 // Common scale ratios for architectural drawings
 export const SCALE_PRESETS = [
     { ratio: 50, label: '1:50' },
@@ -171,6 +183,9 @@ interface PlanningState {
     // Wall Configuration
     wall: WallConfig;
 
+    // Roof Configuration (from elevation drawing analysis)
+    roof: RoofConfig;
+
     // Tool
     currentTool: ToolType;
     isGridSnapEnabled: boolean;
@@ -186,6 +201,7 @@ interface PlanningState {
     updateDrawingProcessedData: (id: string, processedData: ProcessedDrawingData) => void;
     updateDrawingUrl: (id: string, url: string) => void;
     updateDrawingServerId: (id: string, serverId: string) => void;
+    updateDrawingFloor: (id: string, floor: number) => void;
 
     // Actions - Background Drawing
     setBackgroundDrawingId: (id: string | null) => void;
@@ -221,6 +237,7 @@ interface PlanningState {
     setBuilding: (config: Partial<BuildingConfig>) => void;
     setGrid: (config: Partial<GridConfig>) => void;
     setWall: (config: Partial<WallConfig>) => void;
+    setRoof: (config: Partial<RoofConfig>) => void;
 
     setCurrentTool: (tool: ToolType) => void;
 }
@@ -289,7 +306,7 @@ export const usePlanningStore = create<PlanningState>((set, get) => ({
     isDrawingPolyline: false,
     building: {
         floorHeight: 2800, // 2.8m default
-        totalFloors: 2,
+        totalFloors: 1, // Default to 1 floor (auto-expands on import)
         roofHeight: 1000, // 1m default roof
     },
     grid: {
@@ -298,6 +315,14 @@ export const usePlanningStore = create<PlanningState>((set, get) => ({
     wall: {
         dimensionMode: 'actual', // Default to actual dimension mode
         thickness: 160, // Default wall thickness 160mm
+    },
+    roof: {
+        eaveOverhang: 0, // 軒出 (mm)
+        gableOverhang: 0, // ケラバ (mm)
+        slopeRatio: null,
+        slopeAngle: null,
+        roofType: 'flat',
+        ridgeHeight: null,
     },
     currentTool: 'select',
     isGridSnapEnabled: false,
@@ -349,6 +374,12 @@ export const usePlanningStore = create<PlanningState>((set, get) => ({
     updateDrawingServerId: (id, serverId) => set((state) => ({
         drawings: state.drawings.map((d) =>
             d.id === id ? { ...d, serverId } : d
+        ),
+    })),
+
+    updateDrawingFloor: (id, floor) => set((state) => ({
+        drawings: state.drawings.map((d) =>
+            d.id === id ? { ...d, floor } : d
         ),
     })),
 
@@ -430,6 +461,10 @@ export const usePlanningStore = create<PlanningState>((set, get) => ({
 
     setWall: (config) => set((state) => ({
         wall: { ...state.wall, ...config }
+    })),
+
+    setRoof: (config) => set((state) => ({
+        roof: { ...state.roof, ...config }
     })),
 
     setCurrentTool: (tool) => set({ currentTool: tool }),

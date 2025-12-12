@@ -88,3 +88,13 @@ cd backend && source .venv/bin/activate && uvicorn app.main:app --reload
 | 2025-12-05 | フェーズ1完了（Screen B UI構築）|
 | 2025-12-06 | UIデザイン更新：「Luminous Blueprint」（明るいSF調）へ変更 |
 | 2025-12-05 | フェーズ0完了、技術スタックをNext.jsに変更 |
+| 2025-12-10 | Gemini外周抽出ロジック更新：プロンプトを「数値優先（歪み無視）」に最適化、SDK追加 |
+- Added .env file in backend with Anthropic API key placeholder.
+- Added google-generativeai dependency to backend.
+| 2025-12-10 | 階層別カラー表示機能追加：2D（重複時上位階色）、3D（階層別セグメント分割表示） |
+| 2025-12-11 | **屋根情報抽出機能追加**: 立面図から軒出・ケラバ・屋根勾配を AI で自動認識 |
+- Backend: `roof_extractor.py` サービス追加（Gemini Vision による立面図解析）
+- API: `/api/v1/drawings/extract-roof` エンドポイント追加
+- Frontend: `planningStore.ts` に `RoofConfig` 型と `setRoof` アクション追加
+- 2D: `Canvas2D.tsx` に屋根輪郭の破線表示機能追加（軒出/ケラバからオフセット計算）
+- 3D: `View3D.tsx` に屋根設定を反映する準備完了

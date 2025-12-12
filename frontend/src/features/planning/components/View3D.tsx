@@ -3,7 +3,7 @@
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls, Grid, Line, OrthographicCamera, PerspectiveCamera } from "@react-three/drei";
 import { useThemeStore } from "@/store/themeStore";
-import { usePlanningStore, type Point, type EdgeAttribute, type WallConfig } from "@/store/planningStore";
+import { usePlanningStore, type Point, type EdgeAttribute, type WallConfig, type RoofConfig, FLOOR_COLORS } from "@/store/planningStore";
 import { useMemo } from "react";
 import * as THREE from "three";
 
@@ -15,6 +15,7 @@ interface BuildingMeshProps {
     scale: number | null;
     edgeAttributes: Record<number, EdgeAttribute>;
     wall: WallConfig;
+    roof: RoofConfig; // Roof configuration for overhang/shape
     colors: {
         full: string;      // Full height walls
         partial: string;   // Partial walls (1F only, etc.)
@@ -188,9 +189,9 @@ function calculateOffsetPoints(
     return result;
 }
 
-function BuildingMesh({ points, floorHeight, totalFloors, roofHeight, scale, edgeAttributes, wall, colors }: BuildingMeshProps) {
+function BuildingMesh({ points, floorHeight, totalFloors, roofHeight, scale, edgeAttributes, wall, roof, colors }: BuildingMeshProps) {
     const wallData = useMemo(() => {
-        if (points.length < 3) return [];
+        if (points.length < 3) return { walls: [], meshes: [] };
 
         const scaleFactor = scale ? 1 / (scale * 1000) : 0.01;
 
@@ -203,7 +204,8 @@ function BuildingMesh({ points, floorHeight, totalFloors, roofHeight, scale, edg
         }));
 
         const floorH = floorHeight / 1000;
-        const walls: { line: [number, number, number][]; color: string }[] = [];
+        const walls: { line: [number, number, number][]; color: string; dashed?: boolean }[] = [];
+        const meshes: { positions: Float32Array; color: string }[] = [];
 
         // Calculate offset distance in 3D units
         // wall.thickness is in mm, need to apply same scaleFactor as pts3d
@@ -247,113 +249,7 @@ function BuildingMesh({ points, floorHeight, totalFloors, roofHeight, scale, edg
             segmentIndex: number,
             isClosed: boolean
         ) => {
-            // For open polylines, just use next index; for closed, wrap around
-            const next = isClosed
-                ? (segmentIndex + 1) % (wallPts.length - 1) // -1 because last point is duplicate of first
-                : segmentIndex + 1;
-            const wallStartY = (attr.startFloor - 1) * floorH;
-            const wallEndY = attr.endFloor * floorH + roofHeight / 1000;
-
-            // Vertical edges
-            walls.push({
-                line: [
-                    [wallPts[segmentIndex].x, wallStartY, wallPts[segmentIndex].z],
-                    [wallPts[segmentIndex].x, wallEndY, wallPts[segmentIndex].z],
-                ],
-                color: wallColor
-            });
-            walls.push({
-                line: [
-                    [wallPts[next].x, wallStartY, wallPts[next].z],
-                    [wallPts[next].x, wallEndY, wallPts[next].z],
-                ],
-                color: wallColor
-            });
-
-            // Horizontal edges (top and bottom)
-            walls.push({
-                line: [
-                    [wallPts[segmentIndex].x, wallEndY, wallPts[segmentIndex].z],
-                    [wallPts[next].x, wallEndY, wallPts[next].z],
-                ],
-                color: wallColor
-            });
-            walls.push({
-                line: [
-                    [wallPts[segmentIndex].x, wallStartY, wallPts[segmentIndex].z],
-                    [wallPts[next].x, wallStartY, wallPts[next].z],
-                ],
-                color: wallColor
-            });
-
-            // Floor lines
-            for (let f = attr.startFloor; f < attr.endFloor; f++) {
-                const y = f * floorH;
-                walls.push({
-                    line: [
-                        [wallPts[segmentIndex].x, y, wallPts[segmentIndex].z],
-                        [wallPts[next].x, y, wallPts[next].z],
-                    ],
-                    color: colors.floor
-                });
-            }
-
-            // Ceiling line
-            const ceilingY = attr.endFloor * floorH;
-            walls.push({
-                line: [
-                    [wallPts[segmentIndex].x, ceilingY, wallPts[segmentIndex].z],
-                    [wallPts[next].x, ceilingY, wallPts[next].z],
-                ],
-                color: colors.floor
-            });
-        };
-
-        // Draw connecting lines between inner and outer walls (for centerline mode)
-        const drawWallThicknessConnectors = (
-            innerPts: { x: number; z: number }[],
-            outerPts: { x: number; z: number }[],
-            attr: EdgeAttribute,
-            segmentIndex: number,
-            isClosed: boolean
-        ) => {
-            const next = isClosed
-                ? (segmentIndex + 1) % (innerPts.length - 1)
-                : segmentIndex + 1;
-            const wallStartY = (attr.startFloor - 1) * floorH;
-            const wallEndY = attr.endFloor * floorH + roofHeight / 1000;
-
-            // Connect corners at bottom
-            walls.push({
-                line: [
-                    [innerPts[segmentIndex].x, wallStartY, innerPts[segmentIndex].z],
-                    [outerPts[segmentIndex].x, wallStartY, outerPts[segmentIndex].z],
-                ],
-                color: colors.floor
-            });
-            walls.push({
-                line: [
-                    [innerPts[next].x, wallStartY, innerPts[next].z],
-                    [outerPts[next].x, wallStartY, outerPts[next].z],
-                ],
-                color: colors.floor
-            });
-
-            // Connect corners at top
-            walls.push({
-                line: [
-                    [innerPts[segmentIndex].x, wallEndY, innerPts[segmentIndex].z],
-                    [outerPts[segmentIndex].x, wallEndY, outerPts[segmentIndex].z],
-                ],
-                color: colors.floor
-            });
-            walls.push({
-                line: [
-                    [innerPts[next].x, wallEndY, innerPts[next].z],
-                    [outerPts[next].x, wallEndY, outerPts[next].z],
-                ],
-                color: colors.floor
-            });
+            // Retired this helper in favor of inline loop below for flexibility
         };
 
         // Detect if polyline is closed (first and last points are the same)
@@ -361,51 +257,203 @@ function BuildingMesh({ points, floorHeight, totalFloors, roofHeight, scale, edg
             Math.abs(pts3d[0].x - pts3d[pts3d.length - 1].x) < 0.0001 &&
             Math.abs(pts3d[0].z - pts3d[pts3d.length - 1].z) < 0.0001;
 
-        // Number of segments: closed polygon has n segments, open polyline has n-1
-        const numSegments = isClosed ? pts3d.length - 1 : pts3d.length - 1;
+        // Number of segments should be equal to the number of points minus 1
+        // (If closed, the last point is same as first, so we effectively have N-1 segments connecting N-1 unique points plus the closing segment)
+        // Wait, if points are [A, B, C, A], length is 4. Segments are A->B, B->C, C->A. Total 3 segments.
+        // Loop should run 3 times. i=0, 1, 2.
+        // i=0: pts[0]->pts[1] (A->B)
+        // i=1: pts[1]->pts[2] (B->C)
+        // i=2: pts[2]->pts[3] (C->A)
+        // correct.
 
-        console.log('Drawing walls:', { numPoints: pts3d.length, isClosed, numSegments });
+        // If open: [A, B, C], length 3. Segments A->B, B->C. Total 2 segments.
+        // Loop runs 2 times. i=0, 1.
+        // i=0: pts[0]->pts[1]
+        // i=1: pts[1]->pts[2]
+
+        // So numSegments = pts3d.length - 1 ALWAYS.
+        const numSegments = pts3d.length - 1;
+
+        // console.log('Drawing walls:', { numPoints: pts3d.length, isClosed, numSegments });
 
         for (let i = 0; i < numSegments; i++) {
             const attr = edgeAttributes[i] || { startFloor: 1, endFloor: totalFloors };
 
-            // Determine color based on floor range
-            let wallColor = colors.full;
-            if (attr.startFloor === 1 && attr.endFloor === totalFloors) {
-                wallColor = colors.full;
-            } else if (attr.startFloor === 1 && attr.endFloor < totalFloors) {
-                wallColor = colors.partial;
-            } else if (attr.startFloor > 1) {
-                wallColor = colors.upper;
-            } else {
-                wallColor = colors.partial;
-            }
+            // Define points for this segment
+            const p1 = pts3d[i];
+            const p2 = pts3d[i + 1];
 
-            if (wall.dimensionMode === 'centerline') {
-                // Draw both inner and outer wall wireframes
-                drawWallWireframe(outerPts, colors.outerWall, attr, i, isClosed);
-                drawWallWireframe(innerPts, colors.innerWall, attr, i, isClosed);
-                // Draw connecting lines to show wall thickness
-                drawWallThicknessConnectors(innerPts, outerPts, attr, i, isClosed);
-            } else {
-                // Actual mode - draw single wireframe
-                drawWallWireframe(pts3d, wallColor, attr, i, isClosed);
+            // For centerline mode, we need corresponding inner/outer points
+            // Since innerPts/outerPts are calculated from pts3d, they should align index-wise.
+            // However, calculateOffsetPoints returns polygon points.
+            // If closed, calculateOffsetPoints usually returns same number of points.
+            // Let's assume indices align.
+
+            // Draw wall segments per floor to show hierarchy by color
+            for (let f = attr.startFloor; f <= attr.endFloor; f++) {
+                const wallColor = FLOOR_COLORS[f] || colors.full;
+
+                const segmentStartY = (f - 1) * floorH;
+                const segmentEndY = f * floorH + (f === attr.endFloor ? roofHeight / 1000 : 0);
+
+                // Add Mesh for transparent fill
+                // Two triangles for the quad formed by p1-bottom, p2-bottom, p2-top, p1-top
+                // Vertices:
+                // v0: p1, startY
+                // v1: p2, startY
+                // v2: p1, endY
+                // v3: p2, endY
+                // Triangles: v0-v1-v2, v1-v3-v2
+
+                const v0 = [p1.x, segmentStartY, p1.z];
+                const v1 = [p2.x, segmentStartY, p2.z];
+                const v2 = [p1.x, segmentEndY, p1.z];
+                const v3 = [p2.x, segmentEndY, p2.z];
+
+                const positions = new Float32Array([
+                    ...v0, ...v1, ...v2,
+                    ...v1, ...v3, ...v2
+                ]);
+
+                meshes.push({
+                    positions,
+                    color: wallColor
+                });
+
+                if (wall.dimensionMode === 'centerline') {
+                    const op1 = outerPts[i];
+                    const op2 = outerPts[i + 1];
+                    const ip1 = innerPts[i];
+                    const ip2 = innerPts[i + 1];
+
+                    // Outer Vertical
+                    walls.push({
+                        line: [[op1.x, segmentStartY, op1.z], [op1.x, segmentEndY, op1.z]],
+                        color: colors.outerWall
+                    });
+                    walls.push({
+                        line: [[op2.x, segmentStartY, op2.z], [op2.x, segmentEndY, op2.z]],
+                        color: colors.outerWall
+                    });
+
+                    // Horizontal (Top) for Outer - Roof Top
+                    walls.push({
+                        line: [[op1.x, segmentEndY, op1.z], [op2.x, segmentEndY, op2.z]],
+                        color: wallColor,
+                        // dashed: true
+                    });
+                    // Horizontal (Bottom) for Outer - Solid Floor
+                    walls.push({
+                        line: [[op1.x, segmentStartY, op1.z], [op2.x, segmentStartY, op2.z]],
+                        color: colors.floor
+                    });
+
+                    // Inner Vertical
+                    walls.push({
+                        line: [[ip1.x, segmentStartY, ip1.z], [ip1.x, segmentEndY, ip1.z]],
+                        color: colors.innerWall
+                    });
+                    walls.push({
+                        line: [[ip2.x, segmentStartY, ip2.z], [ip2.x, segmentEndY, ip2.z]],
+                        color: colors.innerWall
+                    });
+
+                    // Horizontal (Top) for Inner - Dashed Roof
+                    walls.push({
+                        line: [[ip1.x, segmentEndY, ip1.z], [ip2.x, segmentEndY, ip2.z]],
+                        color: wallColor,
+                        // dashed: true
+                    });
+                    // Horizontal (Bottom) for Inner
+                    walls.push({
+                        line: [[ip1.x, segmentStartY, ip1.z], [ip2.x, segmentStartY, ip2.z]],
+                        color: colors.floor
+                    });
+
+                    // Connectors (Thickness) - only at start of segment?
+                    // No, connectors should be at "corners".
+                    // But if we draw connectors for EVERY segment start/end, we duplicate connectors at shared vertices.
+                    // It's inefficient but safer visually for wireframe.
+                    // Actually, duplicates in Three.js Lines are fine.
+
+                    walls.push({ line: [[ip1.x, segmentStartY, ip1.z], [op1.x, segmentStartY, op1.z]], color: colors.floor });
+                    walls.push({ line: [[ip2.x, segmentStartY, ip2.z], [op2.x, segmentStartY, op2.z]], color: colors.floor });
+                    walls.push({ line: [[ip1.x, segmentEndY, ip1.z], [op1.x, segmentEndY, op1.z]], color: colors.floor });
+                    walls.push({ line: [[ip2.x, segmentEndY, ip2.z], [op2.x, segmentEndY, op2.z]], color: colors.floor });
+
+                } else {
+                    // Actual Mode - Colored Wireframe
+
+                    // Vertical
+                    walls.push({
+                        line: [[p1.x, segmentStartY, p1.z], [p1.x, segmentEndY, p1.z]],
+                        color: wallColor
+                    });
+                    walls.push({
+                        line: [[p2.x, segmentStartY, p2.z], [p2.x, segmentEndY, p2.z]],
+                        color: wallColor
+                    });
+
+                    // Horizontal bounds (Top) - Roof Top in Floor Color (Solid)
+                    walls.push({
+                        line: [[p1.x, segmentEndY, p1.z], [p2.x, segmentEndY, p2.z]],
+                        color: wallColor,
+                        // dashed: true // Reverting to solid
+                    });
+
+                    // If this is the top floor segment and includes roof height, draw the "Ceiling" line at standard height
+                    if (f === attr.endFloor && roofHeight > 0) {
+                        const standardCeilingY = f * floorH;
+                        walls.push({
+                            line: [[p1.x, standardCeilingY, p1.z], [p2.x, standardCeilingY, p2.z]],
+                            color: colors.floor // Gray ceiling line
+                        });
+                    }
+
+                    // Horizontal bounds (Bottom) - Solid Floor (Standard Grey)
+                    walls.push({
+                        line: [[p1.x, segmentStartY, p1.z], [p2.x, segmentStartY, p2.z]],
+                        color: colors.floor
+                    });
+                }
             }
         }
 
-        return walls;
+        return { walls, meshes };
     }, [points, floorHeight, totalFloors, roofHeight, scale, edgeAttributes, wall, colors]);
 
-    if (wallData.length === 0) return null;
+    if (wallData.walls.length === 0) return null;
 
     return (
         <group>
-            {wallData.map((wall, i) => (
+            {wallData.meshes.map((mesh, i) => (
+                <mesh key={`mesh-${i}`}>
+                    <bufferGeometry>
+                        <bufferAttribute
+                            attach="attributes-position"
+                            count={mesh.positions.length / 3}
+                            args={[mesh.positions, 3]}
+                        />
+                    </bufferGeometry>
+                    <meshBasicMaterial
+                        color={mesh.color}
+                        transparent
+                        opacity={0.1}
+                        side={THREE.DoubleSide}
+                        depthWrite={false} // Prevent z-fighting with lines
+                    />
+                </mesh>
+            ))}
+            {wallData.walls.map((wall, i) => (
                 <Line
-                    key={i}
+                    key={`line-${i}`}
                     points={wall.line}
                     color={wall.color}
                     lineWidth={1.5}
+                    dashed={wall.dashed}
+                    dashScale={wall.dashed ? 0.3 : undefined}
+                    dashSize={wall.dashed ? 1 : undefined}
+                    gapSize={wall.dashed ? 0.5 : undefined}
                 />
             ))}
         </group>
@@ -417,7 +465,7 @@ interface View3DProps {
 }
 
 export function View3D({ viewMode = "3D" }: View3DProps) {
-    const { polylinePoints, building, scale, edgeAttributes, wall } = usePlanningStore();
+    const { polylinePoints, building, scale, edgeAttributes, wall, roof } = usePlanningStore();
     const hasBuilding = polylinePoints.length >= 3;
 
     // Camera positions for different modes
@@ -503,6 +551,7 @@ export function View3D({ viewMode = "3D" }: View3DProps) {
                         scale={scale}
                         edgeAttributes={edgeAttributes}
                         wall={wall}
+                        roof={roof}
                         colors={buildingColors}
                     />
                 )}

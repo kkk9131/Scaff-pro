@@ -1,6 +1,6 @@
 """
 サービスレイヤー
 """
-from .drawing_analyzer import DrawingAnalyzer
+from .gemini_outline_extractor import GeminiOutlineExtractor, OutlineExtractionResult, DimensionLine
 
-__all__ = ["DrawingAnalyzer"]
+__all__ = ["GeminiOutlineExtractor", "OutlineExtractionResult", "DimensionLine"]

@@ -2,7 +2,7 @@
 
 import { Stage, Layer, Line, Circle, Text, Image as KonvaImage } from "react-konva";
 import { useEffect, useState, useRef, useCallback } from "react";
-import { usePlanningStore, type Point } from "@/store/planningStore";
+import { usePlanningStore, type Point, FLOOR_COLORS } from "@/store/planningStore";
 import Konva from "konva";
 import { ScaleInputModal } from "./ScaleInputModal";
 import { useThemeStore } from "@/store/themeStore";
@@ -85,6 +85,7 @@ export function Canvas2D() {
         setSelectedEdgeIndex,
         scale: canvasScale,
         grid,
+        roof, // Roof configuration for outline display
         // Background drawing
         drawings,
         backgroundDrawingId,
@@ -135,19 +136,35 @@ export function Canvas2D() {
 
     // Helper to get color based on edge attributes
     const getEdgeColor = (index: number) => {
-        const attr = edgeAttributes[index];
-        if (!attr) return colors.primary; // Default
+        // If attribute exists, use it. Otherwise default to assuming full building height logic
+        const attr = edgeAttributes[index] || { startFloor: 1, endFloor: building.totalFloors };
 
         // 1F Only
-        if (attr.startFloor === 1 && attr.endFloor === 1) return "#22c55e"; // Green
+        if (attr.startFloor === 1 && attr.endFloor === 1) return FLOOR_COLORS[1] || "#22c55e"; // Green
 
         // 2F+ Only (e.g. 2-2 or 2-Total)
-        if (attr.startFloor >= 2) return "#eab308"; // Yellow
+        if (attr.startFloor >= 2) return FLOOR_COLORS[attr.startFloor] || "#eab308"; // Yellow
 
         // Custom / Partial (e.g. 1-2 in a 4 story building)
+        // If it starts at 1 but doesn't go to total, or any other mix
         if (attr.startFloor !== 1 || attr.endFloor !== building.totalFloors) return "#f97316"; // Orange
 
-        return colors.primary;
+        // Full height (default)
+        // If totalFloors is 1, it falls into the first check (1F Only) above?
+        // No, if totalFloors=1, attr={start:1, end:1}. 
+        // 1==1 && 1==1 is true. Returns Green. Correct.
+
+        // If totalFloors=2, attr={start:1, end:2}. 
+        // 1==1 is true, 2==1 false. Next...
+        // 1>=2 false.
+        // 1!==1 false. 2!==2 false.
+        // Fallback to primary.
+
+        // For fallback (Full height spanning multiple floors), maybe use the end floor color? 
+        // User said "Upper floor color priority".
+        // In Canvas2D, we usually show a single color.
+        // Let's us the endFloor color as the 'dominant' color for 2D map overlap logic.
+        return FLOOR_COLORS[attr.endFloor] || colors.primary;
     };
 
     // Helper to snap point to grid if enabled
@@ -375,7 +392,7 @@ export function Canvas2D() {
                                 ? Math.min(
                                     (size.width * 0.6) / (bounds.maxX - bounds.minX),
                                     (size.height * 0.6) / (bounds.maxY - bounds.minY)
-                                  )
+                                )
                                 : 0.05; // デフォルト: 1mm = 0.05px
                             const offsetX = size.width * 0.2;
                             const offsetY = size.height * 0.2;
@@ -465,6 +482,45 @@ export function Canvas2D() {
                                         />
                                     );
                                 })}
+
+                                {/* Roof Outline (Dashed) - Only if eaveOverhang or gableOverhang > 0 */}
+                                {(roof.eaveOverhang > 0 || roof.gableOverhang > 0) && canvasScale && (
+                                    (() => {
+                                        // Calculate offset in pixels
+                                        const overhangPixels = Math.max(roof.eaveOverhang, roof.gableOverhang) * canvasScale;
+
+                                        // Simple offset: expand polyline outward
+                                        // Calculate centroid
+                                        const cx = polylinePoints.reduce((sum, p) => sum + p.x, 0) / polylinePoints.length;
+                                        const cy = polylinePoints.reduce((sum, p) => sum + p.y, 0) / polylinePoints.length;
+
+                                        // Offset each point away from centroid
+                                        const offsetPoints = polylinePoints.map(p => {
+                                            const dx = p.x - cx;
+                                            const dy = p.y - cy;
+                                            const dist = Math.sqrt(dx * dx + dy * dy);
+                                            if (dist === 0) return { x: p.x, y: p.y };
+                                            const scale = (dist + overhangPixels) / dist;
+                                            return {
+                                                x: cx + dx * scale,
+                                                y: cy + dy * scale
+                                            };
+                                        });
+
+                                        const roofFlatPoints = offsetPoints.flatMap(p => [p.x, p.y]);
+
+                                        return (
+                                            <Line
+                                                points={roofFlatPoints}
+                                                closed
+                                                stroke="#94a3b8" // Gray dashed line for roof outline
+                                                strokeWidth={1.5}
+                                                dash={[10, 5]} // Dashed pattern
+                                                listening={false}
+                                            />
+                                        );
+                                    })()
+                                )}
                             </>
                         )}
 

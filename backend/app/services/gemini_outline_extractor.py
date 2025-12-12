@@ -1,15 +1,14 @@
 """
-Gemini 1.5 Flash を使用した建築図面外周座標抽出サービス
+BudgetCap プロキシ経由で Gemini を使用した建築図面外周座標抽出サービス
 """
 import os
 import json
-import base64
 from pathlib import Path
-from typing import Optional
+from typing import Optional, List
 
-import google.generativeai as genai
-from PIL import Image
 from pydantic import BaseModel
+
+from .budgetcap_client import BudgetCapGeminiClient
 
 
 class CoordinatePoint(BaseModel):
@@ -27,26 +26,38 @@ class DimensionLine(BaseModel):
     raw_text: str  # 図面上に記載されたテキスト
 
 
+# Floor colors (mirroring frontend)
+FLOOR_COLORS = {
+    1: '#22c55e',  # Green - 1F
+    2: '#3b82f6',  # Blue - 2F
+    3: '#f59e0b',  # Amber - 3F
+    4: '#ef4444',  # Red - 4F
+    5: '#8b5cf6',  # Purple - 5F
+}
+
 class OutlineExtractionResult(BaseModel):
-    """外周座標抽出結果"""
-    dimensions: list[DimensionLine]  # 読み取った寸法線
-    coordinates: list[CoordinatePoint]
+    """建物の外周座標抽出結果"""
     width_mm: float
     height_mm: float
+    dimensions: List[DimensionLine]
+    coordinates: List[CoordinatePoint]
+    floor: Optional[int] = None
+    color: Optional[str] = None
 
 
 class GeminiOutlineExtractor:
-    """Gemini 1.5 Flash を使用した建築図面外周座標抽出クラス"""
+    """BudgetCap経由でGeminiを使用した図面解析クラス"""
 
-    def __init__(self):
-        """初期化: Google API Keyの設定"""
-        api_key = os.getenv("GOOGLE_API_KEY")
-        if not api_key:
-            raise ValueError("GOOGLE_API_KEY 環境変数が設定されていません")
+    MODEL = "gemini-2.5-flash-lite"
 
-        genai.configure(api_key=api_key)
-        # Use gemini-2.5-flash-lite (user specified)
-        self.model = genai.GenerativeModel("gemini-2.5-flash-lite")
+    def __init__(self, api_key: Optional[str] = None):
+        """
+        初期化: BudgetCap API Keyの設定
+
+        Args:
+            api_key: BudgetCap API キー（省略時は環境変数から取得）
+        """
+        self.client = BudgetCapGeminiClient(api_key)
 
     def _build_prompt(self) -> str:
         """プロンプトを構築"""
@@ -72,30 +83,28 @@ class GeminiOutlineExtractor:
 - coordinates項目は不要です（システム側で計算します）。
 """
 
-    def extract_outline_from_file(self, image_path: str) -> OutlineExtractionResult:
+    def extract_outline_from_file(self, image_path: str, floor: Optional[int] = None) -> OutlineExtractionResult:
         """
         ローカル画像ファイルから建物外周座標を抽出
         """
-        path = Path(image_path)
-        if not path.exists():
-            raise FileNotFoundError(f"画像ファイルが見つかりません: {image_path}")
+        response_text = self.client.generate_content_from_file(
+            model=self.MODEL,
+            prompt=self._build_prompt(),
+            image_path=image_path
+        )
+        return self._parse_response(response_text, floor)
 
-        image = Image.open(path)
-        prompt = self._build_prompt()
-        response = self.model.generate_content([prompt, image])
-        return self._parse_response(response.text)
-
-    def extract_outline_from_bytes(self, image_bytes: bytes, mime_type: str = "image/jpeg") -> OutlineExtractionResult:
+    def extract_outline_from_bytes(self, image_bytes: bytes, mime_type: str = "image/jpeg", floor: Optional[int] = None) -> OutlineExtractionResult:
         """
         バイトデータから建物外周座標を抽出
         """
-        prompt = self._build_prompt()
-        image_part = {
-            "mime_type": mime_type,
-            "data": image_bytes
-        }
-        response = self.model.generate_content([prompt, image_part])
-        return self._parse_response(response.text)
+        response_text = self.client.generate_content(
+            model=self.MODEL,
+            prompt=self._build_prompt(),
+            image_data=image_bytes,
+            mime_type=mime_type
+        )
+        return self._parse_response(response_text, floor)
 
     def _calculate_coordinates(self, width: float, height: float) -> list[CoordinatePoint]:
         """
@@ -111,7 +120,7 @@ class GeminiOutlineExtractor:
             CoordinatePoint(point="p4", x=width, y=0),
         ]
 
-    def _parse_response(self, response_text: str) -> OutlineExtractionResult:
+    def _parse_response(self, response_text: str, floor: Optional[int] = None) -> OutlineExtractionResult:
         """
         Geminiのレスポンスをパースし、座標をPython側で計算して付与
         """
@@ -141,11 +150,18 @@ class GeminiOutlineExtractor:
             for dim in data.get("dimensions", [])
         ]
 
+        # Color logic
+        color = None
+        if floor and floor in FLOOR_COLORS:
+            color = FLOOR_COLORS[floor]
+
         return OutlineExtractionResult(
             dimensions=dimensions,
             coordinates=coordinates,
             width_mm=width_mm,
-            height_mm=height_mm
+            height_mm=height_mm,
+            floor=floor,
+            color=color
         )
 
 

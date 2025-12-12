@@ -42,6 +42,9 @@ export function DrawingImportDialog() {
     updateDrawingUrl,
     updateDrawingServerId,
     setBackgroundDrawingId,
+    drawings, // Get existing drawings to check if we should overwrite or expand
+    setBuilding, // Action to update building config
+    building, // Current building config
   } = usePlanningStore();
 
   const [selectedType, setSelectedType] = useState<DrawingFileType>('plan');
@@ -50,6 +53,26 @@ export function DrawingImportDialog() {
   const [isUploading, setIsUploading] = useState(false);
   const [dragOver, setDragOver] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  // Helper to detect floor from filename
+  // Examples: "1F.png", "2階平面図.pdf", "plan-3f.jpg"
+  const detectFloorFromFilename = (filename: string): number | null => {
+    // English/Number pattern: 1F, 2F, 1f, 2f
+    const fMatch = filename.match(/(\d+)F/i);
+    if (fMatch) {
+      const floor = parseInt(fMatch[1]);
+      if (floor >= 1 && floor <= 5) return floor;
+    }
+
+    // Japanese pattern: 1階, 2階
+    const kMatch = filename.match(/(\d+)階/);
+    if (kMatch) {
+      const floor = parseInt(kMatch[1]);
+      if (floor >= 1 && floor <= 5) return floor;
+    }
+
+    return null;
+  };
 
   const handleFileSelect = useCallback((files: FileList | null) => {
     if (!files) return;
@@ -62,11 +85,18 @@ export function DrawingImportDialog() {
       }
 
       const previewUrl = URL.createObjectURL(file);
+
+      // Attempt to detect floor
+      const detectedFloor = detectFloorFromFilename(file.name);
+
+      // Use detected floor if valid, otherwise use currently selected global floor
+      const finalFloor = detectedFloor !== null ? detectedFloor : selectedFloor;
+
       newPreviews.push({
         file,
         previewUrl,
-        type: selectedType,
-        floor: selectedType === 'plan' ? selectedFloor : 0,
+        type: selectedType, // Keep type as manual selection for now (safer)
+        floor: selectedType === 'plan' ? finalFloor : 0,
       });
     });
 
@@ -119,13 +149,42 @@ export function DrawingImportDialog() {
 
     setIsUploading(true);
 
+    // Auto-adjust global building total floors based on import
+    // 1. Calculate max floor in this batch
+    const batchMaxFloor = filePreviews.reduce((max, p) => {
+      return p.type === 'plan' ? Math.max(max, p.floor) : max;
+    }, 0);
+
+    // Get latest state
+    const currentDrawings = usePlanningStore.getState().drawings;
+    const currentTotalFloors = usePlanningStore.getState().building.totalFloors;
+
+    console.log('[DrawingImportDialog] Auto-Adjust Check:', {
+      batchMaxFloor,
+      currentDrawingsLength: currentDrawings.length,
+      currentTotalFloors
+    });
+
+    if (batchMaxFloor > 0) {
+      // If this is the *first* import (no existing drawings), set totalFloors strictly to batchMaxFloor
+      if (currentDrawings.length === 0) {
+        console.log('[DrawingImportDialog] First import, setting totalFloors to:', batchMaxFloor);
+        setBuilding({ totalFloors: batchMaxFloor });
+      } else {
+        // If adding to existing, only expand if new floor exceeds current total
+        if (batchMaxFloor > currentTotalFloors) {
+          console.log('[DrawingImportDialog] Expanding totalFloors to:', batchMaxFloor);
+          setBuilding({ totalFloors: batchMaxFloor });
+        }
+      }
+    }
+
     for (const preview of filePreviews) {
       // Add drawing with uploading status - addDrawing returns the actual ID used in store
       const drawingId = addDrawing({
         name: preview.file.name,
         type: preview.type,
         url: preview.previewUrl,
-        scale: 1,
         floor: preview.type === 'plan' ? preview.floor : undefined,
         status: 'uploading',
       });
@@ -169,6 +228,39 @@ export function DrawingImportDialog() {
         updateDrawingStatus(drawingId, 'ready');
         setBackgroundDrawingId(drawingId);
         console.log('[DrawingImportDialog] Upload complete, set backgroundDrawingId:', drawingId);
+
+        // Auto-extract roof info if elevation drawing
+        if (preview.type === 'elevation' && result.id) {
+          console.log('[DrawingImportDialog] Auto-extracting roof info for elevation drawing...');
+          try {
+            // Next.jsのRewrites経由ではなく直接呼ぶか、Rewrites設定を確認するか。
+            // ここではRewrites経由前提で /api/v1/drawings... を呼んでいるので合わせる。
+            // しかし SidePanel では http://localhost:8000 を直叩きしていた。
+            // uploadは /api/v1/drawings/upload で成功しているので、Rewritesは効いているはず？
+            // あるいは upload は相対パスで呼んでいる。
+
+            // ここでは相対パスで呼ぶ
+            const roofRes = await fetch('/api/v1/drawings/extract-roof-by-id', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ file_id: result.id })
+            });
+
+            if (roofRes.ok) {
+              const roofData = await roofRes.json();
+              if (roofData.success && roofData.config) {
+                usePlanningStore.getState().setRoof(roofData.config);
+                console.log('[DrawingImportDialog] Roof info applied automatically:', roofData.config);
+              } else {
+                console.warn('[DrawingImportDialog] Roof extraction returned no config:', roofData);
+              }
+            } else {
+              console.error('[DrawingImportDialog] Roof extraction request failed:', roofRes.status);
+            }
+          } catch (e) {
+            console.error('[DrawingImportDialog] Auto roof extraction failed:', e);
+          }
+        }
       } catch (error) {
         console.error('[DrawingImportDialog] Upload error:', error);
         // アップロード失敗時はreadyステータスに設定
@@ -216,11 +308,10 @@ export function DrawingImportDialog() {
                 <button
                   key={type}
                   onClick={() => setSelectedType(type)}
-                  className={`rounded-lg px-4 py-2 text-sm font-medium transition-all ${
-                    selectedType === type
-                      ? 'bg-blue-600 text-white'
-                      : 'bg-zinc-800 text-zinc-400 hover:bg-zinc-700 hover:text-zinc-300'
-                  }`}
+                  className={`rounded-lg px-4 py-2 text-sm font-medium transition-all ${selectedType === type
+                    ? 'bg-blue-600 text-white'
+                    : 'bg-zinc-800 text-zinc-400 hover:bg-zinc-700 hover:text-zinc-300'
+                    }`}
                 >
                   {DRAWING_TYPE_LABELS[type]}
                 </button>
@@ -239,11 +330,10 @@ export function DrawingImportDialog() {
                   <button
                     key={floor}
                     onClick={() => setSelectedFloor(floor)}
-                    className={`flex h-10 w-14 items-center justify-center rounded-lg text-sm font-medium transition-all ${
-                      selectedFloor === floor
-                        ? 'text-white'
-                        : 'bg-zinc-800 text-zinc-400 hover:bg-zinc-700 hover:text-zinc-300'
-                    }`}
+                    className={`flex h-10 w-14 items-center justify-center rounded-lg text-sm font-medium transition-all ${selectedFloor === floor
+                      ? 'text-white'
+                      : 'bg-zinc-800 text-zinc-400 hover:bg-zinc-700 hover:text-zinc-300'
+                      }`}
                     style={{
                       backgroundColor: selectedFloor === floor ? FLOOR_COLORS[floor] : undefined,
                     }}
@@ -261,11 +351,10 @@ export function DrawingImportDialog() {
             onDragOver={handleDragOver}
             onDragLeave={handleDragLeave}
             onClick={() => fileInputRef.current?.click()}
-            className={`mb-6 flex cursor-pointer flex-col items-center justify-center rounded-xl border-2 border-dashed p-8 transition-all ${
-              dragOver
-                ? 'border-blue-500 bg-blue-500/10'
-                : 'border-zinc-700 bg-zinc-800/30 hover:border-zinc-600 hover:bg-zinc-800/50'
-            }`}
+            className={`mb-6 flex cursor-pointer flex-col items-center justify-center rounded-xl border-2 border-dashed p-8 transition-all ${dragOver
+              ? 'border-blue-500 bg-blue-500/10'
+              : 'border-zinc-700 bg-zinc-800/30 hover:border-zinc-600 hover:bg-zinc-800/50'
+              }`}
           >
             <UploadIcon size={32} className="mb-3 text-zinc-500" />
             <p className="mb-1 text-sm font-medium text-zinc-300">

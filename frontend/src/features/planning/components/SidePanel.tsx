@@ -2,8 +2,8 @@ import { GlassPanel } from "@/components/ui/GlassPanel";
 import { useState, useRef } from "react";
 import { clsx } from "clsx";
 import { motion, AnimatePresence } from "framer-motion";
-import { Building2, Layers, Calculator, MessageSquare, Upload, FileImage, Ruler, Check, Trash2, Image, Eye, EyeOff, FolderOpen, Plus, Square, AlignCenter, Sparkles, Loader2 } from "lucide-react";
-import { usePlanningStore, SCALE_PRESETS, DRAWING_TYPE_LABELS, FLOOR_COLORS, type Point } from "@/store/planningStore";
+import { Building2, Layers, Calculator, MessageSquare, Upload, FileImage, Ruler, Check, Trash2, Image, Eye, EyeOff, FolderOpen, Plus, Square, AlignCenter, Sparkles, Loader2, Home } from "lucide-react";
+import { usePlanningStore, SCALE_PRESETS, DRAWING_TYPE_LABELS, FLOOR_COLORS, type Point, type RoofType } from "@/store/planningStore";
 import { NeonButton } from "@/components/ui/NeonButton";
 
 // API response types for outline extraction
@@ -25,6 +25,8 @@ interface OutlineExtractionResult {
     coordinates: CoordinatePoint[];
     width_mm: number;
     height_mm: number;
+    floor?: number;
+    color?: string;
 }
 
 // Building Tab Component with File Upload
@@ -60,6 +62,9 @@ const BuildingTab = () => {
         // Wall configuration
         wall,
         setWall,
+        // Roof configuration
+        roof,
+        setRoof,
     } = usePlanningStore();
     const fileInputRef = useRef<HTMLInputElement>(null);
     const [isExtracting, setIsExtracting] = useState<string | null>(null); // Drawing ID being extracted
@@ -142,6 +147,18 @@ const BuildingTab = () => {
             }
 
             const result: OutlineExtractionResult = await extractResponse.json();
+
+            // Fallback: If backend didn't return floor but we know it from drawing, inject it
+            // This ensures "Apply to Canvas" uses the correct floor even if API response is incomplete
+            if (result.floor === undefined && drawing.floor !== undefined) {
+                console.log('[SidePanel] Injecting floor from drawing info:', drawing.floor);
+                result.floor = drawing.floor;
+
+                // Inject color if missing
+                if (!result.color && FLOOR_COLORS[drawing.floor]) {
+                    result.color = FLOOR_COLORS[drawing.floor];
+                }
+            }
 
             // Display result in console and UI
             console.log('=== AI外周座標抽出結果 ===');
@@ -458,7 +475,26 @@ const BuildingTab = () => {
                                     }
 
                                     // Update store
-                                    usePlanningStore.getState().setPolylinePoints(points);
+                                    const pPoints = points;
+                                    usePlanningStore.getState().setPolylinePoints(pPoints);
+
+                                    // If floor is detected, try to set attributes for these new edges
+                                    const floor = extractionResult.floor;
+                                    if (floor) {
+                                        // We just added N points (N-1 segments for open, N segments for closed if last == first)
+                                        // Actually points define vertices. Segments are between i and i+1.
+                                        const store = usePlanningStore.getState();
+                                        const numSegments = pPoints.length - 1; // Assuming sequential segments
+
+                                        for (let i = 0; i < numSegments; i++) {
+                                            // Set attribute for each segment
+                                            store.setEdgeAttribute(i, {
+                                                startFloor: floor,
+                                                endFloor: floor // Default to single floor height
+                                            });
+                                        }
+                                        console.log(`[SidePanel] Applied floor attributes for ${numSegments} segments: Floor ${floor}`);
+                                    }
 
                                     // Notify user
                                     console.log('Applied points to canvas (Closed Polygon):', points);
@@ -512,22 +548,59 @@ const BuildingTab = () => {
             <div className="space-y-2">
                 <label className="text-xs text-text-muted uppercase font-bold tracking-wider">図面情報</label>
                 <div className="p-3 bg-surface-2 rounded-lg border border-surface-3 text-sm space-y-2">
-                    <div className="flex justify-between items-center">
-                        <span className="text-text-muted flex items-center gap-2"><FileImage size={14} /> ファイル</span>
-                        <span className="truncate max-w-[120px]">{drawingName || '未選択'}</span>
-                    </div>
-                    <div className="flex justify-between items-center">
-                        <span className="text-text-muted flex items-center gap-2"><Ruler size={14} /> スケール</span>
-                        {scaleRatio ? (
-                            <span className="font-mono text-accent">1 : {scaleRatio}</span>
-                        ) : (
-                            <span className="text-text-muted">未設定</span>
-                        )}
-                    </div>
-                    <div className="flex justify-between items-center">
-                        <span className="text-text-muted">外周ポリライン</span>
-                        <span className="font-mono">{polylinePoints.length} 頂点</span>
-                    </div>
+                    {(() => {
+                        // Determine active drawing (prefer background drawing, then first available, or fallback to legacy)
+                        const activeDrawing = backgroundDrawingId
+                            ? drawings.find(d => d.id === backgroundDrawingId)
+                            : (drawings.length > 0 ? drawings[0] : null);
+
+                        // Use active drawing info or legacy info
+                        const name = activeDrawing ? activeDrawing.name : (drawingName || '未選択');
+
+                        return (
+                            <>
+                                <div className="flex justify-between items-center">
+                                    <span className="text-text-muted flex items-center gap-2"><FileImage size={14} /> ファイル</span>
+                                    <span className="truncate max-w-[120px]">{name}</span>
+                                </div>
+                                <div className="flex justify-between items-center">
+                                    <span className="text-text-muted flex items-center gap-2"><Layers size={14} /> 階層</span>
+                                    {activeDrawing && activeDrawing.type === 'plan' ? (
+                                        <div className="flex items-center gap-1">
+                                            <select
+                                                value={activeDrawing.floor || 1}
+                                                onChange={(e) => {
+                                                    const newFloor = parseInt(e.target.value);
+                                                    // Update drawing floor in store
+                                                    usePlanningStore.getState().updateDrawingFloor(activeDrawing.id, newFloor);
+                                                }}
+                                                className="bg-surface-1 border border-surface-3 rounded px-2 py-0.5 text-xs text-text-main focus:outline-none focus:border-accent"
+                                                style={{ color: FLOOR_COLORS[activeDrawing.floor || 1] }}
+                                            >
+                                                {[1, 2, 3, 4, 5].map(f => (
+                                                    <option key={f} value={f}>{f}F</option>
+                                                ))}
+                                            </select>
+                                        </div>
+                                    ) : (
+                                        <span className="text-text-muted text-xs">-</span>
+                                    )}
+                                </div>
+                                <div className="flex justify-between items-center">
+                                    <span className="text-text-muted flex items-center gap-2"><Ruler size={14} /> スケール</span>
+                                    {scaleRatio ? (
+                                        <span className="font-mono text-accent">1 : {scaleRatio}</span>
+                                    ) : (
+                                        <span className="text-text-muted">未設定</span>
+                                    )}
+                                </div>
+                                <div className="flex justify-between items-center">
+                                    <span className="text-text-muted">外周ポリライン</span>
+                                    <span className="font-mono">{polylinePoints.length} 頂点</span>
+                                </div>
+                            </>
+                        );
+                    })()}
                 </div>
                 {polylinePoints.length > 0 && (
                     <button
@@ -631,6 +704,79 @@ const BuildingTab = () => {
                         <span className="text-sm text-accent">総高さ</span>
                         <span className="font-mono text-accent font-bold">{(totalHeight / 1000).toFixed(1)}m</span>
                     </div>
+                </div>
+            </div>
+
+            {/* Roof Settings Section */}
+            <div className="space-y-2">
+                <label className="text-xs text-text-muted uppercase font-bold tracking-wider flex items-center gap-2">
+                    <Home size={14} /> 屋根設定
+                </label>
+                <div className="space-y-2">
+                    {/* Roof Type */}
+                    <div className="grid grid-cols-2 gap-2">
+                        {(['flat', 'gable', 'hip', 'shed'] as RoofType[]).map((type) => (
+                            <button
+                                key={type}
+                                onClick={() => setRoof({ roofType: type })}
+                                className={clsx(
+                                    "p-1.5 rounded-lg border text-xs transition-all flex items-center justify-center gap-1",
+                                    roof.roofType === type
+                                        ? "border-accent bg-accent/10 text-accent shadow-[0_0_8px_var(--accent-glow)]"
+                                        : "border-surface-3 bg-surface-2 text-text-muted hover:border-primary/50 hover:text-text-main"
+                                )}
+                            >
+                                {type === 'flat' && "陸屋根 (Flat)"}
+                                {type === 'gable' && "切妻 (Gable)"}
+                                {type === 'hip' && "寄棟 (Hip)"}
+                                {type === 'shed' && "片流れ (Shed)"}
+                            </button>
+                        ))}
+                    </div>
+
+                    {/* Overhangs */}
+                    <div className="flex items-center gap-2">
+                        <label className="text-xs text-text-muted w-16">軒出</label>
+                        <input
+                            type="number"
+                            value={roof.eaveOverhang}
+                            onChange={(e) => setRoof({ eaveOverhang: parseInt(e.target.value) || 0 })}
+                            min={0}
+                            step={50}
+                            className="flex-1 px-2 py-1.5 bg-surface-2 border border-surface-3 rounded text-sm font-mono text-right focus:outline-none focus:border-accent"
+                        />
+                        <span className="text-xs text-text-muted">mm</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                        <label className="text-xs text-text-muted w-16">ケラバ</label>
+                        <input
+                            type="number"
+                            value={roof.gableOverhang}
+                            onChange={(e) => setRoof({ gableOverhang: parseInt(e.target.value) || 0 })}
+                            min={0}
+                            step={50}
+                            className="flex-1 px-2 py-1.5 bg-surface-2 border border-surface-3 rounded text-sm font-mono text-right focus:outline-none focus:border-accent"
+                        />
+                        <span className="text-xs text-text-muted">mm</span>
+                    </div>
+
+                    {/* Slope */}
+                    <div className="flex items-center gap-2">
+                        <label className="text-xs text-text-muted w-16">勾配</label>
+                        <input
+                            type="text"
+                            placeholder="例: 4/10"
+                            value={roof.slopeRatio || ''}
+                            onChange={(e) => setRoof({ slopeRatio: e.target.value })}
+                            className="flex-1 px-2 py-1.5 bg-surface-2 border border-surface-3 rounded text-sm font-mono text-right focus:outline-none focus:border-accent"
+                        />
+                    </div>
+                    {/* Slope Angle (Read Only / Calculated) */}
+                    {roof.slopeAngle && (
+                        <div className="flex justify-end text-xs text-text-muted">
+                            {roof.slopeAngle.toFixed(1)}°
+                        </div>
+                    )}
                 </div>
             </div>
 
